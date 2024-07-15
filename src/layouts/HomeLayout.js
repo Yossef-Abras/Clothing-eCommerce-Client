@@ -1,10 +1,13 @@
-import Navbar from "@/components/Navbar";
+import MyNavbar from "@/components/MyNavbar";
 
 export default function HomeLayout({ children }) {
   return (
     <div>
-      <Navbar />
-      {children}
+      <MyNavbar />
+      <main>
+        {children}
+      </main>
+
     </div>
   );
 }
