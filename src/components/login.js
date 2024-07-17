@@ -29,7 +29,7 @@ export default function Login() {
                                     <Input
                                         autoFocus
                                         label="Email"
-                                        placeholder="Enter your email"
+                                        placeholder="example@email.com"
                                         variant="bordered"
                                     />
                                     <Input
@@ -46,7 +46,7 @@ export default function Login() {
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="danger" variant="flat" onPress={onClose}>
+                                    <Button variant="flat" onPress={onClose}>
                                         Close
                                     </Button>
                                     <Button className="bg-orange-300" onPress={onClose}>
@@ -78,20 +78,21 @@ export default function Login() {
                         {(onClose) => (
                             <>
                                 <ModalHeader className="flex flex-row text-orange-300 gap-3">
-                                    <Link href="#">sign up</Link>
+                                    <Link href="#">Sign up</Link>
                                 </ModalHeader>
 
                                 <ModalBody>
                                     <Input
                                         autoFocus
                                         label="Full Name"
-                                        placeholder="Enter your Full name"
+                                        placeholder="John Mark"
                                         variant="bordered"
                                     />
                                     <Input
                                         autoFocus
+                                        type="email"
                                         label="Email"
-                                        placeholder="Enter your email"
+                                        placeholder="example@email.com"
                                         variant="bordered"
                                     />
                                     <Input
@@ -107,7 +108,7 @@ export default function Login() {
                                     </div>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="danger" variant="flat" onPress={onClose}>
+                                    <Button variant="flat" onPress={onClose}>
                                         Close
                                     </Button>
                                     <Button className="bg-orange-300" onPress={onClose}>
