@@ -1,8 +1,7 @@
-import { NextUIProvider } from "@nextui-org/system";
+// import { NextUIProvider } from "@nextui-org/system";
+import Providers from "@/components/Providers";
 import HomeLayout from "@/layouts/HomeLayout";
 import "@/styles/globals.css";
-import Providers from "@/providers";
-
 
 export default function App({ Component, pageProps }) {
   return (
