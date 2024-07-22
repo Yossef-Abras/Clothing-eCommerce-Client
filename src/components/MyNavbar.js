@@ -108,7 +108,15 @@ export default function MyNavbar() {
       <NavbarMenu>
         {Object.keys(menuItems).map((key) => (
           <NavbarMenuItem key={key}>
-            <Link className="w-full" href={key} size="lg">
+            <Link
+              className={
+                router.pathname.slice(1) === key
+                  ? `text-orange-400 font-bold`
+                  : `text-black`
+              }
+              href={key}
+              size="lg"
+            >
               {menuItems[key]}
             </Link>
           </NavbarMenuItem>
