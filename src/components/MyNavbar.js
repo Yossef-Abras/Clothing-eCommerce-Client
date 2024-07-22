@@ -1,28 +1,38 @@
 import React, { useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Link, Button, Input, DropdownMenu, DropdownItem, Dropdown, DropdownTrigger } from "@nextui-org/react";
-import { BsPerson } from "react-icons/bs";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Checkbox } from "@nextui-org/react";
-// import { MailIcon } from './MailIcon.jsx';
-// import { LockIcon } from './LockIcon.jsx';
-
-import { ImSearch } from "react-icons/im";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+  Link,
+  Button,
+  Input,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+  DropdownTrigger,
+} from "@nextui-org/react";
+// import { BsPerson } from "react-icons/bs";
 import Login from "./login";
-
+import { ImSearch } from "react-icons/im";
 export default function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
 
   const handleButtonClick = () => {
-    setShowInput(showInput => !showInput);
+    setShowInput((showInput) => !showInput);
   };
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-  ];
+  const menuItems = ["Profile", "Dashboard"];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className=" bg-white text-lg text-black shadow-md backdrop-blur-3xl backdrop-filter">
+    <Navbar
+      onMenuOpenChange={setIsMenuOpen}
+      className=" bg-white text-lg text-black shadow-md backdrop-blur-3xl backdrop-filter"
+    >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -44,7 +54,6 @@ export default function MyNavbar() {
                 radius="sm"
                 variant="light"
                 href="/contacts"
-
               >
                 Product
               </Button>
@@ -60,28 +69,27 @@ export default function MyNavbar() {
             <DropdownItem
               key="autoscaling"
               description="ACME scales apps to meet user demand, automagically, based on load."
-            // startContent={icons.scale}
+              // startContent={icons.scale}
             >
               Autoscaling
             </DropdownItem>
             <DropdownItem
               key="usage_metrics"
               description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-
             >
               Usage Metrics
             </DropdownItem>
             <DropdownItem
               key="production_ready"
               description="ACME runs on ACME, join us and others serving requests at web scale."
-            // startContent={icons.flash}
+              // startContent={icons.flash}
             >
               Production Ready
             </DropdownItem>
             <DropdownItem
               key="99_uptime"
               description="Applications stay on the grid with high availability and high uptime guarantees."
-            // startContent={icons.server}
+              // startContent={icons.server}
             >
               +99% Uptime
             </DropdownItem>
@@ -100,7 +108,6 @@ export default function MyNavbar() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-
           <Button
             className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
             onClick={handleButtonClick}
@@ -126,7 +133,11 @@ export default function MyNavbar() {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+                index === 2
+                  ? "primary"
+                  : index === menuItems.length - 1
+                  ? "danger"
+                  : "foreground"
               }
               className="w-full"
               href="#"
@@ -140,4 +151,3 @@ export default function MyNavbar() {
     </Navbar>
   );
 }
-
