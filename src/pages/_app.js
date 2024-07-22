@@ -5,7 +5,7 @@ export default function App({ Component, pageProps }) {
   return (
     <NextUIProvider>
       <HomeLayout>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </HomeLayout>
     </NextUIProvider>
   );

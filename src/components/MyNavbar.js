@@ -7,18 +7,14 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
   Button,
-  Input,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
-  DropdownTrigger,
 } from "@nextui-org/react";
-// import { BsPerson } from "react-icons/bs";
 import Login from "./login";
 import { ImSearch } from "react-icons/im";
+import { useRouter } from "next/router";
+import Link from "next/link";
 export default function MyNavbar() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
 
@@ -26,7 +22,11 @@ export default function MyNavbar() {
     setShowInput((showInput) => !showInput);
   };
 
-  const menuItems = ["Profile", "Dashboard"];
+  const menuItems = {
+    products: "Products",
+    "about-us": "About us",
+    "contact-us": "Contact us",
+  };
 
   return (
     <Navbar
@@ -39,69 +39,46 @@ export default function MyNavbar() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <p className="font-bold text-orange-400 font-sans ">SARAMODA</p>
+          <p className="text-lg font-bold text-orange-400 font-sans ">
+            SARAMODA
+          </p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <Dropdown>
-          <NavbarItem>
-            <DropdownTrigger>
-              <Button
-                disableRipple
-                // className="p-0 bg-transparent data-[hover=true]:bg-transparent"
-                // endContent={icons.chevron}
-                radius="sm"
-                variant="light"
-                href="/contacts"
-              >
-                Product
-              </Button>
-            </DropdownTrigger>
-          </NavbarItem>
-          <DropdownMenu
-            aria-label="ACME features"
-            className="w-[340px]"
-            itemClasses={{
-              base: "gap-4",
-            }}
+        <NavbarItem>
+          <Link
+            className={
+              router.pathname.slice(1) === "products"
+                ? `text-orange-400 font-bold`
+                : `text-black`
+            }
+            href="/products"
           >
-            <DropdownItem
-              key="autoscaling"
-              description="ACME scales apps to meet user demand, automagically, based on load."
-              // startContent={icons.scale}
-            >
-              Autoscaling
-            </DropdownItem>
-            <DropdownItem
-              key="usage_metrics"
-              description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-            >
-              Usage Metrics
-            </DropdownItem>
-            <DropdownItem
-              key="production_ready"
-              description="ACME runs on ACME, join us and others serving requests at web scale."
-              // startContent={icons.flash}
-            >
-              Production Ready
-            </DropdownItem>
-            <DropdownItem
-              key="99_uptime"
-              description="Applications stay on the grid with high availability and high uptime guarantees."
-              // startContent={icons.server}
-            >
-              +99% Uptime
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        {/* <NavbarItem>
-          <Link href="#">
+            Products
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link
+            className={
+              router.pathname.slice(1) === "contact-us"
+                ? `text-orange-400 font-bold`
+                : `text-black`
+            }
+            href="/contact-us"
+          >
             Contacts
           </Link>
-        </NavbarItem> */}
+        </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link
+            className={
+              router.pathname.slice(1) === "about-us"
+                ? `text-orange-400 font-bold`
+                : `text-black`
+            }
+            href="/about-us"
+          >
             About us
           </Link>
         </NavbarItem>
@@ -129,21 +106,10 @@ export default function MyNavbar() {
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
-              href="#"
-              size="lg"
-            >
-              {item}
+        {Object.keys(menuItems).map((key) => (
+          <NavbarMenuItem key={key}>
+            <Link className="w-full" href={key} size="lg">
+              {menuItems[key]}
             </Link>
           </NavbarMenuItem>
         ))}
