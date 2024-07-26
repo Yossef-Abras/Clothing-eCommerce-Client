@@ -6,3 +6,17 @@
 
 
 
+
+
+/* slick slider default styles */
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
+.product-slider .slick-dots li button:before {
+	font-size: 12px;
+	color: #fb923c;
+}
+
+.product-slider .slick-dots li.slick-active button:before {
+	color: #fb923c;
+}
