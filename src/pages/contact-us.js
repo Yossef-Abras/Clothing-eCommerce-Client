@@ -4,7 +4,7 @@ export default function ContactUs() {
                     
                   <div>
 
-                    <h1   className= "text-lg font-bold text-orange-400 font-sans text-center text-5xl  mt-32">
+                    <h1   className= " font-bold text-orange-400 font-sans text-center text-5xl  mt-32">
                       Contact us
                     </h1>
                     <p  className="  text-center m-8" > 
