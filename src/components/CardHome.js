@@ -3,7 +3,7 @@ import { Button, Image } from '@nextui-org/react';
 export default function CardHome({ prodectname, price, img }) {
     return (
         <div className="min-w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white">
-            <div>
+            <div className='flex justify-center'>
                 <Image
                     width={4000}
                     height={3000}

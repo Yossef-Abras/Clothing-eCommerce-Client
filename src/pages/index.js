@@ -4,20 +4,46 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CardHome from "../components/CardHome";
-import { Progress } from "@nextui-org/react";
+import { Button, Progress } from "@nextui-org/react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MovingCircles from "../components/MovingCircles";
 
+
+function SampleNextArrow(props) {
+	const { className, style, onClick } = props;
+	return (
+		<div
+			className={className}
+			style={{
+				...style,
+				display: "block",
+				background: "#fb923c",
+				borderRadius: "50%",
+				paddingTop: "1px",
+			}}
+			onClick={onClick}
+		/>
+	);
+}
+
+function SamplePrevArrow(props) {
+	const { className, style, onClick } = props;
+	return (
+		<div
+			className={className}
+			style={{
+				...style,
+				display: "block",
+				background: "#fb923c",
+				borderRadius: "50%",
+				paddingTop: "1px",
+			}}
+			onClick={onClick}
+		/>
+	);
+}
+
 export default function Home() {
-	const scrollRef = useRef(null);
-	const scroll = (direction) => {
-		if (scrollRef.current) {
-			scrollRef.current.scrollBy({
-				left: direction === 'left' ? -248 : 248,
-				behavior: 'smooth'
-			});
-		}
-	};
 	const [promoData, setPromoData] = useState([
 		{
 			type: "Women",
@@ -50,6 +76,29 @@ export default function Home() {
 		autoplay: true,
 		autoplaySpeed: 3000,
 		arrows: false,
+	};
+	const settings1 = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 4,
+		slidesToScroll: 1,
+		nextArrow: <SamplePrevArrow />,
+		prevArrow: <SampleNextArrow />,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 2,
+				},
+			},
+			{
+				breakpoint: 640,
+				settings: {
+					slidesToShow: 1,
+				},
+			},
+		],
 	};
 	const products = [
 		{
@@ -91,7 +140,7 @@ export default function Home() {
 	];
 	return (
 		<main className="relative flex min-h-screen flex-col items-center justify-start">
-			<MovingCircles numCircles={15} />
+			<MovingCircles numCircles={10} />
 			<div className="w-full flex justify-center bg-gradient-to-r from-orange-100/50 via-orange-200/50 to-orange-300/50 backdrop-blur-md">
 				<Slider className="w-[700px]" {...settings}>
 					{promoData.map((value) => (
@@ -114,12 +163,10 @@ export default function Home() {
 					value={100}
 					className='font-bold text-orange-400'
 				/>
-				<div className="relative w-[84%] mx-auto m-3">
-					<div
-						className="overflow-x-scroll whitespace-nowrap scrollbar-hide "
-						ref={scrollRef}
-					>
-						<div className="flex">
+
+				<div className="relative w-[86%] mx-auto m-3">
+					<div className="flex">
+						<Slider className="w-full" {...settings1}>
 							{products.map((product) => (
 								<CardHome
 									key={product.id}
@@ -128,24 +175,9 @@ export default function Home() {
 									img={product.img}
 								/>
 							))}
-						</div>
-
-						<button
-							onClick={() => scroll('left')}
-							className="absolute -left-10 top-1/2 transform -translate-y-1/2 p-2 bg-orange-300 text-white rounded-full shadow-lg "
-						>
-							<FaChevronLeft />
-						</button>
-						<button
-							onClick={() => scroll('right')}
-							className="absolute -right-10 top-1/2 transform -translate-y-1/2 p-2 bg-orange-300 text-white rounded-full shadow-lg"
-						>
-							<FaChevronRight />
-						</button>
-					</div >
-
-				</div>
-
+						</Slider>
+					</div>
+				</div >
 			</div>
 		</main>
 	);
