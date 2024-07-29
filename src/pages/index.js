@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CardHome from "../components/CardHome";
 import { Button, Progress } from "@nextui-org/react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MovingCircles from "../components/MovingCircles";
 
 
@@ -73,7 +72,7 @@ export default function Home() {
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		autoplay: false,
+		autoplay: true,
 		autoplaySpeed: 3000,
 		arrows: false,
 	};
