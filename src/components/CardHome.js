@@ -1,6 +1,14 @@
 import { Button, Image } from '@nextui-org/react';
+import { useState } from 'react';
+import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import { TfiShoppingCartFull } from 'react-icons/tfi';
 
 export default function CardHome({ prodectname, price, img }) {
+    const [isFilled, setIsFilled] = useState(false);
+
+    const handleIconClick = () => {
+        setIsFilled(!isFilled);
+    };
     return (
         <div className="min-w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white">
             <div className='flex justify-center'>
@@ -14,15 +22,15 @@ export default function CardHome({ prodectname, price, img }) {
                 />
             </div>
             <hr></hr>
-            <div className='flex flex-col items-center gap-2  text-orange-400 px-2 pb-4 rounded-lg'>
-                <p className="text-lg font-bold  ">{prodectname}</p>
-                <p>{price}</p>
-                <div className='' >
-                    <Button className="border-2 rounded-xl border-orange-400 bg-inherit hover:bg-orange-400">
-                        Add to cart
-                    </Button>
+            <div className='flex justify-between px-2 pb-4 rounded-lg'>
+                <div className='flex flex-col'>  <p className="text-lg font-bold">{prodectname}</p>
+                    <p>{price}</p>
                 </div>
+                <Button className='bg-inherit text-lg min-w-0 w-8 p-0' onClick={handleIconClick} style={{ cursor: 'pointer' }}>
+                    {isFilled ? <MdFavorite style={{ color: 'red' }} /> : <MdFavoriteBorder />}
+                </Button>
             </div>
+
         </div>
     );
 };

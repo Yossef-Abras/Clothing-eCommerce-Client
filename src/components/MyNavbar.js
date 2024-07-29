@@ -13,6 +13,7 @@ import Login from "./login";
 import { ImSearch } from "react-icons/im";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { TfiShoppingCartFull } from "react-icons/tfi";
 export default function MyNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -38,8 +39,9 @@ export default function MyNavbar() {
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="sm:hidden"
         />
-        <NavbarBrand>
-          <p className="text-lg font-bold text-orange-400 font-sans ">
+
+        <NavbarBrand className={showInput ? 'hidden md:block' : ""}>
+          <p className="text-lg font-bold text-orange-400  font-serif italic ">
             SARAMODA
           </p>
         </NavbarBrand>
@@ -83,7 +85,7 @@ export default function MyNavbar() {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent justify="end" className="gap-2 md:gap-4">
         <NavbarItem>
           <Button
             className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
@@ -95,15 +97,23 @@ export default function MyNavbar() {
         <NavbarItem>
           {showInput && (
             <input
-              className="max-w-full sm:max-w-[10rem] h-10 text-small font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20"
+              className="max-w-full sm:max-w-[10rem] h-10 text-small font-normal text-default-500 bg-default-200/20 rounded-lg px-1"
               placeholder="Type to search..."
               size="sm"
             />
           )}
         </NavbarItem>
-        <NavbarItem>
-          <Login />
-        </NavbarItem>
+        <div className={(showInput && 'hidden md:flex') + " flex gap-2 md:gap-4"}>
+          <NavbarItem>
+            <Login />
+          </NavbarItem>
+          <NavbarItem>
+            <Button className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
+              <TfiShoppingCartFull />
+            </Button>
+          </NavbarItem>
+        </div>
+
       </NavbarContent>
       <NavbarMenu>
         {Object.keys(menuItems).map((key) => (

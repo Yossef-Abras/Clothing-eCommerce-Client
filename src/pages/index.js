@@ -73,7 +73,7 @@ export default function Home() {
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		autoplay: true,
+		autoplay: false,
 		autoplaySpeed: 3000,
 		arrows: false,
 	};
@@ -140,9 +140,9 @@ export default function Home() {
 	];
 	return (
 		<main className="relative flex min-h-screen flex-col items-center justify-start">
-			<MovingCircles numCircles={10} />
+			<MovingCircles numCircles={15} />
 			<div className="w-full flex justify-center bg-gradient-to-r from-orange-100/50 via-orange-200/50 to-orange-300/50 backdrop-blur-md">
-				<Slider className="w-[700px]" {...settings}>
+				<Slider className="md:w-[700px] w-[300px]" {...settings}>
 					{promoData.map((value) => (
 						<PromoCategoryCard
 							key={value.type}
@@ -179,6 +179,30 @@ export default function Home() {
 					</div>
 				</div >
 			</div>
+			<div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
+				<label className="text-orange-400 text-lg font-bold">Special Offers</label>
+				<Progress size='sm'
+					color="warning"
+					value={100}
+					className='font-bold text-orange-400'
+				/>
+
+				<div className="relative w-[86%] mx-auto m-3">
+					<div className="flex">
+						<Slider className="w-full" {...settings1}>
+							{products.map((product) => (
+								<CardHome
+									key={product.id}
+									prodectname={product.name}
+									price={product.price}
+									img={product.img}
+								/>
+							))}
+						</Slider>
+					</div>
+				</div >
+			</div>
+
 		</main>
 	);
 }
