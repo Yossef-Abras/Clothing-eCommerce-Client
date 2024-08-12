@@ -132,24 +132,11 @@ export default function Home() {
 				</div>
 				{/* </Slider> */}
 
-				<div className="relative w-[86%] mx-auto m-3">
-					<div className="flex">
-						<Slider className="w-full" {...settings1}>
-							{products.map((product) => (
-								<CardHome
-									key={product.id}
-									prodectname={product.name}
-									price={product.price}
-									img={product.img}
-								/>
-							))}
-						</Slider>
-					</div>
-				</div>
+
 			</div>
 			<div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
 				<label className="text-orange-400 text-lg font-bold">
-					Special Offers
+					Top Sellers
 				</label>
 				<Progress
 					size="sm"

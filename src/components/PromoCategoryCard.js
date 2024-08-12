@@ -18,7 +18,7 @@ export default function PromoCategoryCard({ categories }) {
                 offers elegance and style with our exclusive women's fashion collection.
               </p>
               <div className="flex justify-center items-center flex-wrap md:px-0 px-4 gap-1 mt-4 h-[100px]">
-                {categories.map((catigory) => (
+                {categories.map((category) => (
                   <Link
                     key={category._id}
                     className="border-2 rounded-2xl border-orange-400 px-2 py-1 mb-[3px] hover:bg-orange-200"
