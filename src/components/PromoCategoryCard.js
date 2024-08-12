@@ -15,7 +15,9 @@ export default function PromoCategoryCard({ categories }) {
             <div className="w-full self-center px-0 md:w-1/2">
               <p className="hidden md:block">
                 <span className="font-bold text-orange-400">Saramoda </span>
-                offers elegance and style with our exclusive women's fashion collection.
+                {
+                  "offers elegance and style with our exclusive women's fashion collection."
+                }
               </p>
               <div className="flex justify-center items-center flex-wrap md:px-0 px-4 gap-1 mt-4 h-[100px]">
                 {categories.map((catigory) => (
