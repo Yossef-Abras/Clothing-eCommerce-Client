@@ -12,7 +12,7 @@ export default function PromoCategoryCard({ type, categories, message }) {
           </div>
           <div className="flex flex-col-reverse md:flex-row w-full md:items-center">
             {/* Link & Message */}
-            <div className="w-full md:h-full self-center px-0 md:w-1/2">
+            <div className="w-full self-center px-0 md:w-1/2">
               <p className="hidden md:block">
                 <span className="font-bold text-orange-400">Saramoda </span>
                 {message}
