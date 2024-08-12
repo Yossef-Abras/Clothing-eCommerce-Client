@@ -11,6 +11,7 @@ import {
   getProducts,
   getSubCategories,
 } from "../../global/product";
+import { useRouter } from "next/router";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -70,7 +71,7 @@ export default function Home() {
       },
     ],
   };
-
+  const router = useRouter()
   const [TopSellersProductsproducts, setTopSellersProducts] = useState([]);
   const [TopOffersproducts, setTopOffersProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -141,7 +142,13 @@ export default function Home() {
         {/* </Slider> */}
       </div>
       <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
-        <label className="text-orange-400 text-lg font-bold">Top Sellers</label>
+        <div className="flex justify-between items-center">
+          <label className="text-orange-400 text-lg font-bold">Top Sellers</label>
+          <Button onClick={() => {
+            router.push('/products')
+          }} className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 ">Show More</Button>
+        </div>
+
         <Progress
           size="sm"
           color="warning"
@@ -166,9 +173,14 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
-        <label className="text-orange-400 text-lg font-bold">
-          Special Offers
-        </label>
+        <div className="flex justify-between items-center">
+          <label className="text-orange-400 text-lg font-bold">
+            Special Offers
+          </label>
+          <Button onClick={() => {
+            router.push('/products')
+          }} className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 ">Show More</Button>
+        </div>
         <Progress
           size="sm"
           color="warning"

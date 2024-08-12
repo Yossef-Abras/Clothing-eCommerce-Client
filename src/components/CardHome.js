@@ -1,16 +1,18 @@
 import { Button, Image } from "@nextui-org/react";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-
+import { MdFavorite, MdFavoriteBorder, MdOutlineEmojiPeople } from "react-icons/md";
 export default function CardHome({ prodectname, price, img, isFavorite }) {
   return (
     <div className="min-w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white">
-      <div className="flex justify-center">
+      <div className="flex justify-center min-h-64 relative">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <MdOutlineEmojiPeople name="woman" size={100} className="text-gray-300" />
+        </div>
         <Image
           width={4000}
           height={3000}
           src={img}
           alt={prodectname}
-          className="w-fit"
+          className="w-fit relative z-10"
         />
       </div>
       <hr />
