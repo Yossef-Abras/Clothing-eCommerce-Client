@@ -11,93 +11,112 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
-
+import { login, signup } from "../../global/auth";
+import Message from "./Message";
 export default function Login() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [loading, setLoading] = useState(false);
   const [Formislogin, setFormisLogin] = useState(true);
-  if (Formislogin) {
-    return (
-      <div>
-        <Button
-          onPress={onOpen}
-          className="min-w-fit flex rounded-full bg-orange-200 justify-center items-center  md:text-lg text-black"
-        >
-          <BsPerson />
-        </Button>
-        <Modal
-          backdrop="blur"
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          placement="top-center"
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-row text-orange-300  gap-3">
-                  <p>Login</p>
-                </ModalHeader>
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  });
+  const [message, setMessage] = useState({ data: '', isError: Boolean });
+  const resetMessage = () => {
+    setMessage({ data: '', isError: Boolean });
+  };
 
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const onSubmit = async () => {
+    try {
+      if (Formislogin) {
+        setLoading(true);
+        const response = await login(
+          formData.email,
+          formData.password);
+        if (!response.error) {
+          localStorage.setItem('token', response.token);
+          setMessage({ data: 'Login successful', isError: true });
+        } else {
+          setMessage({ data: response.msg, isError: false })
+        }
+        setLoading(false);
+      } else {
+        setLoading(true);
+        const response = await signup(
+          formData.name,
+          formData.email,
+          formData.password,
+          formData.passwordConfirm);
+        if (!response.error) {
+          localStorage.setItem('token', response.token);
+          setMessage({ data: 'signup successful', isError: true });
+        } else {
+          setMessage({ data: response.msg, isError: false })
+        }
+        setLoading(false);
+      }
+    } catch (message) {
+      // setMessage(message || 'An error occurred');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <Button
+        onPress={onOpen}
+        className="min-w-fit flex rounded-full bg-orange-200 justify-center items-center  md:text-lg text-black"
+      >
+        <BsPerson />
+      </Button>
+      <Modal
+        backdrop="blur"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-row text-orange-300  gap-3">
+                <p>{Formislogin ? "Login" : "Signup"}</p>
+              </ModalHeader>
+
+              {Formislogin ? (
                 <ModalBody>
                   <Input
                     autoFocus
                     label="Email"
                     placeholder="example@email.com"
+                    name="email"
+                    onChange={handleInputChange}
                     variant="bordered"
                   />
                   <Input
                     label="Password"
                     placeholder="Enter your password"
                     type="password"
+                    name="password"
+                    onChange={handleInputChange}
                     variant="bordered"
                   />
-
-                  <div className="flex py-2 px-1 justify-center">
-                    <Link href="" onClick={() => setFormisLogin(!Formislogin)}>
-                      {"you don't have account?"}
-                    </Link>
-                  </div>
                 </ModalBody>
-                <ModalFooter>
-                  <Button variant="flat" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button className="bg-orange-300" onPress={onClose}>
-                    login
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <Button
-          onPress={onOpen}
-          className="min-w-fit flex rounded-full bg-orange-200 justify-center items-center  md:text-lg text-black"
-        >
-          <BsPerson />
-        </Button>
-        <Modal
-          backdrop="blur"
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          placement="top-center"
-        >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-row text-orange-300 gap-3">
-                  <Link href="#">Sign up</Link>
-                </ModalHeader>
-
+              ) : (
                 <ModalBody>
                   <Input
                     autoFocus
                     label="Full Name"
                     placeholder="John Mark"
+                    name="name"
+                    onChange={handleInputChange}
                     variant="bordered"
                   />
                   <Input
@@ -105,37 +124,61 @@ export default function Login() {
                     type="email"
                     label="Email"
                     placeholder="example@email.com"
+                    name="email"
+                    onChange={handleInputChange}
                     variant="bordered"
                   />
                   <Input
                     label="Password"
                     placeholder="Enter your password"
                     type="password"
+                    name="password"
+                    onChange={handleInputChange}
                     variant="bordered"
                   />
-                  <div className="flex py-2 px-1 justify-center">
-                    <Link
-                      className="hover:text-orange-300"
-                      href=""
-                      onClick={() => setFormisLogin(!Formislogin)}
-                    >
-                      You have alredy account?
-                    </Link>
-                  </div>
+                  <Input
+                    label="Confirm Password"
+                    placeholder="Confirm your password"
+                    type="password"
+                    name="passwordConfirm"
+                    onChange={handleInputChange}
+                    variant="bordered"
+                  />
                 </ModalBody>
-                <ModalFooter>
-                  <Button variant="flat" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button className="bg-orange-300" onPress={onClose}>
-                    Sign up
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
-      </div>
-    );
-  }
+              )}
+              <div className="flex py-2 px-1 justify-center">
+                <Link
+                  className="hover:text-orange-300"
+                  href=""
+                  onClick={() => setFormisLogin(!Formislogin)}
+                >
+                  {Formislogin ? "You Dont Have account" : "You have already account?"}
+                </Link>
+              </div>
+              <div className="flex py-2 px-1 justify-center bg-white">
+                <Message message={message.data} isError={message.isError} onReset={resetMessage} ></Message>
+              </div>
+              <ModalFooter>
+                <Button variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button className="bg-orange-300" onClick={onSubmit}
+                  isDisabled={
+                    Formislogin ? !(formData.email &&
+                      formData.password) :
+                      !(formData.name &&
+                        formData.email &&
+                        formData.password &&
+                        formData.passwordConfirm && formData.password === formData.passwordConfirm)
+
+                  }>
+                  {Formislogin ? loading ? "login.." : "login" : loading ? "Signing.." : "Sign up"}
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </div>
+  );
 }
