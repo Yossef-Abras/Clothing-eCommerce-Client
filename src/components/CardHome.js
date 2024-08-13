@@ -1,11 +1,13 @@
 import { Button, Image } from "@nextui-org/react";
+import { FaRegImage } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder, MdOutlineEmojiPeople } from "react-icons/md";
 export default function CardHome({ prodectname, price, img, isFavorite }) {
   return (
     <div className="min-w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white">
       <div className="flex justify-center min-h-64 relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <MdOutlineEmojiPeople name="woman" size={100} className="text-gray-300" />
+        <div className=" flex-col absolute inset-0 flex items-center justify-center">
+          <FaRegImage name="woman" size={100} className="text-gray-300" />
+          Loading image
         </div>
         <Image
           width={4000}

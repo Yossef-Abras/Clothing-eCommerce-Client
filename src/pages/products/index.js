@@ -1,36 +1,68 @@
 import React from "react";
 import CategoriesSlider from "/src/components/CategoriesSlider";
-import image1 from "/public/img/man.png";
-import image2 from "/public/img/girl.png";
-import image3 from "/public/img/pngegg (2).png";
-import image4 from "/public/img/pngegg (3).png";
-
-const ImagesList = [image1, image2, image3, image4];
-
+import { Button, Progress } from "@nextui-org/react";
 export default function index() {
 	const productSections = [
 		{
-			type: "Men",
-			categories: ["Jeans", "Shorts", "Shirts", "Tees"],
-			images: ImagesList,
+			id: 1,
+			prodectname: "sdweew",
+			img: "/img/girl.png",
+			price: "$10",
+
 		},
 		{
-			type: "Women",
-			categories: ["Jeans", "top", "Shirts", "Tees"],
-			images: ImagesList,
+			id: 2,
+			prodectname: "sdweew",
+			img: "/img/girl.png",
+			price: "$10",
+
+		},
+		{
+			id: 3,
+			prodectname: "sdweew",
+			img: "/img/girl.png",
+			price: "$10",
+
+		},
+		{
+			id: 4,
+			prodectname: "sdweew",
+			img: "/img/girl.png",
+			price: "$10",
+
+		},
+		{
+			id: 5,
+			prodectname: "sdweew",
+			img: "/img/girl.png",
+			price: "$10",
+
 		},
 	];
-
 	return (
 		<div>
-			{productSections.map((section, index) => (
-				<CategoriesSlider
-					key={index}
-					type={section.type}
-					categories={section.categories}
-					images={section.images}
-				/>
-			))}
+			<div className="flex justify-between items-center">
+				<label className="text-orange-400 text-lg font-bold">Top Sellers</label>
+				<Button className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 ">
+					Show More
+				</Button>
+			</div>
+			<Progress
+				size="sm"
+				color="warning"
+				value={100}
+				className="font-bold text-orange-400 pb-5"
+			/>
+			<div className="w-full grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-6 mb-2">
+				{productSections.map((product) => (
+					<CategoriesSlider
+						key={product.id}
+						prodectname={product.prodectname}
+						price={product.price}
+						img={product.img}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }
