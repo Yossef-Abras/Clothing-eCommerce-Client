@@ -58,7 +58,13 @@ export default function Home() {
     prevArrow: <SampleNextArrow />,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1240,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 940,
         settings: {
           slidesToShow: 2,
         },
@@ -71,7 +77,7 @@ export default function Home() {
       },
     ],
   };
-  const router = useRouter()
+  const router = useRouter();
   const [TopSellersProductsproducts, setTopSellersProducts] = useState([]);
   const [TopOffersproducts, setTopOffersProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -143,10 +149,17 @@ export default function Home() {
       </div>
       <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
         <div className="flex justify-between items-center">
-          <label className="text-orange-400 text-lg font-bold">Top Sellers</label>
-          <Button onClick={() => {
-            router.push('/products')
-          }} className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 ">Show More</Button>
+          <label className="text-orange-400 text-lg font-bold">
+            Top Sellers
+          </label>
+          <Button
+            onClick={() => {
+              router.push("/products");
+            }}
+            className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 "
+          >
+            Show More
+          </Button>
         </div>
 
         <Progress
@@ -177,9 +190,14 @@ export default function Home() {
           <label className="text-orange-400 text-lg font-bold">
             Special Offers
           </label>
-          <Button onClick={() => {
-            router.push('/products')
-          }} className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 ">Show More</Button>
+          <Button
+            onClick={() => {
+              router.push("/products");
+            }}
+            className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 "
+          >
+            Show More
+          </Button>
         </div>
         <Progress
           size="sm"
