@@ -25,9 +25,8 @@ export default function CategoriesSlider({
           height={3000}
           src={img}
           alt={prodectname}
-          className={`w-fit relative z-10 max-h-64 m-auto ${
-            imageLoaded ? "" : "hidden"
-          }`}
+          className={`w-fit relative z-10 max-h-64 m-auto ${imageLoaded ? "" : "hidden"
+            }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
