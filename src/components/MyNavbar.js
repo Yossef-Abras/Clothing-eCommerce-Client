@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -14,11 +14,27 @@ import { ImSearch } from "react-icons/im";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 export default function MyNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const route = useRouter();
+  const checkToken = () => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  };
 
+  useEffect(() => {
+    checkToken();
+    const intervalId = setInterval(checkToken, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+  };
   const handleButtonClick = () => {
     setShowInput((showInput) => !showInput);
   };
@@ -104,14 +120,20 @@ export default function MyNavbar() {
           )}
         </NavbarItem>
         <div className={(showInput && 'hidden md:flex') + " flex gap-2 md:gap-4"}>
-          <NavbarItem>
+          {!isLoggedIn ? <NavbarItem>
             <Login />
-          </NavbarItem>
-          <NavbarItem>
+          </NavbarItem> : <NavbarItem>
+            <Button
+              onClick={handleLogout}
+              className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
+              <RiLogoutCircleRLine />
+            </Button>
+          </NavbarItem>}
+          {isLoggedIn && (<NavbarItem>
             <Button className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
               <TfiShoppingCartFull />
             </Button>
-          </NavbarItem>
+          </NavbarItem>)}
         </div>
 
       </NavbarContent>

@@ -42,16 +42,3 @@ export default function CardHome({ prodectname, price, img, isFavorite }) {
     </div>
   );
 }
-// const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
-// useEffect(() => {
-//     setIsFilled(isFavorite(productId));
-// }, [isFavorite, productId]);
-
-// const handleIconClick = () => {
-//     if (isFilled) {
-//         removeFromFavorites(productId);
-//     } else {
-//         addToFavorites({ productId, prodectname, price, img });
-//     }
-//     setIsFilled(!isFilled);
-// };

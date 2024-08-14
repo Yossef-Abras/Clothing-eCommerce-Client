@@ -14,7 +14,7 @@ import { BsPerson } from "react-icons/bs";
 import { login, signup } from "../../global/auth";
 import Message from "./Message";
 export default function Login() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const [Formislogin, setFormisLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -42,8 +42,9 @@ export default function Login() {
           formData.email,
           formData.password);
         if (!response.error) {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.data.token);
           setMessage({ data: 'Login successful', isError: true });
+          onClose();
         } else {
           setMessage({ data: response.msg, isError: false })
         }
@@ -56,15 +57,15 @@ export default function Login() {
           formData.password,
           formData.passwordConfirm);
         if (!response.error) {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.data.token);
           setMessage({ data: 'signup successful', isError: true });
+          onClose();
         } else {
           setMessage({ data: response.msg, isError: false })
         }
         setLoading(false);
       }
     } catch (message) {
-      // setMessage(message || 'An error occurred');
       setLoading(false);
     }
   };
