@@ -1,3 +1,4 @@
+import { Button, Image } from "@nextui-org/react";
 
 export default function Favorites() {
     const favorites = [{
@@ -20,22 +21,22 @@ export default function Favorites() {
                 {favorites.length > 0 ? (
                     favorites.map(product => (
                         <div key={product.productId} className="border p-4 rounded-lg shadow-md">
-                            <img src={product.img} alt={product.prodectname} className="h-40 w-full object-cover mb-4" />
+                            <Image src={product.img} alt={product.prodectname} className="h-40 w-full object-cover mb-4" />
                             <h2 className="text-lg font-semibold">{product.prodectname}</h2>
                             <p className="text-gray-600">${product.price}</p>
                             <div className="mt-4 flex justify-between">
-                                <button
+                                <Button
                                     className="bg-red-500 text-white px-4 py-2 rounded"
                                 // onClick={() => removeFromFavorites(product.productId)}
                                 >
                                     Remove
-                                </button>
-                                <button
+                                </Button>
+                                <Button
                                     className="bg-blue-500 text-white px-4 py-2 rounded"
                                 // onClick={() => addToCart(product.productId)}
                                 >
                                     Add to Cart
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     ))
