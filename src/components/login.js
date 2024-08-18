@@ -13,6 +13,7 @@ import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { login, signup } from "../../global/auth";
 import Message from "./Message";
+import VerifyEmail from "../pages/verify-email";
 export default function Login() {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
@@ -44,7 +45,9 @@ export default function Login() {
         if (!response.error) {
           localStorage.setItem('token', response.data.token);
           setMessage({ data: 'Login successful', isError: true });
+
           onClose();
+         
         } else {
           setMessage({ data: response.msg, isError: false })
         }
@@ -86,6 +89,7 @@ export default function Login() {
       >
         <ModalContent>
           {(onClose) => (
+            
             <>
               <ModalHeader className="flex flex-row text-orange-300  gap-3">
                 <p>{Formislogin ? "Login" : "Signup"}</p>
@@ -174,10 +178,14 @@ export default function Login() {
 
                   }>
                   {Formislogin ? loading ? "login.." : "login" : loading ? "Signing.." : "Sign up"}
+                  
                 </Button>
               </ModalFooter>
+              <VerifyEmail/>
+
             </>
-          )}
+           
+           )}
         </ModalContent>
       </Modal>
     </div>
