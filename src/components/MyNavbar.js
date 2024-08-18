@@ -15,8 +15,12 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+<<<<<<< HEAD
+import VerifyEmail from "../pages/verify-email";
+=======
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../store/userSlice";
+>>>>>>> df7104771f868799d5f23e5ed45a0968410d3bf4
 export default function MyNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
