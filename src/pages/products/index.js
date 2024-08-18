@@ -93,7 +93,7 @@ export default function Index() {
           size="sm"
           color="warning"
           value={100}
-          className="font-bold text-orange-400 my-4 mx-3"
+          className="font-bold text-orange-400 my-4 mx-3 md:block hidden"
         />
         <div className="flex justify-end gap-1 items-center">
           <div className="text-orange-400 text-lg font-bold">
@@ -102,7 +102,7 @@ export default function Index() {
                 <Button
                   className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
                   variant="bordered"
-                  // className="capitalize"
+                // className="capitalize"
                 >
                   Category
                 </Button>
