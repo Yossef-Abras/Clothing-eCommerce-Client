@@ -13,7 +13,12 @@ import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { login, signup } from "../../global/auth";
 import Message from "./Message";
+<<<<<<< HEAD
 import VerifyEmail from "../pages/verify-email";
+=======
+import { useDispatch } from "react-redux";
+import { sign } from "../store/userSlice";
+>>>>>>> df7104771f868799d5f23e5ed45a0968410d3bf4
 export default function Login() {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
@@ -25,10 +30,10 @@ export default function Login() {
     passwordConfirm: '',
   });
   const [message, setMessage] = useState({ data: '', isError: Boolean });
+  const dispatch = useDispatch();
   const resetMessage = () => {
     setMessage({ data: '', isError: Boolean });
   };
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,11 +50,17 @@ export default function Login() {
         if (!response.error) {
           localStorage.setItem('token', response.data.token);
           setMessage({ data: 'Login successful', isError: true });
+<<<<<<< HEAD
 
+=======
+          dispatch(sign(response.data.user));
+>>>>>>> df7104771f868799d5f23e5ed45a0968410d3bf4
           onClose();
          
         } else {
           setMessage({ data: response.msg, isError: false })
+
+
         }
         setLoading(false);
       } else {
@@ -62,6 +73,7 @@ export default function Login() {
         if (!response.error) {
           localStorage.setItem('token', response.data.token);
           setMessage({ data: 'signup successful', isError: true });
+          dispatch(sign(response.data.user));
           onClose();
         } else {
           setMessage({ data: response.msg, isError: false })
