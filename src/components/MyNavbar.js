@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -15,25 +15,22 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+<<<<<<< HEAD
+import VerifyEmail from "../pages/verify-email";
+=======
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/userSlice";
+>>>>>>> df7104771f868799d5f23e5ed45a0968410d3bf4
 export default function MyNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const route = useRouter();
-  const checkToken = () => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  };
-
-  useEffect(() => {
-    checkToken();
-    const intervalId = setInterval(checkToken, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    dispatch(logout());
   };
   const handleButtonClick = () => {
     setShowInput((showInput) => !showInput);
