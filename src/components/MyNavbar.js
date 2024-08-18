@@ -123,7 +123,7 @@ export default function MyNavbar() {
             </Button>
           </NavbarItem>}
           {isLoggedIn && (<NavbarItem>
-            <Button className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
+            <Button onClick={() => router.push("/cart")} className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
               <TfiShoppingCartFull />
             </Button>
           </NavbarItem>)}
