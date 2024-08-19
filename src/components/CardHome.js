@@ -18,7 +18,9 @@ export default function CardHome({ prodectname, price, img, isFavorite }) {
           height={3000}
           src={img}
           alt={prodectname}
-          className={`w-fit relative z-10 ${imageLoaded ? "" : "hidden"}`}
+          className={`w-fit relative max-h-64 z-10 ${
+            imageLoaded ? "" : "hidden"
+          }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
