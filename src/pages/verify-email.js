@@ -1,6 +1,6 @@
 export default function VerifyEmail() {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 my-20 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
       <div className="text-center">
         <h1 className="font-bold text-gray-800 font-sans text-3xl sm:text-4xl mt-8">
           Verify Email

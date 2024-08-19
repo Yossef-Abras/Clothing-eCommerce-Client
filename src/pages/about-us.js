@@ -56,8 +56,8 @@ export default function AboutUs() {
       <div className="flex justify-center mb-8 lg:mb-12">
         <Image
           alt="Saramoda luxury fashion"
-          src="/img/cloth2.webp"
-          className="rounded-lg shadow-lg w-full max-w-xl lg:max-w-lg xl:max-w-md"
+          src="/img/saramoda_img.png"
+          className="rounded-2xl shadow-lg w-full max-w-xl lg:max-w-lg xl:max-w-md"
         />
       </div>
       <div className="space-y-12 lg:space-y-16">
