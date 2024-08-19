@@ -118,7 +118,7 @@ export default function MyNavbar() {
             />
           )}
         </NavbarItem>
-        <div className={(showInput && 'hidden md:flex') + "flex gap-2 md:gap-4"}>
+        <div className={(showInput && 'hidden md:flex') + " flex gap-2 md:gap-4"}>
           {!isLoggedIn ? <NavbarItem>
             <Login />
           </NavbarItem> : <NavbarItem>
