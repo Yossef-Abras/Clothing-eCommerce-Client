@@ -12,26 +12,28 @@ export default function CartSellers() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen p-5 ">
+    <div className=" w-full min-h-screen p-5 ">
       <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
-      <div className=''></div>
+
       {products.length > 0 ? (
-        <>
-          {products.map((product) =>
-            <Cart key={product.id} product={product} />
-          )}
-
-          <div className="mt-6">
-            <span className="text-xl font-bold">Total:</span>
-            <span className="text-xl font-bold">{totalPrice} SAR</span>
+        <div>
+          <div className="flex flex-col items-center justify-center">
+            {products.map((product) => (
+              <Cart key={product.id} product={product} />
+            ))}
           </div>
-
-          <div className="mt-4">
-            <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-              Proceed to Checkout
-            </button>
+          <div className="w-full mt-6 flex flex-col">
+            <div className='flex justify-between mx-10 border-2 border-orange-300 rounded-sm p-3'>
+              <span className="text-xl font-bold">Total:</span>
+              <span className="text-xl font-bold">{totalPrice}$</span>
+            </div>
+            <div className="mt-4 self-center">
+              <button className="bg-orange-400 text-white font-bold py-2 px-4 rounded">
+                Proceed to Checkout
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       ) : (
         <p className="text-gray-500 text-lg">Your cart is empty.</p>
       )}

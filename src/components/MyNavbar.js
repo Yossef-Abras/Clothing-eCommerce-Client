@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -15,18 +15,20 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-<<<<<<< HEAD
-import VerifyEmail from "../pages/verify-email";
-=======
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/userSlice";
->>>>>>> df7104771f868799d5f23e5ed45a0968410d3bf4
+import { logout, sign } from "../store/userSlice";
 export default function MyNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(sign());
+    }
+  }, [dispatch]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -116,7 +118,7 @@ export default function MyNavbar() {
             />
           )}
         </NavbarItem>
-        <div className={(showInput && 'hidden md:flex') + " flex gap-2 md:gap-4"}>
+        <div className={(showInput && 'hidden md:flex') + "flex gap-2 md:gap-4"}>
           {!isLoggedIn ? <NavbarItem>
             <Login />
           </NavbarItem> : <NavbarItem>
