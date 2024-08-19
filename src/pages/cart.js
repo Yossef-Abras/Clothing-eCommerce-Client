@@ -1,6 +1,11 @@
+import { useRouter } from 'next/router';
 import Cart from '../components/Cart';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Spinner } from '@nextui-org/react';
+import { useSelector } from 'react-redux';
 export default function CartSellers() {
+  const router = useRouter()
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [products, setProducts] = useState([
     { id: 1, name: 'Stylish Short', price: 165, img: "/img/girl.png", quantity: 1 },
     { id: 2, name: 'Stylish Short', price: 165, img: "/img/girl.png", quantity: 2 },
@@ -10,6 +15,15 @@ export default function CartSellers() {
     (acc, product) => acc + product.price * product.quantity,
     0
   );
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.replace("/")
+    }
+  }, []);
+  if (!isLoggedIn) {
+    return <div className='flex justify-center'><Spinner /></div>
+  }
 
   return (
     <div className=" w-full min-h-screen p-5 ">
