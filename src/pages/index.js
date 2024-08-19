@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PromoCategoryCard from "../components/PromoCategoryCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CardHome from "../components/CardHome";
+import CardHome from "../components/ProductCard";
 import { Button, Progress, Spinner } from "@nextui-org/react";
 import MovingCircles from "../components/MovingCircles";
 import {
@@ -12,6 +12,7 @@ import {
   getSubCategories,
 } from "../../global/product";
 import { useRouter } from "next/router";
+import ProductCard from "../components/ProductCard";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -173,7 +174,7 @@ export default function Home() {
           <div className="flex">
             <Slider className="w-full" {...settings1}>
               {TopSellersProductsproducts.map((product) => (
-                <CardHome
+                <ProductCard
                   key={product._id}
                   productId={product._id}
                   prodectname={product.title}

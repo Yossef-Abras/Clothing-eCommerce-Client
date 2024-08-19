@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import CategoriesSlider from "/src/components/CategoriesSlider";
 import { Progress, Spinner } from "@nextui-org/react";
 import {
   Dropdown,
@@ -9,6 +8,8 @@ import {
   Button,
 } from "@nextui-org/react";
 import { getProducts } from "../../../global/product";
+import ProductCard from "../../components/ProductCard";
+
 export default function Index() {
   const Categories = [
     {
@@ -102,7 +103,7 @@ export default function Index() {
                 <Button
                   className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
                   variant="bordered"
-                // className="capitalize"
+                  // className="capitalize"
                 >
                   Category
                 </Button>
@@ -148,7 +149,7 @@ export default function Index() {
 
       <div className="w-full grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-6 mb-2 lg:px-5">
         {products.map((product) => (
-          <CategoriesSlider
+          <ProductCard
             key={product._id}
             prodectname={product.title}
             price={product.price}
