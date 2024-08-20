@@ -51,7 +51,8 @@ export default function Index() {
   const [category, setCategory] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [lodaing, setLoading] = useState(true);
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["text"]));
+  const [selectedKeysForCategories, setSelectedKeysForCategories] = useState(new Set(["text"]));
+  const [selectedKeysForSorted, setselectedKeysForSorted] = useState(new Set(["text"]));
 
   const getAllProducts = async () => {
     try {
@@ -103,7 +104,7 @@ export default function Index() {
                 <Button
                   className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
                   variant="bordered"
-                  // className="capitalize"
+                // className="capitalize"
                 >
                   Category
                 </Button>
@@ -113,8 +114,8 @@ export default function Index() {
                 variant="flat"
                 disallowEmptySelection
                 selectionMode="multiple"
-                selectedKeys={selectedKeys}
-                onSelectionChange={setSelectedKeys}
+                selectedKeys={selectedKeysForCategories}
+                onSelectionChange={setSelectedKeysForCategories}
               >
                 {Categories.map((cat) => (
                   <DropdownItem key={cat.id}>{cat.name}</DropdownItem>
@@ -136,8 +137,8 @@ export default function Index() {
               variant="flat"
               disallowEmptySelection
               selectionMode="single"
-              selectedKeys={selectedKeys}
-              onSelectionChange={setSelectedKeys}
+              selectedKeys={selectedKeysForSorted}
+              onSelectionChange={setselectedKeysForSorted}
             >
               {sorted.map((product) => (
                 <DropdownItem key={product.id}>{product.name}</DropdownItem>

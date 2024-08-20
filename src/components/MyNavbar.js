@@ -102,12 +102,12 @@ export default function MyNavbar() {
       </NavbarContent>
       <NavbarContent justify="end" className="gap-2 md:gap-4">
         <NavbarItem>
-          <Button
+          {router.pathname.slice(1) === "products" && <Button
             className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
             onClick={handleButtonClick}
           >
             <ImSearch />
-          </Button>
+          </Button>}
         </NavbarItem>
         <NavbarItem>
           {showInput && (

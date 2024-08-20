@@ -13,7 +13,7 @@ export default function PromoCategoryCard({ categories }) {
           <div className="flex flex-col-reverse md:flex-row w-full md:items-center">
             {/* Link & Message */}
             <div className="w-full self-center px-0 md:w-1/2">
-              <p className="hidden md:block">
+              <p className="hidden md:block my-10">
                 <span className="font-bold text-orange-400">Saramoda </span>
                 {
                   "offers elegance and style with our exclusive women's fashion collection."
