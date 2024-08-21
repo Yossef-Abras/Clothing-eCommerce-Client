@@ -56,7 +56,7 @@ export default function MyNavbar() {
         />
 
         <NavbarBrand className={showInput ? 'hidden md:block' : ""}>
-          <p className="text-lg font-bold text-orange-400  font-serif italic ">
+          <p onClick={() => { router.replace("/") }} className="text-lg font-bold text-orange-400  font-serif italic cursor-pointer">
             SARAMODA
           </p>
         </NavbarBrand>
