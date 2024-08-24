@@ -5,7 +5,14 @@ const nextConfig = {
     BASE_API_URL: "https://api.saramoda.shop/api/v1",
   },
   images: {
-    domains: ["api.saramoda.shop"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.saramoda.shop",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
 };
 
