@@ -20,15 +20,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [Formislogin, setFormisLogin] = useState(true);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
   });
-  const [message, setMessage] = useState({ data: '', isError: Boolean });
+  const [message, setMessage] = useState({ data: "", isError: Boolean });
   const dispatch = useDispatch();
   const resetMessage = () => {
-    setMessage({ data: '', isError: Boolean });
+    setMessage({ data: "", isError: Boolean });
   };
 
   const handleInputChange = (e) => {
@@ -40,16 +40,14 @@ export default function Login() {
     try {
       if (Formislogin) {
         setLoading(true);
-        const response = await login(
-          formData.email,
-          formData.password);
+        const response = await login(formData.email, formData.password);
         if (!response.error) {
-          localStorage.setItem('token', response.data.token);
-          setMessage({ data: 'Login successful', isError: true });
+          localStorage.setItem("token", response.data.token);
+          setMessage({ data: "Login successful", isError: true });
           dispatch(sign(response.data.token));
           onClose();
         } else {
-          setMessage({ data: response.msg, isError: false })
+          setMessage({ data: response.msg, isError: false });
         }
         setLoading(false);
       } else {
@@ -58,14 +56,15 @@ export default function Login() {
           formData.name,
           formData.email,
           formData.password,
-          formData.passwordConfirm);
+          formData.passwordConfirm
+        );
         if (!response.error) {
-          localStorage.setItem('token', response.data.token);
-          setMessage({ data: 'signup successful', isError: true });
+          localStorage.setItem("token", response.data.token);
+          setMessage({ data: "signup successful", isError: true });
           dispatch(sign(response.data.user));
           onClose();
         } else {
-          setMessage({ data: response.msg, isError: false })
+          setMessage({ data: response.msg, isError: false });
         }
         setLoading(false);
       }
@@ -77,20 +76,14 @@ export default function Login() {
   return (
     <div>
       <Button
-        onPress={onOpen}
+        onClick={onOpen}
         className="min-w-fit flex rounded-full bg-orange-200 justify-center items-center  md:text-lg text-black"
       >
         <BsPerson />
       </Button>
-      <Modal
-        backdrop="blur"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        placement="top-center"
-      >
+      <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
-
             <>
               <ModalHeader className="flex flex-row text-orange-300  gap-3">
                 <p>{Formislogin ? "Login" : "Signup"}</p>
@@ -158,32 +151,47 @@ export default function Login() {
                   href=""
                   onClick={() => setFormisLogin(!Formislogin)}
                 >
-                  {Formislogin ? "You Dont Have account" : "You have already account?"}
+                  {Formislogin
+                    ? "You Dont Have account"
+                    : "You have already account?"}
                 </Link>
               </div>
               <div className="flex py-2 px-1 justify-center bg-white">
-                <Message message={message.data} isError={message.isError} onReset={resetMessage} ></Message>
+                <Message
+                  message={message.data}
+                  isError={message.isError}
+                  onReset={resetMessage}
+                ></Message>
               </div>
               <ModalFooter>
-                <Button variant="flat" onPress={onClose}>
+                <Button variant="flat" onClick={onClose}>
                   Close
                 </Button>
-                <Button className="bg-orange-300" onClick={onSubmit}
+                <Button
+                  className="bg-orange-300"
+                  onClick={onSubmit}
                   isDisabled={
-                    Formislogin ? !(formData.email &&
-                      formData.password) :
-                      !(formData.name &&
-                        formData.email &&
-                        formData.password &&
-                        formData.passwordConfirm && formData.password === formData.passwordConfirm)
-
-                  }>
-                  {Formislogin ? loading ? "login.." : "login" : loading ? "Signing.." : "Sign up"}
-
+                    Formislogin
+                      ? !(formData.email && formData.password)
+                      : !(
+                          formData.name &&
+                          formData.email &&
+                          formData.password &&
+                          formData.passwordConfirm &&
+                          formData.password === formData.passwordConfirm
+                        )
+                  }
+                >
+                  {Formislogin
+                    ? loading
+                      ? "login.."
+                      : "login"
+                    : loading
+                    ? "Signing.."
+                    : "Sign up"}
                 </Button>
               </ModalFooter>
             </>
-
           )}
         </ModalContent>
       </Modal>
