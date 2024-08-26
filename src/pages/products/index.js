@@ -7,7 +7,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { getProducts } from "../../../global/product";
+import { getProducts } from "../../../public/global/product";
 import ProductCard from "../../components/ProductCard";
 
 export default function Index() {

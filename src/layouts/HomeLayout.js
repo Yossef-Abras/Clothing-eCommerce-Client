@@ -2,7 +2,7 @@ import MyNavbar from "../components/MyNavbar";
 import Footer from "../components/Footer";
 import { Button, Spinner } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { isLogin } from "../../global/auth";
+import { isLogin } from "../../public/global/auth";
 import { useRouter } from "next/router";
 export default function HomeLayout({ children }) {
   const router = useRouter();
