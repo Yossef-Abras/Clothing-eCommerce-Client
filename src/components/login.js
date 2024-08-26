@@ -112,7 +112,7 @@ export default function Login({ onSuccess }) {
                       variant="bordered"
                     />
                     <span
-                      className="absolute right-3 top-10 cursor-pointer"
+                      className="absolute right-3 top-5 cursor-pointer"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -147,7 +147,7 @@ export default function Login({ onSuccess }) {
                       variant="bordered"
                     />
                     <span
-                      className="absolute right-3 top-10 cursor-pointer"
+                      className="absolute right-3 top-6 cursor-pointer"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -163,7 +163,7 @@ export default function Login({ onSuccess }) {
                       variant="bordered"
                     />
                     <span
-                      className="absolute right-3 top-10 cursor-pointer"
+                      className="absolute right-3 top-6 cursor-pointer"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
