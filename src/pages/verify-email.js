@@ -74,22 +74,28 @@ export default function VerifyEmail() {
           <form onSubmit={handleSubmit}>
             <CodeInput onCodeChange={setVerificationCode} />
             <div className="flex flex-col justify-center items-center gap-2">
-              <Button
-                type="submit"
-                onClick={handleSubmit}
-                className="w-fit mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
-                isDisabled={isLoading}
-              >
-                {isLoading ? <Spinner color="primary" /> : "Submit"}
-              </Button>
+              {isLoading ? (
+                <Spinner color="primary" />
+              ) : (
+                <>
+                  <Button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="w-fit mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
+                    isDisabled={isLoading}
+                  >
+                    Submit
+                  </Button>
 
-              <Button
-                onClick={handleResendCode}
-                className="w-fit mt-4 bg-inherit text-orange-400 font-semibold py-3 rounded-lg transition duration-300 hover:text-orange-500 hover:border-2 hover:border-orange-400"
-                isDisabled={isLoading}
-              >
-                {isLoading ? <Spinner color="primary" /> : "Resend Code"}
-              </Button>
+                  <Button
+                    onClick={handleResendCode}
+                    className="w-fit mt-4 bg-inherit text-orange-400 font-semibold py-3 rounded-lg transition duration-300 hover:text-orange-500 hover:border-2 hover:border-orange-400"
+                    isDisabled={isLoading}
+                  >
+                    Resend Code
+                  </Button>
+                </>
+              )}
             </div>
           </form>
         </div>
