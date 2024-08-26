@@ -57,16 +57,35 @@ export const signup = async (name, email, password, passwordConfirm) => {
   }
 };
 
-// export const verifyEmail = async (email, code) => {
-//     try {
-//         const response = await axios.post(`${API_BASE_URL}/verify-email`, {
-//             email,
-//             code,
-//         });
-//         return {
-//             data: response.data,
-//         };
-//     } catch (error) {
-//         throw error.response.data;
-//     }
-// };
+export const verifyEmail = async (email, code) => {
+  try {
+    const response = await axios.post(
+      `${process.env.BASE_API_URL}/auth/verifyEmail`,
+      {
+        email,
+        code,
+      }
+    );
+    return {
+      ...response.data,
+    };
+  } catch (error) {
+    throw error.response?.data;
+  }
+};
+
+export const resendVerificationCode = async (email) => {
+  try {
+    const response = await axios.post(
+      `${process.env.BASE_API_URL}/auth/resendVerificationCode`,
+      {
+        email,
+      }
+    );
+    return {
+      ...response.data,
+    };
+  } catch (error) {
+    throw error.response?.data;
+  }
+};

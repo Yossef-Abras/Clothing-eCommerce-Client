@@ -1,4 +1,53 @@
+import { Button, Spinner } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
+import { resendVerificationCode, verifyEmail } from "../../global/auth";
+import { useRouter } from "next/router";
+import CodeInput from "../components/CodeInput";
+
 export default function VerifyEmail() {
+  const router = useRouter();
+  const [message, setMessage] = useState({ error: false, data: "" });
+  const [isLoading, setIsLoading] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
+  const [verificationCode, setVerificationCode] = useState("");
+
+  useEffect(() => {
+    const email = JSON.parse(localStorage.getItem("user"))?.email;
+    setUserEmail(email);
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setMessage({ error: false, data: "" });
+
+    try {
+      const response = await verifyEmail(userEmail, verificationCode);
+      setMessage({ error: false, data: response.message });
+      setTimeout(() => {
+        router.replace("/");
+      }, 3000);
+    } catch (error) {
+      setMessage({ error: true, data: error.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    setIsLoading(true);
+    setMessage({ error: false, data: "" });
+
+    try {
+      const response = await resendVerificationCode(userEmail);
+      setMessage({ error: false, data: response.message });
+    } catch (error) {
+      setMessage({ error: true, data: error.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 my-20 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
       <div className="text-center">
@@ -10,46 +59,38 @@ export default function VerifyEmail() {
         </p>
       </div>
 
-      <div className="mt-8">
-        <form className="flex justify-center space-x-2 sm:space-x-4">
-          <input
-            type="text"
-            maxLength="1"
-            className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200"
-          />
-          <input
-            type="text"
-            maxLength="1"
-            className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200"
-          />
-          <input
-            type="text"
-            maxLength="1"
-            className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200"
-          />
-          <input
-            type="text"
-            maxLength="1"
-            className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200"
-          />
-          <input
-            type="text"
-            maxLength="1"
-            className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200"
-          />
-          <input
-            type="text"
-            maxLength="1"
-            className="w-10 h-10 sm:w-12 sm:h-12 text-center border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition duration-200"
-          />
-        </form>
-
-        <button
-          type="submit"
-          className="w-full mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
+      {message.data && (
+        <div
+          className={`mt-4 text-center font-semibold ${
+            message.error ? "text-red-500" : "text-green-500"
+          }`}
         >
-          Submit
-        </button>
+          {message.data}
+        </div>
+      )}
+
+      <div className="mt-8">
+        <form onSubmit={handleSubmit}>
+          <CodeInput onCodeChange={setVerificationCode} />
+          <div className="flex flex-col justify-center items-center gap-2">
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              className="w-fit mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
+              isDisabled={isLoading}
+            >
+              {isLoading ? <Spinner color="primary" /> : "Submit"}
+            </Button>
+
+            <Button
+              onClick={handleResendCode}
+              className="w-fit mt-4 bg-inherit text-orange-400 font-semibold py-3 rounded-lg transition duration-300 hover:text-orange-500 hover:border-2 hover:border-orange-400"
+              isDisabled={isLoading}
+            >
+              {isLoading ? <Spinner color="primary" /> : "Resend Code"}
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );

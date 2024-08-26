@@ -36,27 +36,34 @@ export default function HomeLayout({ children }) {
     <div>
       <MyNavbar
         loginUserState={loginUserState}
+        onLogin={() => {
+          setLoginUserState(true);
+          setShowVerificationMessage(
+            !JSON.parse(localStorage.getItem("user"))?.emailVerified
+          );
+        }}
         onLogout={() => {
           setLoginUserState(false);
           setShowVerificationMessage(false);
         }}
       />
-      {showVerificationMessage && (
-        <div
-          style={{ marginBottom: "15px", marginTop: "15px" }}
-          className="mx-auto w-fit bg-orange-200 text-orange-800 p-2 px-3 rounded-lg shadow-md flex justify-between items-center"
-        >
-          <span>You should verify your email</span>
-          <Button
-            className="bg-orange-400 text-white font-bold px-4 mx-2 rounded-md min-h-8 h-8"
-            onClick={() => {
-              router.push("/verify-email");
-            }}
+      {showVerificationMessage &&
+        !router.pathname.endsWith("/verify-email") && (
+          <div
+            style={{ marginBottom: "15px", marginTop: "15px" }}
+            className="mx-auto w-fit bg-orange-200 text-orange-800 p-2 px-3 rounded-lg shadow-md flex justify-between items-center"
           >
-            verify now!
-          </Button>
-        </div>
-      )}
+            <span>You should verify your email</span>
+            <Button
+              className="bg-orange-400 text-white font-bold px-4 mx-2 rounded-md min-h-8 h-8"
+              onClick={() => {
+                router.push("/verify-email");
+              }}
+            >
+              verify now!
+            </Button>
+          </div>
+        )}
       <main>{children}</main>
       <Footer />
     </div>

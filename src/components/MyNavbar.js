@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-export default function MyNavbar({ loginUserState, onLogout }) {
+export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
@@ -128,6 +128,7 @@ export default function MyNavbar({ loginUserState, onLogout }) {
               <Login
                 onSuccess={() => {
                   setIsLoggedIn(true);
+                  onLogin();
                 }}
               />
             </NavbarItem>
