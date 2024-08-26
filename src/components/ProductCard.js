@@ -29,7 +29,7 @@ export default function ProductCard({ prodectname, price, img, isFavorite }) {
       <div className="flex justify-between px-2 pb-4 rounded-lg">
         <div className="flex flex-col">
           <p className="text-lg font-bold">{prodectname}</p>
-          <p>{price}</p>
+          <p>{price}$</p>
         </div>
         <Button
           className="bg-inherit text-lg min-w-0 w-8 p-0"
