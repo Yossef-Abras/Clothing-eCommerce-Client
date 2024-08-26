@@ -11,10 +11,10 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { login, signup } from "../../global/auth";
 import Message from "./Message";
-import { useDispatch } from "react-redux";
-import { sign } from "../store/userSlice";
+
 export default function Login({ onSuccess }) {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,8 @@ export default function Login({ onSuccess }) {
     passwordConfirm: "",
   });
   const [message, setMessage] = useState({ data: "", isError: Boolean });
-  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
   const resetMessage = () => {
     setMessage({ data: "", isError: Boolean });
   };
@@ -34,6 +35,10 @@ export default function Login({ onSuccess }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const onSubmit = async () => {
@@ -60,6 +65,7 @@ export default function Login({ onSuccess }) {
         if (!response.error) {
           setMessage({ data: "signup successful", isError: true });
           onClose();
+          onSuccess();
         } else {
           setMessage({ data: response.msg, isError: false });
         }
@@ -82,7 +88,7 @@ export default function Login({ onSuccess }) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-row text-orange-300  gap-3">
+              <ModalHeader className="flex flex-row text-orange-300 gap-3">
                 <p>{Formislogin ? "Login" : "Signup"}</p>
               </ModalHeader>
 
@@ -96,14 +102,22 @@ export default function Login({ onSuccess }) {
                     onChange={handleInputChange}
                     variant="bordered"
                   />
-                  <Input
-                    label="Password"
-                    placeholder="Enter your password"
-                    type="password"
-                    name="password"
-                    onChange={handleInputChange}
-                    variant="bordered"
-                  />
+                  <div className="relative">
+                    <Input
+                      label="Password"
+                      placeholder="Enter your password"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      onChange={handleInputChange}
+                      variant="bordered"
+                    />
+                    <span
+                      className="absolute right-3 top-10 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
                 </ModalBody>
               ) : (
                 <ModalBody>
@@ -116,7 +130,6 @@ export default function Login({ onSuccess }) {
                     variant="bordered"
                   />
                   <Input
-                    autoFocus
                     type="email"
                     label="Email"
                     placeholder="example@email.com"
@@ -124,24 +137,41 @@ export default function Login({ onSuccess }) {
                     onChange={handleInputChange}
                     variant="bordered"
                   />
-                  <Input
-                    label="Password"
-                    placeholder="Enter your password"
-                    type="password"
-                    name="password"
-                    onChange={handleInputChange}
-                    variant="bordered"
-                  />
-                  <Input
-                    label="Confirm Password"
-                    placeholder="Confirm your password"
-                    type="password"
-                    name="passwordConfirm"
-                    onChange={handleInputChange}
-                    variant="bordered"
-                  />
+                  <div className="relative">
+                    <Input
+                      label="Password"
+                      placeholder="Enter your password"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      onChange={handleInputChange}
+                      variant="bordered"
+                    />
+                    <span
+                      className="absolute right-3 top-10 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <Input
+                      label="Confirm Password"
+                      placeholder="Confirm your password"
+                      type={showPassword ? "text" : "password"}
+                      name="passwordConfirm"
+                      onChange={handleInputChange}
+                      variant="bordered"
+                    />
+                    <span
+                      className="absolute right-3 top-10 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
                 </ModalBody>
               )}
+
               <div className="flex py-2 px-1 justify-center">
                 <Link
                   className="hover:text-orange-300"
