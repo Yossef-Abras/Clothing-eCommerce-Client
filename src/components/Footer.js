@@ -34,7 +34,7 @@ export default function Footer() {
             <div>
               <Link href="">Contact</Link>
             </div>
-             <div>
+            <div>
               <Link href="">Contact</Link>
             </div>
           </div>
@@ -52,53 +52,41 @@ export default function Footer() {
               <span>
                 <IoLocationOutline />
               </span>
-              <span>Syria,Lattakia</span>
+              <span>United State</span>
             </div>
             <div className="flex gap-1 items-center">
               <span>
                 <BsEnvelopeAt />
               </span>
-              <span>saramoda@gmail.com</span>
+              <span>info@saramoda.shop</span>
             </div>
             <div className="flex gap-1 items-center">
               <span>
                 <BsTelephone />
               </span>
-              <span>905-123-4532</span>
+              <span>+13136713399</span>
             </div>
-            
           </div>
 
-
           <div className="flex flex-col flex-wrap content-center gap-2">
-
-
             <h2 className="font-bold text-orange-400">Social Media</h2>
 
             <div className="flex gap-1 items-center ">
-             <Link href="https://www.facebook.com/saramoda.29087?mibextid=ZbWKwL">
-             <FaFacebook />
-            </Link>
-            Visit us on facebook
- 
+              <Link href="https://www.facebook.com/saramoda.29087?mibextid=ZbWKwL">
+                <FaFacebook />
+              </Link>
+              Follow us on facebook
             </div>
 
             <div className="flex gap-1 items-center ">
-            <Link href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.instagram.com%2Fsaramoda23%3Figsh%3DOGd3OWd0bXBya2Iz%26fbclid%3DIwZXh0bgNhZW0CMTAAAR2d6yUB311zXSgyZ55qs-CvZSAqQEZ6SuM3RcN3He8c-UgzCxmjrZNMQOg_aem_LevmJBCjoOx5jhahVLubhw&h=AT3ka0YClUUOHGSwoHBxPEpZ3rlF5R300CW_PqqPMV7bdhvQOlbun19-KCzs9ELVvLMGmam2dNMImMjlplsCSj7NVBiRfvNDyeEABPJzuFkshuEESTPfhS8JZj3UIte-686xqQ">
-            <FaInstagram />
-            </Link>
-            Visit us on instagram
-
-          
+              <Link href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.instagram.com%2Fsaramoda23%3Figsh%3DOGd3OWd0bXBya2Iz%26fbclid%3DIwZXh0bgNhZW0CMTAAAR2d6yUB311zXSgyZ55qs-CvZSAqQEZ6SuM3RcN3He8c-UgzCxmjrZNMQOg_aem_LevmJBCjoOx5jhahVLubhw&h=AT3ka0YClUUOHGSwoHBxPEpZ3rlF5R300CW_PqqPMV7bdhvQOlbun19-KCzs9ELVvLMGmam2dNMImMjlplsCSj7NVBiRfvNDyeEABPJzuFkshuEESTPfhS8JZj3UIte-686xqQ">
+                <FaInstagram />
+              </Link>
+              Follow us on instagram
             </div>
-           
-            
-          </div> 
-
+          </div>
         </div>
-        
       </div>
-      
     </footer>
   );
 }
