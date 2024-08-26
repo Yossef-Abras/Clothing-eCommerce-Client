@@ -8,7 +8,6 @@ export default function App({ Component, pageProps }) {
     <NextUIProvider>
       <Provider store={store}>
         <HomeLayout>
-
           <Component {...pageProps} />
         </HomeLayout>
       </Provider>

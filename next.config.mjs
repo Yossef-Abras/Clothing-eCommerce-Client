@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   env: {
     BASE_API_URL: "https://api.saramoda.shop/api/v1",
   },

@@ -15,29 +15,24 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { logout, sign } from "../store/userSlice";
-export default function MyNavbar() {
+export default function MyNavbar({ loginUserState, onLogout }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [showInput, setShowInput] = useState(false);
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(sign());
-    }
-  }, [dispatch]);
+  const [isLoggedIn, setIsLoggedIn] = useState(loginUserState);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    dispatch(logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+    onLogout();
   };
   const handleButtonClick = () => {
     setShowInput((showInput) => !showInput);
   };
-
+  useEffect(() => {
+    console.log(loginUserState);
+  }, []);
   const menuItems = {
     products: "Products",
     "about-us": "About us",
@@ -55,8 +50,13 @@ export default function MyNavbar() {
           className="sm:hidden"
         />
 
-        <NavbarBrand className={showInput ? 'hidden md:block' : ""}>
-          <p onClick={() => { router.replace("/") }} className="text-lg font-bold text-orange-400  font-serif italic cursor-pointer">
+        <NavbarBrand className={showInput ? "hidden md:block" : ""}>
+          <p
+            onClick={() => {
+              router.replace("/");
+            }}
+            className="text-lg font-bold text-orange-400  font-serif italic cursor-pointer"
+          >
             SARAMODA
           </p>
         </NavbarBrand>
@@ -102,12 +102,14 @@ export default function MyNavbar() {
       </NavbarContent>
       <NavbarContent justify="end" className="gap-2 md:gap-4">
         <NavbarItem>
-          {router.pathname.slice(1) === "products" && <Button
-            className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
-            onClick={handleButtonClick}
-          >
-            <ImSearch />
-          </Button>}
+          {router.pathname.slice(1) === "products" && (
+            <Button
+              className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+              onClick={handleButtonClick}
+            >
+              <ImSearch />
+            </Button>
+          )}
         </NavbarItem>
         <NavbarItem>
           {showInput && (
@@ -118,23 +120,38 @@ export default function MyNavbar() {
             />
           )}
         </NavbarItem>
-        <div className={(showInput && 'hidden md:flex') + " flex gap-2 md:gap-4"}>
-          {!isLoggedIn ? <NavbarItem>
-            <Login />
-          </NavbarItem> : <NavbarItem>
-            <Button
-              onClick={handleLogout}
-              className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
-              <RiLogoutCircleRLine />
-            </Button>
-          </NavbarItem>}
-          {isLoggedIn && (<NavbarItem>
-            <Button onClick={() => router.push("/cart")} className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit">
-              <TfiShoppingCartFull />
-            </Button>
-          </NavbarItem>)}
+        <div
+          className={(showInput && "hidden md:flex") + " flex gap-2 md:gap-4"}
+        >
+          {!isLoggedIn ? (
+            <NavbarItem>
+              <Login
+                onSuccess={() => {
+                  setIsLoggedIn(true);
+                }}
+              />
+            </NavbarItem>
+          ) : (
+            <NavbarItem>
+              <Button
+                onClick={handleLogout}
+                className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+              >
+                <RiLogoutCircleRLine />
+              </Button>
+            </NavbarItem>
+          )}
+          {isLoggedIn && (
+            <NavbarItem>
+              <Button
+                onClick={() => router.push("/cart")}
+                className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+              >
+                <TfiShoppingCartFull />
+              </Button>
+            </NavbarItem>
+          )}
         </div>
-
       </NavbarContent>
       <NavbarMenu>
         {Object.keys(menuItems).map((key) => (

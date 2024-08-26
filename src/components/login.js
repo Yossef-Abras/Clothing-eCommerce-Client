@@ -15,7 +15,7 @@ import { login, signup } from "../../global/auth";
 import Message from "./Message";
 import { useDispatch } from "react-redux";
 import { sign } from "../store/userSlice";
-export default function Login() {
+export default function Login({ onSuccess }) {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const [Formislogin, setFormisLogin] = useState(true);
@@ -42,10 +42,9 @@ export default function Login() {
         setLoading(true);
         const response = await login(formData.email, formData.password);
         if (!response.error) {
-          localStorage.setItem("token", response.data.token);
           setMessage({ data: "Login successful", isError: true });
-          dispatch(sign(response.data.token));
           onClose();
+          onSuccess();
         } else {
           setMessage({ data: response.msg, isError: false });
         }
@@ -59,9 +58,7 @@ export default function Login() {
           formData.passwordConfirm
         );
         if (!response.error) {
-          localStorage.setItem("token", response.data.token);
           setMessage({ data: "signup successful", isError: true });
-          dispatch(sign(response.data.user));
           onClose();
         } else {
           setMessage({ data: response.msg, isError: false });

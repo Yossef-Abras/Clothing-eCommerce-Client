@@ -1,73 +1,125 @@
-import { useEffect, useState } from "react";
-import { Progress, Spinner } from "@nextui-org/react";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from "@nextui-org/react";
-import { getProducts } from "../../../global/product";
-import ProductCard from "../../components/ProductCard";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import CardHome from "../components/ProductCard";
+import { Button, Progress, Spinner } from "@nextui-org/react";
+import MovingCircles from "../components/MovingCircles";
+import { getProducts, getSubCategories } from "../../global/product";
+import { useRouter } from "next/router";
+import ProductCard from "../components/ProductCard";
+import PromoCategoryCard from "../../components/PromoCategoryCard";
 
-export default function Index() {
-  const Categories = [
-    {
-      id: 1,
-      name: "shorts",
-    },
-    {
-      id: 2,
-      name: "shorts",
-    },
-    {
-      id: 3,
-      name: "shorts",
-    },
-    {
-      id: 4,
-      name: "shorts",
-    },
-  ];
-  const sorted = [
-    {
-      id: 1,
-      name: "Top Sellers",
-    },
-    {
-      id: 2,
-      name: "Special offers",
-    },
-    {
-      id: 3,
-      name: "Down sellers",
-    },
-    {
-      id: 4,
-      name: "our me",
-    },
-  ];
-  const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        background: "#fb923c",
+        borderRadius: "50%",
+        paddingTop: "1px",
+      }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        background: "#fb923c",
+        borderRadius: "50%",
+        paddingTop: "1px",
+      }}
+      onClick={onClick}
+    />
+  );
+}
+
+export default function Home() {
+  const settings1 = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: <SamplePrevArrow />,
+    prevArrow: <SampleNextArrow />,
+    responsive: [
+      {
+        breakpoint: 1240,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 940,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
+  const router = useRouter();
+  const [TopSellersProductsproducts, setTopSellersProducts] = useState([]);
+  const [TopOffersproducts, setTopOffersProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [lodaing, setLoading] = useState(true);
-  const [selectedKeysForCategories, setSelectedKeysForCategories] = useState(new Set(["text"]));
-  const [selectedKeysForSorted, setselectedKeysForSorted] = useState(new Set(["text"]));
 
-  const getAllProducts = async () => {
+  const getTopSellersProducts = async () => {
     try {
       const res = await getProducts();
-      setProducts(res.data);
+      setTopSellersProducts(res.data);
     } catch (error) {
       console.error("Error fetching Top Sellers Products:", error);
       throw error;
     }
   };
+
+  const getTopOffersProducts = async () => {
+    try {
+      const res = await getProducts();
+      setTopOffersProducts(res.data);
+    } catch (error) {
+      console.error("Error fetching Top Offers Products:", error);
+      throw error;
+    }
+  };
+
+  const getAllCategories = async () => {
+    try {
+      const res = await getSubCategories();
+      setCategories(res.data);
+    } catch (error) {
+      console.error("Error fetching Categories:", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        await Promise.all([getAllProducts()]);
+        await Promise.all([
+          getTopSellersProducts(),
+          getTopOffersProducts(),
+          getAllCategories(),
+        ]);
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       } finally {
@@ -85,79 +137,95 @@ export default function Index() {
       </div>
     );
   }
+
   return (
-    <div>
-      <div className="flex justify-between items-center mt-5 mx-5">
-        <div className="md:text-xl text-lg mb-2 font-bold text-right whitespace-nowrap">
-          <p>Our Products</p>
+    <main className="relative flex min-h-screen flex-col items-center justify-start">
+      <MovingCircles numCircles={15} />
+
+      <div className="w-full flex justify-center bg-gradient-to-r from-orange-100/50 via-orange-200/50 to-orange-300/50 backdrop-blur-md">
+        <div className="md:w-[700px] w-[300px]">
+          <PromoCategoryCard categories={categories} />
         </div>
+      </div>
+
+      <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
+        <div className="flex justify-between items-center">
+          <label className="text-orange-400 text-lg font-bold">
+            Top Sellers
+          </label>
+          <Button
+            onClick={() => {
+              router.push("/products");
+            }}
+            className="p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200"
+          >
+            Show More
+          </Button>
+        </div>
+
         <Progress
           size="sm"
           color="warning"
           value={100}
-          className="font-bold text-orange-400 my-4 mx-3 md:block hidden"
+          className="font-bold text-orange-400"
         />
-        <div className="flex justify-end gap-1 items-center">
-          <div className="text-orange-400 text-lg font-bold">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
-                  variant="bordered"
-                // className="capitalize"
-                >
-                  Category
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Single selection example"
-                variant="flat"
-                disallowEmptySelection
-                selectionMode="multiple"
-                selectedKeys={selectedKeysForCategories}
-                onSelectionChange={setSelectedKeysForCategories}
-              >
-                {Categories.map((cat) => (
-                  <DropdownItem key={cat.id}>{cat.name}</DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                variant="bordered"
-                className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
-              >
-                Sort
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Single selection example"
-              variant="flat"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedKeysForSorted}
-              onSelectionChange={setselectedKeysForSorted}
-            >
-              {sorted.map((product) => (
-                <DropdownItem key={product.id}>{product.name}</DropdownItem>
+
+        <div className="relative w-[86%] mx-auto m-3">
+          <div className="flex">
+            <Slider className="w-full" {...settings1}>
+              {TopSellersProductsproducts.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  productId={product._id}
+                  prodectname={product.title}
+                  price={product.price}
+                  img={product.imageCover}
+                />
               ))}
-            </DropdownMenu>
-          </Dropdown>
+            </Slider>
+          </div>
         </div>
       </div>
 
-      <div className="w-full grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-6 mb-2 lg:px-5">
-        {products.map((product) => (
-          <ProductCard
-            key={product._id}
-            prodectname={product.title}
-            price={product.price}
-            img={product.imageCover}
-          />
-        ))}
+      <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
+        <div className="flex justify-between items-center">
+          <label className="text-orange-400 text-lg font-bold">
+            Special Offers
+          </label>
+          <Button
+            onClick={() => {
+              router.push("/products");
+            }}
+            className="p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200"
+          >
+            Show More
+          </Button>
+        </div>
+
+        <Progress
+          size="sm"
+          color="warning"
+          value={100}
+          className="font-bold text-orange-400"
+        />
+
+        <div className="relative w-[86%] mx-auto m-3">
+          <div className="flex">
+            <Slider className="w-full" {...settings1}>
+              {TopOffersproducts.map((product) => (
+                <CardHome
+                  key={product._id}
+                  productId={product._id}
+                  prodectname={product.title}
+                  price={product.price}
+                  img={product.imageCover}
+                  isFavorite={product.isFavorite}
+                />
+              ))}
+            </Slider>
+          </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
