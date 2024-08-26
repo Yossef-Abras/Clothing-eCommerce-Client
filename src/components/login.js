@@ -14,6 +14,8 @@ import { BsPerson } from "react-icons/bs";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { login, signup } from "../../global/auth";
 import Message from "./Message";
+import { useDispatch } from "react-redux";
+import { sign } from "../store/userSlice";
 
 export default function Login({ onSuccess }) {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
@@ -27,6 +29,7 @@ export default function Login({ onSuccess }) {
   });
   const [message, setMessage] = useState({ data: "", isError: Boolean });
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const resetMessage = () => {
     setMessage({ data: "", isError: Boolean });
@@ -112,11 +115,19 @@ export default function Login({ onSuccess }) {
                       variant="bordered"
                     />
                     <span
-                      className="absolute right-3 top-5 cursor-pointer"
+                      className="absolute right-3 top-6 cursor-pointer"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </span>
+                  </div>
+                  <div className="flex justify-end py-2">
+                    <Link
+                      href="/forget-password"
+                      className="text-orange-500 hover:underline"
+                    >
+                      Forgot Password?
+                    </Link>
                   </div>
                 </ModalBody>
               ) : (
