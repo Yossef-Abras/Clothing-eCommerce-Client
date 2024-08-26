@@ -26,6 +26,12 @@ export default function HomeLayout({ children }) {
     isLogged();
   }, []);
 
+  useEffect(() => {
+    setShowVerificationMessage(
+      !JSON.parse(localStorage.getItem("user"))?.emailVerified && loginUserState
+    );
+  }, [router, loginUserState]);
+
   if (pageLoading)
     return (
       <div className="flex w-full h-screen justify-center items-center">

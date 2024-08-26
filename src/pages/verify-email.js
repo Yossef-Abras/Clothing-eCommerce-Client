@@ -23,6 +23,11 @@ export default function VerifyEmail() {
 
     try {
       const response = await verifyEmail(userEmail, verificationCode);
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        user.emailVerified = true;
+        localStorage.setItem("user", JSON.stringify(user));
+      }
       setMessage({ error: false, data: response.message });
       setTimeout(() => {
         router.replace("/");
@@ -75,7 +80,7 @@ export default function VerifyEmail() {
             <CodeInput onCodeChange={setVerificationCode} />
             <div className="flex flex-col justify-center items-center gap-2">
               {isLoading ? (
-                <Spinner color="primary" />
+                <Spinner className="mt-8" color="primary" />
               ) : (
                 <>
                   <Button
