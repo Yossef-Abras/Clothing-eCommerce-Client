@@ -49,48 +49,50 @@ export default function VerifyEmail() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 my-20 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
-      <div className="text-center">
-        <h1 className="font-bold text-gray-800 font-sans text-3xl sm:text-4xl mt-8">
-          Verify Email
-        </h1>
-        <p className="text-lg text-gray-600 font-sans mt-4">
-          Enter the six-digit code here, please
-        </p>
-      </div>
-
-      {message.data && (
-        <div
-          className={`mt-4 text-center font-semibold ${
-            message.error ? "text-red-500" : "text-green-500"
-          }`}
-        >
-          {message.data}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-200 to-orange-400">
+      <div className="bg-white shadow-lg rounded-xl p-8 max-w-md mx-auto my-20">
+        <div className="text-center">
+          <h1 className="font-bold text-gray-800 font-sans text-3xl sm:text-4xl mt-8">
+            Verify Email
+          </h1>
+          <p className="text-lg text-gray-600 font-sans mt-4">
+            Enter the six-digit code here, please
+          </p>
         </div>
-      )}
 
-      <div className="mt-8">
-        <form onSubmit={handleSubmit}>
-          <CodeInput onCodeChange={setVerificationCode} />
-          <div className="flex flex-col justify-center items-center gap-2">
-            <Button
-              type="submit"
-              onClick={handleSubmit}
-              className="w-fit mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
-              isDisabled={isLoading}
-            >
-              {isLoading ? <Spinner color="primary" /> : "Submit"}
-            </Button>
-
-            <Button
-              onClick={handleResendCode}
-              className="w-fit mt-4 bg-inherit text-orange-400 font-semibold py-3 rounded-lg transition duration-300 hover:text-orange-500 hover:border-2 hover:border-orange-400"
-              isDisabled={isLoading}
-            >
-              {isLoading ? <Spinner color="primary" /> : "Resend Code"}
-            </Button>
+        {message.data && (
+          <div
+            className={`mt-4 text-center font-semibold ${
+              message.error ? "text-red-500" : "text-green-500"
+            }`}
+          >
+            {message.data}
           </div>
-        </form>
+        )}
+
+        <div className="mt-8">
+          <form onSubmit={handleSubmit}>
+            <CodeInput onCodeChange={setVerificationCode} />
+            <div className="flex flex-col justify-center items-center gap-2">
+              <Button
+                type="submit"
+                onClick={handleSubmit}
+                className="w-fit mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
+                isDisabled={isLoading}
+              >
+                {isLoading ? <Spinner color="primary" /> : "Submit"}
+              </Button>
+
+              <Button
+                onClick={handleResendCode}
+                className="w-fit mt-4 bg-inherit text-orange-400 font-semibold py-3 rounded-lg transition duration-300 hover:text-orange-500 hover:border-2 hover:border-orange-400"
+                isDisabled={isLoading}
+              >
+                {isLoading ? <Spinner color="primary" /> : "Resend Code"}
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
