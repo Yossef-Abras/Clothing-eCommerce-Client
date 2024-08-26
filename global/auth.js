@@ -89,3 +89,42 @@ export const resendVerificationCode = async (email) => {
     throw error.response?.data;
   }
 };
+
+export const forgetPassword = async (email) => {
+  try {
+    const res = await axios.post(
+      `${process.env.BASE_API_URL}/auth/forgotPassword`,
+      { email }
+    );
+
+    return { error: false, data: res.data };
+  } catch (err) {
+    throw err.response?.data;
+  }
+};
+
+export const verifyPassResetCode = async (resetCode) => {
+  try {
+    const res = await axios.post(
+      `${process.env.BASE_API_URL}/auth/verifyPassResetCode`,
+      { resetCode }
+    );
+
+    return { error: false, data: res.data };
+  } catch (err) {
+    throw err.response?.data;
+  }
+};
+
+export const resetPassword = async (email, newPassword) => {
+  try {
+    const res = await axios.put(
+      `${process.env.BASE_API_URL}/auth/resetPassword`,
+      { email, newPassword }
+    );
+
+    return { error: false, data: res.data };
+  } catch (err) {
+    throw err.response?.data;
+  }
+};
