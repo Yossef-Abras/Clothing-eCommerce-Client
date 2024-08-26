@@ -27,7 +27,7 @@ export default function ContactUs() {
         <div className="p-15 border-8 border-orange-400 rounded-2xl p-14 m-10 md:w-1/2" >
           <Image class="cu-icon" src="https://www.madewell.com/brand_creative/svg/contact-phone.svg" alt="Phone" />
           <strong>PHONE</strong>
-          <p>7am–11:59pm ET, seven days a week at </p>
+          <p> +13136713399 : seven days a week at 7am–11:59pm ET </p>
           {/* <strong > INTERNATIONAL:</strong>
                                       <p>Send us an number any time, any where.</p>
                                       <br/> */}
