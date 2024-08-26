@@ -1,6 +1,6 @@
 import { Button, Spinner } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
-import { resendVerificationCode, verifyEmail } from "../../global/auth";
+import { resendVerificationCode, verifyEmail } from "../../public/global/auth";
 import { useRouter } from "next/router";
 import CodeInput from "../components/CodeInput";
 

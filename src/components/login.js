@@ -12,10 +12,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { login, signup } from "../../global/auth";
+import { login, signup } from "../../public/global/auth";
 import Message from "./Message";
-import { useDispatch } from "react-redux";
-import { sign } from "../store/userSlice";
 
 export default function Login({ onSuccess }) {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
@@ -29,7 +27,6 @@ export default function Login({ onSuccess }) {
   });
   const [message, setMessage] = useState({ data: "", isError: Boolean });
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
 
   const resetMessage = () => {
     setMessage({ data: "", isError: Boolean });

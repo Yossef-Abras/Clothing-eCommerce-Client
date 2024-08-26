@@ -5,7 +5,7 @@ import {
   forgetPassword,
   resetPassword,
   verifyPassResetCode,
-} from "../../global/auth";
+} from "../../public/global/auth";
 import CodeInput from "../components/CodeInput";
 
 export default function ForgetPassword() {
