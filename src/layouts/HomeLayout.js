@@ -9,6 +9,8 @@ export default function HomeLayout({ children }) {
   const [pageLoading, setPageLoading] = useState(false);
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const [loginUserState, setLoginUserState] = useState(false);
+  const userPages = ["/cart", "/favorite"];
+
   useEffect(() => {
     const isLogged = async () => {
       try {
@@ -27,6 +29,8 @@ export default function HomeLayout({ children }) {
   }, []);
 
   useEffect(() => {
+    if (userPages.includes(router.pathname) && !loginUserState)
+      router.replace("/");
     setShowVerificationMessage(
       !JSON.parse(localStorage.getItem("user"))?.emailVerified && loginUserState
     );
@@ -38,6 +42,7 @@ export default function HomeLayout({ children }) {
         <Spinner color="primary" />
       </div>
     );
+  if (userPages.includes(router.pathname) && !loginUserState) return <></>;
   return (
     <div>
       <MyNavbar
