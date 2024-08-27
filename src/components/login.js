@@ -120,6 +120,7 @@ export default function Login({ onSuccess }) {
                   </div>
                   <div className="flex justify-end py-2">
                     <Link
+                      onClick={onClose}
                       href="/forget-password"
                       className="text-orange-500 hover:underline"
                     >
