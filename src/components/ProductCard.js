@@ -2,7 +2,7 @@ import { Button, Image } from "@nextui-org/react";
 import { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import { createWislist } from "../../global/wishlist";
+import { createWislist } from "../../public/global/wishlist";
 
 export default function ProductCard({ id, prodectname, price, img, onAddToWishlist, isFav }) {
   const [imageLoaded, setImageLoaded] = useState(false);

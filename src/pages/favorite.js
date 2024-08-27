@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FavoriteCard from "../components/FavoriteCard";
-import { deletProductFromWishlist, getWishlist } from "../../global/wishlist";
+import { deletProductFromWishlist, getWishlist } from "../../public/global/wishlist";
 import { Spinner } from "@nextui-org/react";
 
 export default function Favorites() {
