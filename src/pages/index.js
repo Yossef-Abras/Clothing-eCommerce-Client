@@ -3,7 +3,7 @@ import PromoCategoryCard from "../components/PromoCategoryCard";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CardHome from "../components/ProductCard";
+import ProductCard from "../components/ProductCard";
 import { Button, Progress, Spinner } from "@nextui-org/react";
 import MovingCircles from "../components/MovingCircles";
 import {
@@ -12,7 +12,6 @@ import {
   getSubCategories,
 } from "../../public/global/product";
 import { useRouter } from "next/router";
-import ProductCard from "../components/ProductCard";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -83,6 +82,11 @@ export default function Home() {
   const [TopOffersproducts, setTopOffersProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [lodaing, setLoading] = useState(true);
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const handleAddToWishlist = (id) => {
+    setFavoriteProducts([...favoriteProducts, id]);
+  };
+
   const getTopSellersProducts = async () => {
     try {
       const res = await getProducts();
@@ -176,10 +180,12 @@ export default function Home() {
               {TopSellersProductsproducts.map((product) => (
                 <ProductCard
                   key={product._id}
-                  productId={product._id}
                   prodectname={product.title}
                   price={product.price}
                   img={product.imageCover}
+                  id={product._id}
+                  onAddToWishlist={handleAddToWishlist}
+                  isFav={favoriteProducts.includes(product._id)}
                 />
               ))}
             </Slider>
@@ -210,13 +216,14 @@ export default function Home() {
           <div className="flex">
             <Slider className="w-full" {...settings1}>
               {TopOffersproducts.map((product) => (
-                <CardHome
+                <ProductCard
                   key={product._id}
-                  productId={product._id}
                   prodectname={product.title}
                   price={product.price}
                   img={product.imageCover}
-                  isFavorite={product.isFavorite}
+                  id={product._id}
+                  onAddToWishlist={handleAddToWishlist}
+                  isFav={favoriteProducts.includes(product._id)}
                 />
               ))}
             </Slider>
