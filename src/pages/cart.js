@@ -2,38 +2,53 @@ import { useRouter } from 'next/router';
 import Cart from '../components/Cart';
 import { useEffect, useState } from 'react';
 import { Spinner } from '@nextui-org/react';
-import { useSelector } from 'react-redux';
+import { deletProductFromCart, getCart } from '../../public/global/cart';
 export default function CartSellers() {
   const router = useRouter()
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Stylish Short', price: 165, img: "/img/girl.png", quantity: 1 },
-    { id: 2, name: 'Stylish Short', price: 165, img: "/img/girl.png", quantity: 2 },
-    { id: 3, name: 'Stylish Short', price: 165, img: "/img/girl.png", quantity: 2 },
-  ]);
-  const totalPrice = products.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0
-  );
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.replace("/")
-    }
-  }, []);
-  if (!isLoggedIn) {
-    return <div className='flex justify-center'><Spinner /></div>
-  }
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const totalPrice = cart.reduce(
+  //   (acc, cart) => acc + cart.price * cart.quantity,0);
 
+  useEffect(() => {
+    setLoading(true)
+    const fetchCart = async () => {
+      try {
+        const cart = await getCart();
+        setCart(cart);
+      } catch (error) {
+        console.error("Failed to fetch cart", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCart();
+  }, []);
+
+  const handleRemove = async (_id) => {
+    try {
+      await deletProductFromCart(_id);
+      setFavorites(cart.filter(product => product._id !== _id));
+    } catch (error) {
+      console.error("Failed to remove product from cart", error);
+    }
+  };
+  if (loading) {
+    return (
+      <div className="min-h-[400px] text-orange-500 flex justify-center items-center">
+        <Spinner color="primary" />
+      </div>
+    );
+  }
   return (
     <div className=" w-full min-h-screen p-5 ">
       <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
 
-      {products.length > 0 ? (
+      {cart.length > 0 ? (
         <div>
           <div className="flex flex-col items-center justify-center">
             {products.map((product) => (
-              <Cart key={product.id} product={product} />
+              <Cart key={product.id} product={product} handleRemove={() => handleRemove(product._id)} />
             ))}
           </div>
           <div className="w-full mt-6 flex flex-col">
