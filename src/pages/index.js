@@ -10,7 +10,7 @@ import {
   getCategories,
   getProducts,
   getSubCategories,
-} from "../../global/product";
+} from "../../public/global/product";
 import { useRouter } from "next/router";
 import ProductCard from "../components/ProductCard";
 

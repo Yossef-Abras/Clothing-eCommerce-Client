@@ -20,7 +20,7 @@ export default function ProductCard({ id, prodectname, price, img, onAddToWishli
 
   return (
     <div className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white overflow-hidden block mx-auto cursor-pointer">
-      <div className="flex justify-center min-h-64 relative">
+      <div className="flex justify-center min-h-[328px] relative">
         {!imageLoaded && (
           <div className="flex-col absolute inset-0 flex items-center justify-center bg-white">
             <FaRegImage name="woman" size={100} className="text-gray-300" />
@@ -32,7 +32,8 @@ export default function ProductCard({ id, prodectname, price, img, onAddToWishli
           height={3000}
           src={img}
           alt={prodectname}
-          className={`w-fit relative max-h-64 z-10 ${imageLoaded ? "" : "hidden"}`}
+          className={`w-60 relative rounded-none max-h-[328px] z-10 ${imageLoaded ? "" : "hidden"
+            }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
@@ -40,7 +41,7 @@ export default function ProductCard({ id, prodectname, price, img, onAddToWishli
       <div className="flex justify-between px-2 pb-4 rounded-lg">
         <div className="flex flex-col">
           <p className="text-lg font-bold">{prodectname}</p>
-          <p>{price}</p>
+          <p>{price}$</p>
         </div>
         <Button
           className="bg-inherit text-lg min-w-0 w-8 p-0"

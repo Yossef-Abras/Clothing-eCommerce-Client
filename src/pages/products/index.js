@@ -7,9 +7,9 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { getProducts } from "../../../global/product";
+import { getProducts } from "../../../public/global/product";
 import ProductCard from "../../components/ProductCard";
-import { getWishlist } from "../../../global/wishlist";
+import { getWishlist } from "../../../public/global/wishlist";
 
 export default function Index() {
   const Categories = [
