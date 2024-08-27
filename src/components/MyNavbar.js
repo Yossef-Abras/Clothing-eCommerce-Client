@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { MdFavorite } from "react-icons/md";
 export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -121,8 +122,29 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
           )}
         </NavbarItem>
         <div
-          className={(showInput && "hidden md:flex") + " flex gap-2 md:gap-4"}
+          className={(showInput && "hidden md:flex") + " flex gap-2 md:gap-6"}
         >
+
+          {isLoggedIn && (
+            <>
+              <NavbarItem>
+                <Button
+                  onClick={() => router.push("/cart")}
+                  className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+                >
+                  <TfiShoppingCartFull />
+                </Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button
+                  onClick={() => router.push("/favorite")}
+                  className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+                >
+                  <MdFavorite />
+                </Button>
+              </NavbarItem>
+            </>
+          )}
           {!isLoggedIn ? (
             <NavbarItem>
               <Login
@@ -142,16 +164,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
               </Button>
             </NavbarItem>
           )}
-          {isLoggedIn && (
-            <NavbarItem>
-              <Button
-                onClick={() => router.push("/cart")}
-                className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
-              >
-                <TfiShoppingCartFull />
-              </Button>
-            </NavbarItem>
-          )}
+
         </div>
       </NavbarContent>
       <NavbarMenu>
