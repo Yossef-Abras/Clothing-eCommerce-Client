@@ -1,45 +1,42 @@
-import { Button, Image } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 import FavoriteCard from "../components/FavoriteCard";
+import { deletProductFromWishlist, getWishlist } from "../../global/wishlist";
+import { Spinner } from "@nextui-org/react";
 
 export default function Favorites() {
-    const favorites = [{
-        productId: 1,
-        name: 'Product 1',
-        price: '$10.00',
-        img: "/img/ss.jpg"
-    },
-    {
-        productId: 2,
-        name: 'Product 2',
-        price: '$20.00',
-        img: "/img/ss.jpg"
-    },
-    {
-        productId: 2,
-        name: 'Product 2',
-        price: '$20.00',
-        img: "/img/ss.jpg"
-    },
-    {
-        productId: 2,
-        name: 'Product 2',
-        price: '$20.00',
-        img: "/img/ss.jpg"
-    },
-    {
-        productId: 2,
-        name: 'Product 2',
-        price: '$20.00',
-        img: "/img/ss.jpg"
-    },
-    {
-        productId: 2,
-        name: 'Product 2',
-        price: '$20.00',
-        img: "/img/ss.jpg"
-    },
-    ]
+    const [favorites, setFavorites] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        setLoading(true)
+        const fetchWishlist = async () => {
+            try {
+                const wishlist = await getWishlist();
+                setFavorites(wishlist);
+            } catch (error) {
+                console.error("Failed to fetch wishlist", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchWishlist();
+    }, []);
+
+    const handleRemove = async (_id) => {
+        try {
+            await deletProductFromWishlist(_id);
+            setFavorites(favorites.filter(product => product._id !== _id));
+        } catch (error) {
+            console.error("Failed to remove product from wishlist", error);
+        }
+    };
+    if (loading) {
+        return (
+            <div className="min-h-[400px] text-orange-500 flex justify-center items-center">
+                <Spinner color="primary" />
+            </div>
+        );
+    }
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Favorites</h1>
@@ -48,9 +45,10 @@ export default function Favorites() {
                     favorites.map(product => (
                         <FavoriteCard
                             key={product._id}
-                            prodectname={product.name}
+                            prodectname={product.title}
                             price={product.price}
                             img={product.imageCover}
+                            handleRemove={() => handleRemove(product._id)}
                         />))
                 ) : (
                     <p className="text-gray-600">Your favorites list is empty.</p>

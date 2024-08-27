@@ -2,9 +2,22 @@ import { Button, Image } from "@nextui-org/react";
 import { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { createWislist } from "../../global/wishlist";
 
-export default function ProductCard({ prodectname, price, img, isFavorite }) {
+export default function ProductCard({ id, prodectname, price, img, onAddToWishlist, isFav }) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const handleAddToWishlist = async () => {
+    setIsAdding(true);
+    try {
+      await createWislist(id);
+      onAddToWishlist(id);
+    } catch (error) {
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   return (
     <div className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white overflow-hidden block mx-auto cursor-pointer">
       <div className="flex justify-center min-h-64 relative">
@@ -19,9 +32,7 @@ export default function ProductCard({ prodectname, price, img, isFavorite }) {
           height={3000}
           src={img}
           alt={prodectname}
-          className={`w-fit relative max-h-64 z-10 ${
-            imageLoaded ? "" : "hidden"
-          }`}
+          className={`w-fit relative max-h-64 z-10 ${imageLoaded ? "" : "hidden"}`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
@@ -34,12 +45,14 @@ export default function ProductCard({ prodectname, price, img, isFavorite }) {
         <Button
           className="bg-inherit text-lg min-w-0 w-8 p-0"
           style={{ cursor: "pointer" }}
+          onClick={handleAddToWishlist}
+          disabled={isAdding}
         >
-          {isFavorite ? (
-            <MdFavorite style={{ color: "red" }} />
-          ) : (
+          {isFav ? (
+            <MdFavorite style={{ color: "red" }} />)
+            :
             <MdFavoriteBorder />
-          )}
+          }
         </Button>
       </div>
     </div>

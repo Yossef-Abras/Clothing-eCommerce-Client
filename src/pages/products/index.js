@@ -9,6 +9,7 @@ import {
 } from "@nextui-org/react";
 import { getProducts } from "../../../global/product";
 import ProductCard from "../../components/ProductCard";
+import { getWishlist } from "../../../global/wishlist";
 
 export default function Index() {
   const Categories = [
@@ -53,7 +54,10 @@ export default function Index() {
   const [lodaing, setLoading] = useState(true);
   const [selectedKeysForCategories, setSelectedKeysForCategories] = useState(new Set(["text"]));
   const [selectedKeysForSorted, setselectedKeysForSorted] = useState(new Set(["text"]));
-
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const handleAddToWishlist = (id) => {
+    setFavoriteProducts([...favoriteProducts, id]);
+  }
   const getAllProducts = async () => {
     try {
       const res = await getProducts();
@@ -77,6 +81,22 @@ export default function Index() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchFavoriteProducts = async () => {
+      try {
+        setLoading(true);
+        await getWishlist()
+      } catch (error) {
+        console.error("Error occurred during fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    //add condition userLogged
+    fetchFavoriteProducts();
+  }, []);
+
 
   if (lodaing) {
     return (
@@ -155,6 +175,9 @@ export default function Index() {
             prodectname={product.title}
             price={product.price}
             img={product.imageCover}
+            id={product._id}
+            onAddToWishlist={handleAddToWishlist}
+            isFav={favoriteProducts.includes(product._id)}
           />
         ))}
       </div>
