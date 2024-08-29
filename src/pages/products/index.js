@@ -52,12 +52,33 @@ export default function Index() {
   const [category, setCategory] = useState("");
   const [sortOrder, setSortOrder] = useState("");
   const [lodaing, setLoading] = useState(true);
-  const [selectedKeysForCategories, setSelectedKeysForCategories] = useState(new Set(["text"]));
-  const [selectedKeysForSorted, setselectedKeysForSorted] = useState(new Set(["text"]));
+  const [selectedKeysForCategories, setSelectedKeysForCategories] = useState(
+    new Set(["text"])
+  );
+  const [selectedKeysForSorted, setselectedKeysForSorted] = useState(
+    new Set(["text"])
+  );
   const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
+  };
+
   const handleAddToWishlist = (id) => {
     setFavoriteProducts([...favoriteProducts, id]);
-  }
+  };
+
+  const handleDeleteFromWishlist = (id) => {
+    const index = favoriteProducts.indexOf(id);
+    if (index !== -1) {
+      favoriteProducts.splice(index, 1);
+    }
+    console.log(favoriteProducts);
+    setFavoriteProducts([...favoriteProducts]);
+  };
+
   const getAllProducts = async () => {
     try {
       const res = await getProducts();
@@ -67,6 +88,7 @@ export default function Index() {
       throw error;
     }
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,25 +100,31 @@ export default function Index() {
         setLoading(false);
       }
     };
-
     fetchData();
+
+    checkLoginStatus();
+    const interval = setInterval(() => {
+      checkLoginStatus();
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
         setLoading(true);
-        await getWishlist()
+        const wishlist = await getWishlist();
+        setFavoriteProducts(wishlist.map((item) => item._id));
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
-    //add condition userLogged
+
     fetchFavoriteProducts();
   }, []);
-
 
   if (lodaing) {
     return (
@@ -124,7 +152,7 @@ export default function Index() {
                 <Button
                   className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
                   variant="bordered"
-                // className="capitalize"
+                  // className="capitalize"
                 >
                   Category
                 </Button>
@@ -177,7 +205,8 @@ export default function Index() {
             img={product.imageCover}
             id={product._id}
             onAddToWishlist={handleAddToWishlist}
-            isFav={favoriteProducts.includes(product._id)}
+            onDeleteFromWishlist={handleDeleteFromWishlist}
+            isFav={isLoggedIn && favoriteProducts.includes(product._id)}
           />
         ))}
       </div>

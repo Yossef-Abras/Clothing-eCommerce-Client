@@ -83,8 +83,24 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [lodaing, setLoading] = useState(true);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleAddToWishlist = (id) => {
     setFavoriteProducts([...favoriteProducts, id]);
+  };
+
+  const handleDeleteFromWishlist = (id) => {
+    const index = favoriteProducts.indexOf(id);
+    if (index !== -1) {
+      favoriteProducts.splice(index, 1);
+    }
+    console.log(favoriteProducts);
+    setFavoriteProducts([...favoriteProducts]);
+  };
+
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
   };
 
   const getTopSellersProducts = async () => {
@@ -132,9 +148,32 @@ export default function Home() {
         setLoading(false);
       }
     };
-
     fetchData();
+
+    checkLoginStatus();
+    const interval = setInterval(() => {
+      checkLoginStatus();
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const fetchFavoriteProducts = async () => {
+      try {
+        setLoading(true);
+        const wishlist = await getWishlist();
+        setFavoriteProducts(wishlist.map((item) => item._id));
+      } catch (error) {
+        console.error("Error occurred during fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFavoriteProducts();
+  }, []);
+
   if (lodaing) {
     return (
       <div className="min-h-[400px] text-orange-500 flex justify-center items-center">
@@ -185,7 +224,8 @@ export default function Home() {
                   img={product.imageCover}
                   id={product._id}
                   onAddToWishlist={handleAddToWishlist}
-                  isFav={favoriteProducts.includes(product._id)}
+                  onDeleteFromWishlist={handleDeleteFromWishlist}
+                  isFav={isLoggedIn && favoriteProducts.includes(product._id)}
                 />
               ))}
             </Slider>
@@ -223,7 +263,8 @@ export default function Home() {
                   img={product.imageCover}
                   id={product._id}
                   onAddToWishlist={handleAddToWishlist}
-                  isFav={favoriteProducts.includes(product._id)}
+                  onDeleteFromWishlist={handleDeleteFromWishlist}
+                  isFav={isLoggedIn && favoriteProducts.includes(product._id)}
                 />
               ))}
             </Slider>

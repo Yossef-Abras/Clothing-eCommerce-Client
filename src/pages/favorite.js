@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import FavoriteCard from "../components/FavoriteCard";
-import {
-  deletProductFromWishlist,
-  getWishlist,
-} from "../../public/global/wishlist";
+import { deleteFromWishlist, getWishlist } from "../../public/global/wishlist";
 import { Spinner } from "@nextui-org/react";
 
 export default function Favorites() {
@@ -27,7 +24,7 @@ export default function Favorites() {
 
   const handleRemove = async (_id) => {
     try {
-      await deletProductFromWishlist(_id);
+      await deleteFromWishlist(_id);
       setFavorites(favorites.filter((product) => product._id !== _id));
     } catch (error) {
       console.error("Failed to remove product from wishlist", error);

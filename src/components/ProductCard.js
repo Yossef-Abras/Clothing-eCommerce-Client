@@ -2,8 +2,11 @@ import { Button, Image } from "@nextui-org/react";
 import { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import { createWislist } from "../../public/global/wishlist";
 import { useRouter } from "next/router";
+import {
+  addToWishlist,
+  deleteFromWishlist,
+} from "../../public/global/wishlist";
 
 export default function ProductCard({
   id,
@@ -11,19 +14,32 @@ export default function ProductCard({
   price,
   img,
   onAddToWishlist,
+  onDeleteFromWishlist,
   isFav,
 }) {
   const router = useRouter();
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAddingDeleting, setIsAddingDeleting] = useState(false);
+
   const handleAddToWishlist = async () => {
-    setIsAdding(true);
-    try {
-      await createWislist(id);
-      onAddToWishlist(id);
-    } catch (error) {
-    } finally {
-      setIsAdding(false);
+    if (isFav) {
+      setIsAddingDeleting(true);
+      try {
+        await deleteFromWishlist(id);
+        onDeleteFromWishlist(id);
+      } catch (error) {
+      } finally {
+        setIsAddingDeleting(false);
+      }
+    } else {
+      setIsAddingDeleting(true);
+      try {
+        await addToWishlist(id);
+        onAddToWishlist(id);
+      } catch (error) {
+      } finally {
+        setIsAddingDeleting(false);
+      }
     }
   };
 
@@ -60,7 +76,7 @@ export default function ProductCard({
           className="bg-inherit text-lg min-w-0 w-8 p-0"
           style={{ cursor: "pointer" }}
           onClick={handleAddToWishlist}
-          disabled={isAdding}
+          disabled={isAddingDeleting}
         >
           {isFav ? (
             <MdFavorite style={{ color: "red" }} />
