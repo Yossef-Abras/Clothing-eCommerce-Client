@@ -3,8 +3,17 @@ import { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { createWislist } from "../../public/global/wishlist";
+import { useRouter } from "next/router";
 
-export default function ProductCard({ id, prodectname, price, img, onAddToWishlist, isFav }) {
+export default function ProductCard({
+  id,
+  prodectname,
+  price,
+  img,
+  onAddToWishlist,
+  isFav,
+}) {
+  const router = useRouter();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const handleAddToWishlist = async () => {
@@ -19,7 +28,10 @@ export default function ProductCard({ id, prodectname, price, img, onAddToWishli
   };
 
   return (
-    <div className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white overflow-hidden block mx-auto cursor-pointer">
+    <div
+      onClick={() => router.push("/products/" + id)}
+      className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white overflow-hidden block mx-auto cursor-pointer"
+    >
       <div className="flex justify-center min-h-[328px] relative">
         {!imageLoaded && (
           <div className="flex-col absolute inset-0 flex items-center justify-center bg-white">
@@ -32,8 +44,9 @@ export default function ProductCard({ id, prodectname, price, img, onAddToWishli
           height={3000}
           src={img}
           alt={prodectname}
-          className={`w-60 relative rounded-none max-h-[328px] z-10 ${imageLoaded ? "" : "hidden"
-            }`}
+          className={`w-60 relative rounded-none max-h-[328px] z-10 ${
+            imageLoaded ? "" : "hidden"
+          }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
@@ -50,10 +63,10 @@ export default function ProductCard({ id, prodectname, price, img, onAddToWishli
           disabled={isAdding}
         >
           {isFav ? (
-            <MdFavorite style={{ color: "red" }} />)
-            :
+            <MdFavorite style={{ color: "red" }} />
+          ) : (
             <MdFavoriteBorder />
-          }
+          )}
         </Button>
       </div>
     </div>
