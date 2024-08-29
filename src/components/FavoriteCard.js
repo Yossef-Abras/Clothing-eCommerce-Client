@@ -50,7 +50,9 @@ export default function FavoriteCard({
           height={3000}
           src={img}
           alt={productname}
-          className={`w-fit relative z-10 ${imageLoaded ? "" : "hidden"}`}
+          className={`w-fit rounded-none relative z-10 ${
+            imageLoaded ? "" : "hidden"
+          }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
