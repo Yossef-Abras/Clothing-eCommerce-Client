@@ -48,6 +48,7 @@ export default function Favorites() {
           favorites.map((product) => (
             <FavoriteCard
               key={product._id}
+              id={product._id}
               productname={product.title}
               price={product.price}
               img={product.imageCover}
