@@ -8,16 +8,19 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 
 export default function FavoriteCard({
+  id,
   productname,
   price,
   img,
   handleRemove,
 }) {
+  const router = useRouter();
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -27,6 +30,10 @@ export default function FavoriteCard({
     await handleRemove();
     setIsDeleting(false);
     onClose();
+  };
+
+  const handleAddToCart = () => {
+    router.push("/products/" + id);
   };
 
   return (
@@ -52,7 +59,10 @@ export default function FavoriteCard({
         <div className="w-52 flex flex-col mx-auto">
           <p className="py-1 text-lg font-bold">{productname}</p>
           <div className=" flex gap-3 justify-between">
-            <Button className="w-full bg-inherit border-1 text-orange-400 hover:text-black border-orange-400 rounded-md hover:bg-orange-300 px-4 py-2 ">
+            <Button
+              onClick={handleAddToCart}
+              className="w-full bg-inherit border-1 text-orange-400 hover:text-black border-orange-400 rounded-md hover:bg-orange-300 px-4 py-2 "
+            >
               Add to Cart <b className="text-black">{price}$</b>
             </Button>
             <Button
