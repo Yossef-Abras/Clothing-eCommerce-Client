@@ -14,7 +14,7 @@ export const getWishlist = async () => {
     }
   }
 };
-export const addWishlist = async (productId) => {
+export const addToWishlist = async (productId) => {
   let token = localStorage.getItem("token");
   if (token) {
     try {
@@ -33,7 +33,7 @@ export const addWishlist = async (productId) => {
     }
   }
 };
-export const deletProductFromWishlist = async (productId) => {
+export const deleteFromWishlist = async (productId) => {
   let token = localStorage.getItem("token");
   if (token) {
     try {
