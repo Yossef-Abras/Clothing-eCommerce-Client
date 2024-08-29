@@ -13,8 +13,8 @@ export default function AboutUs() {
     {
       title: "The Saramoda Story.",
       description: [
-        "Founded with a vision to redefine luxury fashion, Saramoda was born from a passion for exquisite craftsmanship and timeless style. Over the years, we’ve grown into a leading destination for pre-owned luxury, with a global clientele that values authenticity and quality.",
-        "Our journey began with a simple idea: to make luxury fashion more accessible to everyone. Today, Saramoda stands as a testament to that vision, offering a curated selection of the finest pieces, each with its own story to tell.",
+        "Saramoda was born out of a love for fashion and a desire to make a difference in the way people shop. Our founders, a group of fashion enthusiasts, recognized the growing demand for trendy yet affordable clothing that doesn't compromise on quality.",
+        "Inspired by the vibrant styles seen in fashion capitals around the world, they set out to create a brand that could offer a diverse range of fashion-forward pieces suitable for every occasion.",
       ],
     },
     {
