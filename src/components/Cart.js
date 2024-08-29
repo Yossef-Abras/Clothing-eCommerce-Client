@@ -1,8 +1,9 @@
-import { Button, Image, Input, Select } from '@nextui-org/react';
+import { Button, Image, Input } from '@nextui-org/react';
 import { useState } from 'react';
 
-export default function Cart({ product }) {
+export default function Cart({ product, handleRemove }) {
     const [quantity, setQuantity] = useState(product.quantity);
+    const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
     const price = product.price;
 
     const handleIncrease = () => {
@@ -14,7 +15,14 @@ export default function Cart({ product }) {
             setQuantity(quantity - 1);
         }
     };
+    const [isDeleting, setIsDeleting] = useState(false);
 
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        await handleRemove();
+        setIsDeleting(false);
+        onClose();
+    };
     return (
         <div className="w-auto rounded overflow-hidden shadow-lg p-2 bg-white mb-4 border-2 border-orange-400">
             <div className='flex justify-center w-full items-center gap-14'>
@@ -73,9 +81,38 @@ export default function Cart({ product }) {
                 </select>
             </div>
             <div className='flex justify-end'>
-                <Button className='bg-red-400 text-white' >remove</Button>
-            </div>
+                <Button
+                    onClick={onOpen}
+                    className='bg-red-400 text-white' >remove</Button>
 
+            </div>
+            <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange}>
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-row text-orange-300 gap-3">
+                                <p>Confirm Deletion</p>
+                            </ModalHeader>
+                            <ModalBody>
+                                <p>Are you sure you want to remove this item from your cart?</p>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button variant="flat" onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button
+                                    className="bg-red-500 text-white"
+                                    onClick={handleDelete}
+                                    disabled={isDeleting}
+                                >
+                                    {isDeleting ? "Removing..." : "Remove"}
+
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
         </div>
     );
 }
