@@ -1,6 +1,6 @@
 import Image from "next/image";
 import ButnIc from "/public/img/plain-orange.svg";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem, Spinner } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -11,11 +11,19 @@ export default function ProductPage() {
   const [mainImage, setMainImage] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
 
+  const checkLoginStatus = () => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(!!user);
+  };
+
   useEffect(() => {
+    checkLoginStatus();
+
     if (id) {
       getProduct(id)
         .then((data) => {
@@ -27,11 +35,23 @@ export default function ProductPage() {
           console.error("Failed to fetch product:", error);
         });
     }
+
+    const interval = setInterval(() => {
+      checkLoginStatus();
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [id]);
 
   if (!productData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <Spinner color="primary" />
+      </div>
+    );
   }
+
+  const images = [productData.imageCover, ...productData.images];
 
   return (
     <div className="bg-white">
@@ -39,7 +59,7 @@ export default function ProductPage() {
         <div className="grid gap-8 md:grid-cols-2">
           <div className="p-[40px] md:p-12 max-md:h-[60rem] max-sm:h-[40rem] grid gap-4 lg:grid-cols-5">
             <div className="order-last flex gap-4 lg:order-none lg:flex-col">
-              {productData.images.map((image, index) => (
+              {images.map((image, index) => (
                 <div
                   key={index}
                   className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
@@ -70,7 +90,7 @@ export default function ProductPage() {
             </div>
           </div>
           <div className="md:pt-14">
-            <div className="mb-5 md:mb-3 flex flex-col gap-[35px]">
+            <div className="mb-5 md:mb-3 h-full flex flex-col gap-[35px]">
               <div className="flex gap-2">
                 {productData.subcategories.map((subcategory) => (
                   <span
@@ -92,33 +112,47 @@ export default function ProductPage() {
               </div>
               <div className="inline-flex flex-col gap-[15px]">
                 <h2 className="text-2xl font-semibold">Color</h2>
-                <Select
-                  label="Please Select Your Color"
-                  value={selectedColor}
-                  onChange={(e) => setSelectedColor(e.target.value)}
-                  className="max-w-full"
-                  classNames={{
-                    label: "text-black tracking-[2px]",
-                    trigger:
-                      "focus:ring-2 focus:ring-orange-300 focus:ring-offset-2",
-                  }}
-                  style={{ backgroundColor: "#fdba74" }}
-                >
-                  {productData.colors.map((color, index) => (
-                    <SelectItem key={index} value={color}>
-                      {color}
-                    </SelectItem>
-                  ))}
-                </Select>
+                {isLoggedIn ? (
+                  <Select
+                    label="Please Select Your Color(s)"
+                    selectionMode="multiple"
+                    value={selectedColor}
+                    onChange={(e) => setSelectedColor(e.target.value)}
+                    className="max-w-full"
+                    classNames={{
+                      label: "text-black tracking-[2px]",
+                      trigger:
+                        "focus:ring-2 focus:ring-orange-300 focus:ring-offset-2",
+                    }}
+                    style={{ backgroundColor: "#fdba74" }}
+                  >
+                    {productData.colors.map((color, index) => (
+                      <SelectItem key={index} value={color}>
+                        {color}
+                      </SelectItem>
+                    ))}
+                  </Select>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {productData.colors.map((color, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-gray-200 rounded-md"
+                      >
+                        {color}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="inline-flex flex-col gap-[15px]">
                 <h2 className="text-2xl font-semibold">Size</h2>
-                <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+                {isLoggedIn ? (
                   <Select
                     label={
                       <div className="flex items-center gap-2">
-                        Please Select Your Size
+                        {"Please Select Your Size(s)"}
                         <Image
                           src={ButnIc}
                           width={16}
@@ -128,6 +162,7 @@ export default function ProductPage() {
                         />
                       </div>
                     }
+                    selectionMode="multiple"
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(e.target.value)}
                     className="max-w-full"
@@ -136,9 +171,7 @@ export default function ProductPage() {
                       trigger:
                         "focus:ring-2 focus:ring-orange-300 focus:ring-offset-2",
                     }}
-                    style={{
-                      backgroundColor: "#fdba74",
-                    }}
+                    style={{ backgroundColor: "#fdba74" }}
                   >
                     {productData.sizes.map((size, index) => (
                       <SelectItem key={index} value={size}>
@@ -146,15 +179,36 @@ export default function ProductPage() {
                       </SelectItem>
                     ))}
                   </Select>
-                </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {productData.sizes.map((size, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-gray-200 rounded-md"
+                      >
+                        {size}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div className="w-full">
-                <Button
-                  radius="2px"
-                  className="bg-gradient-to-tr from-orange-300 to-yellow-500 text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
-                >
-                  Add To Cart 🛒
-                </Button>
+
+              <div className="w-full mt-20">
+                {isLoggedIn ? (
+                  <Button
+                    radius="2px"
+                    className="bg-gradient-to-tr from-orange-300 to-yellow-500 text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
+                  >
+                    Add To Cart 🛒
+                  </Button>
+                ) : (
+                  <Button
+                    radius="2px"
+                    className="bg-gradient-to-tr from-orange-300 to-yellow-500 text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
+                  >
+                    Login to Add to Cart 🔒
+                  </Button>
+                )}
               </div>
             </div>
           </div>
