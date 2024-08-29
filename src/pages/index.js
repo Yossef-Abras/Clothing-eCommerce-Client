@@ -12,6 +12,7 @@ import {
   getSubCategories,
 } from "../../public/global/product";
 import { useRouter } from "next/router";
+import { getWishlist } from "../../public/global/wishlist";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
