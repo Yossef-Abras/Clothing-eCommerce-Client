@@ -1,17 +1,16 @@
-import { useRouter } from 'next/router';
-import Cart from '../components/Cart';
-import { useEffect, useState } from 'react';
-import { Spinner } from '@nextui-org/react';
-import { deletProductFromCart, getCart } from '../../public/global/cart';
+import { useRouter } from "next/router";
+import Cart from "../components/Cart";
+import { useEffect, useState } from "react";
+import { Spinner } from "@nextui-org/react";
+import { deletProductFromCart, getCart } from "../../public/global/cart";
 export default function CartSellers() {
-  const router = useRouter()
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   // const totalPrice = cart.reduce(
   //   (acc, cart) => acc + cart.price * cart.quantity,0);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const fetchCart = async () => {
       try {
         const cart = await getCart();
@@ -28,7 +27,7 @@ export default function CartSellers() {
   const handleRemove = async (_id) => {
     try {
       await deletProductFromCart(_id);
-      setFavorites(cart.filter(product => product._id !== _id));
+      setFavorites(cart.filter((product) => product._id !== _id));
     } catch (error) {
       console.error("Failed to remove product from cart", error);
     }
@@ -48,11 +47,15 @@ export default function CartSellers() {
         <div>
           <div className="flex flex-col items-center justify-center">
             {products.map((product) => (
-              <Cart key={product.id} product={product} handleRemove={() => handleRemove(product._id)} />
+              <Cart
+                key={product.id}
+                product={product}
+                handleRemove={() => handleRemove(product._id)}
+              />
             ))}
           </div>
           <div className="w-full mt-6 flex flex-col">
-            <div className='flex justify-between mx-10 border-2 border-orange-300 rounded-sm p-3'>
+            <div className="flex justify-between mx-10 border-2 border-orange-300 rounded-sm p-3">
               <span className="text-xl font-bold">Total:</span>
               <span className="text-xl font-bold">{totalPrice}$</span>
             </div>
