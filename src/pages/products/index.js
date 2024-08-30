@@ -122,9 +122,8 @@ export default function Index() {
         setLoading(false);
       }
     };
-
-    fetchFavoriteProducts();
-  }, []);
+    if (isLoggedIn) fetchFavoriteProducts();
+  }, [isLoggedIn]);
 
   if (lodaing) {
     return (

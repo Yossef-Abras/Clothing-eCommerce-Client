@@ -171,9 +171,8 @@ export default function Home() {
         setLoading(false);
       }
     };
-
-    fetchFavoriteProducts();
-  }, []);
+    if (isLoggedIn) fetchFavoriteProducts();
+  }, [isLoggedIn]);
 
   if (lodaing) {
     return (
