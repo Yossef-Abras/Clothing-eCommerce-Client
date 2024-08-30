@@ -6,7 +6,7 @@ import { isLogin } from "../../public/global/auth";
 import { useRouter } from "next/router";
 export default function HomeLayout({ children }) {
   const router = useRouter();
-  const [pageLoading, setPageLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const [loginUserState, setLoginUserState] = useState(false);
   const userPages = ["/cart", "/favorite"];
@@ -29,12 +29,12 @@ export default function HomeLayout({ children }) {
   }, []);
 
   useEffect(() => {
-    if (userPages.includes(router.pathname) && !loginUserState)
+    if (!pageLoading && userPages.includes(router.pathname) && !loginUserState)
       router.replace("/");
     setShowVerificationMessage(
       !JSON.parse(localStorage.getItem("user"))?.emailVerified && loginUserState
     );
-  }, [router, loginUserState]);
+  }, [router, loginUserState, pageLoading]);
 
   if (pageLoading)
     return (
