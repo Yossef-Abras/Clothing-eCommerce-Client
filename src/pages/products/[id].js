@@ -134,6 +134,7 @@ export default function ProductPage() {
                 <h2 className="text-2xl font-semibold">Color</h2>
                 {isLoggedIn ? (
                   <Select
+                    disallowEmptySelection={true}
                     label="Please Select Your Color"
                     value={selectedColor}
                     onChange={(e) => setSelectedColor(e.target.value)}
@@ -146,7 +147,7 @@ export default function ProductPage() {
                     style={{ backgroundColor: "#fdba74" }}
                   >
                     {productData.colors.map((color, index) => (
-                      <SelectItem key={index} value={color}>
+                      <SelectItem key={color} value={color}>
                         {color}
                       </SelectItem>
                     ))}
@@ -169,6 +170,7 @@ export default function ProductPage() {
                 <h2 className="text-2xl font-semibold">Size</h2>
                 {isLoggedIn ? (
                   <Select
+                    disallowEmptySelection={true}
                     label={
                       <div className="flex items-center gap-2">
                         {"Please Select Your Size"}
@@ -192,7 +194,7 @@ export default function ProductPage() {
                     style={{ backgroundColor: "#fdba74" }}
                   >
                     {productData.sizes.map((size, index) => (
-                      <SelectItem key={index} value={size}>
+                      <SelectItem key={size} value={size}>
                         {size}
                       </SelectItem>
                     ))}
