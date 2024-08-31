@@ -1,14 +1,11 @@
 import Cart from "../components/Cart";
 import { useEffect, useState } from "react";
 import { Button, Spinner } from "@nextui-org/react";
-import {
-  deletProductFromCart,
-  getCart,
-  updateCartItemQuantity,
-} from "../../public/global/cart";
+import { getCart } from "../../public/global/cart";
 
 export default function CartSellers() {
   const [cart, setCart] = useState([]);
+  const [totalCartPrice, setTotalCartPrice] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,6 +14,7 @@ export default function CartSellers() {
       try {
         const cart = await getCart();
         setCart(cart.data.cartItems);
+        setTotalCartPrice(cart.data.totalCartPrice);
       } catch (error) {
         console.error("Failed to fetch cart", error);
       } finally {
@@ -26,35 +24,9 @@ export default function CartSellers() {
     fetchCart();
   }, []);
 
-  const handleCartUpdate = (updatedCart) => {
+  const handleCartUpdate = (totalCartPrice, updatedCart) => {
     setCart(updatedCart);
-  };
-
-  const handleRemove = async (_id) => {
-    try {
-      await deletProductFromCart(_id);
-      setCart((prevCart) => prevCart.filter((item) => item._id !== _id));
-    } catch (error) {
-      console.error("Failed to remove product from cart", error);
-    }
-  };
-
-  const handleQuantityChange = async (cartItemId, newQuantity) => {
-    if (newQuantity < 1) {
-      alert("Quantity must be at least 1.");
-      return;
-    }
-
-    try {
-      await updateCartItemQuantity(cartItemId, newQuantity);
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item._id === cartItemId ? { ...item, quantity: newQuantity } : item
-        )
-      );
-    } catch (error) {
-      console.error("Failed to update cart item quantity", error);
-    }
+    setTotalCartPrice(totalCartPrice);
   };
 
   if (loading) {
@@ -88,13 +60,7 @@ export default function CartSellers() {
           <div className="w-full max-w-lg mx-auto bg-white border border-gray-300 rounded-lg shadow-lg p-4 mt-8">
             <div className="flex justify-between mb-4">
               <span className="text-xl font-semibold">Total:</span>
-              <span className="text-xl font-semibold">
-                $
-                {cart.reduce(
-                  (total, item) => total + item.quantity * item.price,
-                  0
-                )}
-              </span>
+              <span className="text-xl font-semibold">$ {totalCartPrice}</span>
             </div>
             <div className="text-center">
               <Button className="bg-orange-400 text-white px-6 py-2 rounded-lg">

@@ -45,7 +45,8 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
 
     setIsUpdating(true);
     try {
-      await updateCartItemQuantity(cartItemId, quantity);
+      const res = await updateCartItemQuantity(cartItemId, quantity);
+      handleCartUpdate(res.data.totalCartPrice, res.data.cartItems);
       setInitialQuantity(quantity);
     } catch (error) {
       console.error("Failed to update cart item quantity", error);
@@ -57,8 +58,8 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
   const handleDelete = async () => {
     setIsDeleting(true);
     try {
-      await deletProductFromCart(cartItemId);
-      handleCartUpdate((prevCart) =>
+      const res = await deletProductFromCart(cartItemId);
+      handleCartUpdate(res.data.totalCartPrice, (prevCart) =>
         prevCart.filter((item) => item._id !== cartItemId)
       );
       onClose();
