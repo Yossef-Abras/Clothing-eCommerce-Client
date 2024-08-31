@@ -99,8 +99,9 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
           </p>
           <div className="flex items-center gap-2 mb-2">
             <span className="text-gray-700">Color:</span>
+            {product.color}
             <span
-              className="w-6 h-6 rounded-full"
+              className="w-5 h-5 rounded-full"
               style={{ backgroundColor: product.color }}
             />
           </div>
