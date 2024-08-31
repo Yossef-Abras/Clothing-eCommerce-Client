@@ -58,12 +58,15 @@ export const deletProductFromCart = async (cartItemId) => {
   let token = localStorage.getItem("token");
   if (token) {
     try {
-      await axios.delete(`${process.env.BASE_API_URL}/cart/${cartItemId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return true;
+      const response = await axios.delete(
+        `${process.env.BASE_API_URL}/cart/${cartItemId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
     } catch (error) {
       throw error.response.data;
     }
