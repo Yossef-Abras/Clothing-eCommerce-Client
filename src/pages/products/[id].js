@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getProduct } from "../../../public/global/product";
+import { addToCart } from "../../../public/global/cart";
 
 export default function ProductPage() {
   const [productData, setProductData] = useState(null);
@@ -12,6 +13,7 @@ export default function ProductPage() {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -30,6 +32,7 @@ export default function ProductPage() {
           setProductData(data.data);
           setMainImage(data.data.imageCover);
           setSelectedColor(data.data.colors[0]);
+          setSelectedSize(data.data.sizes[0]);
         })
         .catch((error) => {
           console.error("Failed to fetch product:", error);
@@ -50,6 +53,23 @@ export default function ProductPage() {
       </div>
     );
   }
+
+  const handleAddToCart = async () => {
+    if (!selectedColor || !selectedSize) {
+      alert("Please select both color and size.");
+      return;
+    }
+
+    setIsAddingToCart(true);
+    try {
+      await addToCart(productData._id, selectedColor, selectedSize);
+      router.push("/cart");
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
 
   const images = [productData.imageCover, ...productData.images];
 
@@ -114,8 +134,7 @@ export default function ProductPage() {
                 <h2 className="text-2xl font-semibold">Color</h2>
                 {isLoggedIn ? (
                   <Select
-                    label="Please Select Your Color(s)"
-                    selectionMode="multiple"
+                    label="Please Select Your Color"
                     value={selectedColor}
                     onChange={(e) => setSelectedColor(e.target.value)}
                     className="max-w-full"
@@ -152,7 +171,7 @@ export default function ProductPage() {
                   <Select
                     label={
                       <div className="flex items-center gap-2">
-                        {"Please Select Your Size(s)"}
+                        {"Please Select Your Size"}
                         <Image
                           src={ButnIc}
                           width={16}
@@ -162,7 +181,6 @@ export default function ProductPage() {
                         />
                       </div>
                     }
-                    selectionMode="multiple"
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(e.target.value)}
                     className="max-w-full"
@@ -198,8 +216,10 @@ export default function ProductPage() {
                   <Button
                     radius="2px"
                     className="bg-gradient-to-tr from-orange-300 to-yellow-500 text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
+                    onClick={handleAddToCart}
+                    disabled={isAddingToCart}
                   >
-                    Add To Cart 🛒
+                    {isAddingToCart ? "Adding to cart..." : "Add To Cart 🛒"}
                   </Button>
                 ) : (
                   <Button
