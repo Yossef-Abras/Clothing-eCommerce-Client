@@ -6,6 +6,7 @@ import {
   SelectItem,
   Spinner,
   Divider,
+  Button,
 } from "@nextui-org/react";
 import { getProducts, getSubCategories } from "../../../public/global/product";
 import ProductCard from "../../components/ProductCard";
@@ -27,16 +28,21 @@ export default function Index() {
   );
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
+  // Function to check user login status
   const checkLoginStatus = () => {
     const user = localStorage.getItem("user");
     setIsLoggedIn(!!user);
   };
 
+  // Function to handle adding a product to the wishlist
   const handleAddToWishlist = (id) => {
     setFavoriteProducts([...favoriteProducts, id]);
   };
 
+  // Function to handle deleting a product from the wishlist
   const handleDeleteFromWishlist = (id) => {
     const index = favoriteProducts.indexOf(id);
     if (index !== -1) {
@@ -45,24 +51,32 @@ export default function Index() {
     setFavoriteProducts([...favoriteProducts]);
   };
 
-  const getAllProducts = async () => {
+  // Function to fetch all products based on filters and pagination
+  const getAllProducts = async (page) => {
     try {
       const q = {
-        page: 1,
+        page: page,
+        limit: 20,
         sort: sortOrder,
         keyword: keyword,
         subcategories: selectedKeysForCategories,
       };
-      if (selectedKeysForCategories.length == 0) delete q.subcategories;
+      if (selectedKeysForCategories.length === 0) delete q.subcategories;
       const query = new URLSearchParams(q).toString();
       const res = await getProducts(query);
-      setProducts(res.data);
+      if (res.data.length === 0) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+      setProducts(page == 1 ? res.data : [...products, ...res.data]);
     } catch (error) {
       console.error("Error fetching products:", error);
       throw error;
     }
   };
 
+  // Function to fetch all subcategories
   const fetchSubCategories = async () => {
     try {
       const res = await getSubCategories();
@@ -72,6 +86,15 @@ export default function Index() {
     }
   };
 
+  // Function to load more products when "Load More" button is clicked
+  const loadMoreProducts = async () => {
+    setPage(page + 1);
+    setLoadingProducts(true);
+    await getAllProducts(page + 1);
+    setLoadingProducts(false);
+  };
+
+  // Effect to run on initial component load
   useEffect(() => {
     if (query) {
       if (query.sort !== undefined) {
@@ -84,7 +107,7 @@ export default function Index() {
     const fetchData = async () => {
       try {
         setLoadingPage(true);
-        await Promise.all([getAllProducts(), fetchSubCategories()]);
+        await Promise.all([getAllProducts(1), fetchSubCategories()]);
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       } finally {
@@ -101,15 +124,18 @@ export default function Index() {
     return () => clearInterval(interval);
   }, []);
 
+  // Effect to update products when sort order, categories, or keyword change
   useEffect(() => {
     const updateProducts = async () => {
+      setPage(1);
       setLoadingProducts(true);
-      await getAllProducts();
+      await getAllProducts(1);
       setLoadingProducts(false);
     };
     updateProducts();
   }, [sortOrder, selectedKeysForCategories, keyword]);
 
+  // Effect to fetch favorite products when user is logged in
   useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
@@ -229,10 +255,23 @@ export default function Index() {
           />
         ))}
       </div>
-      {loadingProducts && (
+      {loadingProducts ? (
         <div className="flex justify-center mt-6">
           <Spinner color="primary" />
         </div>
+      ) : (
+        hasMore && (
+          <div className="flex justify-center mt-6">
+            <Button
+              onClick={loadMoreProducts}
+              isDisabled={loadingProducts}
+              color="primary"
+              auto
+            >
+              Load More
+            </Button>
+          </div>
+        )
       )}
     </div>
   );
