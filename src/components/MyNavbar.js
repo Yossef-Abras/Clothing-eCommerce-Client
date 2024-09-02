@@ -19,7 +19,6 @@ import { MdFavorite } from "react-icons/md";
 export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [showInput, setShowInput] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(loginUserState);
 
   const handleLogout = () => {
@@ -28,12 +27,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
     setIsLoggedIn(false);
     onLogout();
   };
-  const handleButtonClick = () => {
-    setShowInput((showInput) => !showInput);
-  };
-  useEffect(() => {
-    console.log(loginUserState);
-  }, []);
+
   const menuItems = {
     products: "Products",
     "about-us": "About us",
@@ -51,7 +45,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
           className="sm:hidden"
         />
 
-        <NavbarBrand className={showInput ? "hidden md:block" : ""}>
+        <NavbarBrand>
           <p
             onClick={() => {
               router.replace("/");
@@ -102,29 +96,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end" className="gap-2 md:gap-4">
-        <NavbarItem>
-          {router.pathname.slice(1) === "products" && (
-            <Button
-              className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
-              onClick={handleButtonClick}
-            >
-              <ImSearch />
-            </Button>
-          )}
-        </NavbarItem>
-        <NavbarItem>
-          {showInput && (
-            <input
-              className="max-w-full sm:max-w-[10rem] h-10 text-small font-normal text-default-500 bg-default-200/20 rounded-lg px-1"
-              placeholder="Type to search..."
-              size="sm"
-            />
-          )}
-        </NavbarItem>
-        <div
-          className={(showInput && "hidden md:flex") + " flex gap-2 md:gap-6"}
-        >
-
+        <div className={"flex gap-2 md:gap-6"}>
           {isLoggedIn && (
             <>
               <NavbarItem>
@@ -164,7 +136,6 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
               </Button>
             </NavbarItem>
           )}
-
         </div>
       </NavbarContent>
       <NavbarMenu>
