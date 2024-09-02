@@ -59,19 +59,19 @@ export default function Home() {
     prevArrow: <SampleNextArrow />,
     responsive: [
       {
-        breakpoint: 1240,
+        breakpoint: 1580,
         settings: {
           slidesToShow: 3,
         },
       },
       {
-        breakpoint: 940,
+        breakpoint: 1240,
         settings: {
           slidesToShow: 2,
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 820,
         settings: {
           slidesToShow: 1,
         },
