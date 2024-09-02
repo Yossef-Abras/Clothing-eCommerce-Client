@@ -11,9 +11,9 @@ export default function Footer() {
         <div className="mb-4 w-full md:w-[40%]">
           <h1 className="text-lg font-bold text-orange-400">Saramoda</h1>
           <p>
-            test my file . this is website for sara moda aboutus and contactus
-            ana all things you need this is website for sara moda aboutus and
-            contactus ana all things you need
+            {
+              "Discover the latest trends in women's fashion with our exclusive collection. From casual wear to elegant evening dresses, we offer high-quality clothing that combines style and comfort. Shop with us and elevate your wardrobe with our chic and trendy outfits."
+            }
           </p>
         </div>
         <div className="flex flex-wrap mx-auto gap-20 px-10">
