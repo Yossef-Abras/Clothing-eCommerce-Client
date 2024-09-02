@@ -1,6 +1,5 @@
 import { Button, Image } from "@nextui-org/react";
 import { useState } from "react";
-import { FaRegImage } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useRouter } from "next/router";
 import {
@@ -21,67 +20,56 @@ export default function ProductCard({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isAddingDeleting, setIsAddingDeleting] = useState(false);
 
-  const handleAddToWishlist = async () => {
-    if (isFav) {
-      setIsAddingDeleting(true);
-      try {
+  const handleAddToWishlist = async (e) => {
+    e.stopPropagation(); // To prevent routing when clicking on the wishlist button
+    setIsAddingDeleting(true);
+    try {
+      if (isFav) {
         await deleteFromWishlist(id);
         onDeleteFromWishlist(id);
-      } catch (error) {
-      } finally {
-        setIsAddingDeleting(false);
-      }
-    } else {
-      setIsAddingDeleting(true);
-      try {
+      } else {
         await addToWishlist(id);
         onAddToWishlist(id);
-      } catch (error) {
-      } finally {
-        setIsAddingDeleting(false);
       }
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    } finally {
+      setIsAddingDeleting(false);
     }
   };
 
   return (
     <div
       onClick={() => router.push("/products/" + id)}
-      className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white overflow-hidden block mx-auto cursor-pointer"
+      className="relative w-full max-w-xs p-4 m-2 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 border border-gray-200 cursor-pointer mx-auto"
     >
-      <div className="flex justify-center min-h-[328px] relative">
-        {!imageLoaded && (
-          <div className="flex-col absolute inset-0 flex items-center justify-center bg-white">
-            <FaRegImage name="woman" size={100} className="text-gray-300" />
-            Loading image
-          </div>
-        )}
+      <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg flex justify-center items-center">
         <Image
-          width={4000}
-          height={3000}
+          width={3000}
+          height={4000}
           src={img}
           alt={prodectname}
-          className={`w-60 relative rounded-none max-h-[328px] z-10 ${
-            imageLoaded ? "" : "hidden"
+          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
           }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
-      <hr />
-      <div className="flex justify-between px-2 pb-4 rounded-lg">
-        <div className="flex flex-col">
-          <p className="text-lg font-bold">{prodectname}</p>
-          <p>{price}$</p>
+      <div className="mt-4 flex justify-between items-center">
+        <div>
+          <p className="text-lg font-bold text-gray-800">{prodectname}</p>
+          <p className="text-sm text-gray-600">{price}$</p>
         </div>
         <Button
-          className="bg-inherit text-lg min-w-0 w-8 p-0"
-          style={{ cursor: "pointer" }}
           onClick={handleAddToWishlist}
           disabled={isAddingDeleting}
+          className="bg-transparent hover:bg-transparent p-0 m-0 min-w-0"
+          aria-label="Add to wishlist"
         >
           {isFav ? (
-            <MdFavorite style={{ color: "red" }} />
+            <MdFavorite className="text-red-500" size={24} />
           ) : (
-            <MdFavoriteBorder />
+            <MdFavoriteBorder className="text-gray-500" size={24} />
           )}
         </Button>
       </div>
