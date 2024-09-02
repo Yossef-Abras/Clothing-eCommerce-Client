@@ -95,48 +95,46 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end" className="gap-2 md:gap-4">
-        <div className={"flex gap-2 md:gap-6"}>
-          {isLoggedIn && (
-            <>
-              <NavbarItem>
-                <Button
-                  onClick={() => router.push("/cart")}
-                  className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
-                >
-                  <TfiShoppingCartFull />
-                </Button>
-              </NavbarItem>
-              <NavbarItem>
-                <Button
-                  onClick={() => router.push("/favorite")}
-                  className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
-                >
-                  <MdFavorite />
-                </Button>
-              </NavbarItem>
-            </>
-          )}
-          {!isLoggedIn ? (
-            <NavbarItem>
-              <Login
-                onSuccess={() => {
-                  setIsLoggedIn(true);
-                  onLogin();
-                }}
-              />
-            </NavbarItem>
-          ) : (
+      <NavbarContent justify="end" className="gap-4 md:gap-6">
+        {isLoggedIn && (
+          <>
             <NavbarItem>
               <Button
-                onClick={handleLogout}
+                onClick={() => router.push("/cart")}
                 className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
               >
-                <RiLogoutCircleRLine />
+                <TfiShoppingCartFull />
               </Button>
             </NavbarItem>
-          )}
-        </div>
+            <NavbarItem>
+              <Button
+                onClick={() => router.push("/favorite")}
+                className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+              >
+                <MdFavorite />
+              </Button>
+            </NavbarItem>
+          </>
+        )}
+        {!isLoggedIn ? (
+          <NavbarItem>
+            <Login
+              onSuccess={() => {
+                setIsLoggedIn(true);
+                onLogin();
+              }}
+            />
+          </NavbarItem>
+        ) : (
+          <NavbarItem>
+            <Button
+              onClick={handleLogout}
+              className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+            >
+              <RiLogoutCircleRLine />
+            </Button>
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarMenu>
         {Object.keys(menuItems).map((key) => (
