@@ -1,8 +1,8 @@
 import axios from "axios";
-export const getProducts = async () => {
+export const getProducts = async (query) => {
   try {
     const response = await axios.get(
-      `${process.env.BASE_API_URL}/products`,
+      `${process.env.BASE_API_URL}/products?${query}`,
       {}
     );
     return response.data;
