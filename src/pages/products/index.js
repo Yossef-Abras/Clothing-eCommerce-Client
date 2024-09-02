@@ -1,62 +1,28 @@
 import { useEffect, useState } from "react";
-import { Progress, Spinner } from "@nextui-org/react";
 import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
+  Input,
+  Progress,
+  Select,
+  SelectItem,
+  Spinner,
+  Divider,
 } from "@nextui-org/react";
-import { getProducts } from "../../../public/global/product";
+import { getProducts, getSubCategories } from "../../../public/global/product";
 import ProductCard from "../../components/ProductCard";
 import { getWishlist } from "../../../public/global/wishlist";
+import { useRouter } from "next/router";
 
 export default function Index() {
-  const Categories = [
-    {
-      id: 1,
-      name: "shorts",
-    },
-    {
-      id: 2,
-      name: "shorts",
-    },
-    {
-      id: 3,
-      name: "shorts",
-    },
-    {
-      id: 4,
-      name: "shorts",
-    },
-  ];
-  const sorted = [
-    {
-      id: 1,
-      name: "Top Sellers",
-    },
-    {
-      id: 2,
-      name: "Special offers",
-    },
-    {
-      id: 3,
-      name: "Down sellers",
-    },
-    {
-      id: 4,
-      name: "our me",
-    },
-  ];
+  const router = useRouter();
+  const query = router.query;
   const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState("");
+  const [subCategories, setSubCategories] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
-  const [lodaing, setLoading] = useState(true);
+  const [keyword, setKeyword] = useState("");
+  const [loadingPage, setLoadingPage] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [selectedKeysForCategories, setSelectedKeysForCategories] = useState(
-    new Set(["text"])
-  );
-  const [selectedKeysForSorted, setselectedKeysForSorted] = useState(
-    new Set(["text"])
+    []
   );
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -75,29 +41,53 @@ export default function Index() {
     if (index !== -1) {
       favoriteProducts.splice(index, 1);
     }
-    console.log(favoriteProducts);
     setFavoriteProducts([...favoriteProducts]);
   };
 
   const getAllProducts = async () => {
     try {
-      const res = await getProducts();
+      const q = {
+        page: 1,
+        sort: sortOrder,
+        keyword: keyword,
+        subcategories: selectedKeysForCategories,
+      };
+      if (selectedKeysForCategories.length == 0) delete q.subcategories;
+      const query = new URLSearchParams(q).toString();
+      const res = await getProducts(query);
       setProducts(res.data);
     } catch (error) {
-      console.error("Error fetching Top Sellers Products:", error);
+      console.error("Error fetching products:", error);
       throw error;
     }
   };
 
+  const fetchSubCategories = async () => {
+    try {
+      const res = await getSubCategories();
+      setSubCategories(res.data);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+    }
+  };
+
   useEffect(() => {
+    if (query) {
+      if (query.sort !== undefined) {
+        setSortOrder(query.sort);
+      }
+      if (query.category !== undefined) {
+        setSelectedKeysForCategories(query.category);
+      }
+    }
     const fetchData = async () => {
       try {
-        setLoading(true);
-        await Promise.all([getAllProducts()]);
+        setLoadingPage(true);
+        await Promise.all([getAllProducts(), fetchSubCategories()]);
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       } finally {
-        setLoading(false);
+        setLoadingPage(false);
       }
     };
     fetchData();
@@ -111,91 +101,119 @@ export default function Index() {
   }, []);
 
   useEffect(() => {
+    const updateProducts = async () => {
+      setLoadingProducts(true);
+      await getAllProducts();
+      setLoadingProducts(false);
+    };
+    updateProducts();
+  }, [sortOrder, selectedKeysForCategories, keyword]);
+
+  useEffect(() => {
     const fetchFavoriteProducts = async () => {
       try {
-        setLoading(true);
+        setLoadingPage(true);
         const wishlist = await getWishlist();
         setFavoriteProducts(wishlist.map((item) => item._id));
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       } finally {
-        setLoading(false);
+        setLoadingPage(false);
       }
     };
     if (isLoggedIn) fetchFavoriteProducts();
   }, [isLoggedIn]);
 
-  if (lodaing) {
+  if (loadingPage) {
     return (
-      <div className="min-h-[400px] text-orange-500 flex justify-center items-center">
+      <div className="min-h-screen flex items-center justify-center text-orange-500">
         <Spinner color="primary" />
       </div>
     );
   }
+
   return (
-    <div>
-      <div className="flex justify-between items-center mt-5 mx-5">
-        <div className="md:text-xl text-lg mb-2 font-bold text-right whitespace-nowrap">
-          <p>Our Products</p>
+    <div className="container mx-auto px-4 py-6">
+      {/* Toolbar */}
+      <div className="flex flex-col md:flex-row gap-3 md:gap-6 w-full justify-between items-center">
+        <div className="w-full md:w-1/3">
+          <Input
+            aria-label="Search products"
+            placeholder="Search.."
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            fullWidth
+            bordered
+            className="rounded-md"
+          />
         </div>
         <Progress
           size="sm"
+          aria-label="Loading progress"
           color="warning"
           value={100}
-          className="font-bold text-orange-400 my-4 mx-3 md:block hidden"
+          className="w-full md:w-1/3 hidden md:block"
         />
-        <div className="flex justify-end gap-1 items-center">
-          <div className="text-orange-400 text-lg font-bold">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
-                  variant="bordered"
-                  // className="capitalize"
-                >
-                  Category
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Single selection example"
-                variant="flat"
-                disallowEmptySelection
-                selectionMode="multiple"
-                selectedKeys={selectedKeysForCategories}
-                onSelectionChange={setSelectedKeysForCategories}
-              >
-                {Categories.map((cat) => (
-                  <DropdownItem key={cat.id}>{cat.name}</DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                variant="bordered"
-                className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 hover:bg-orange-200"
-              >
-                Sort
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu
-              aria-label="Single selection example"
-              variant="flat"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selectedKeysForSorted}
-              onSelectionChange={setselectedKeysForSorted}
-            >
-              {sorted.map((product) => (
-                <DropdownItem key={product.id}>{product.name}</DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
+        <div className="w-full md:w-1/3 flex justify-around items-center">
+          <Select
+            selectionMode="multiple"
+            aria-label="Filter by category"
+            placeholder="Category"
+            variant="bordered"
+            onChange={(e) => {
+              setSelectedKeysForCategories(e.target.value);
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: {
+                    ...router.query,
+                    cat: e.target.value,
+                  },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+            className="w-[49%]"
+          >
+            {subCategories.map((cat) => (
+              <SelectItem key={cat._id} value={cat.id}>
+                {cat.name}
+              </SelectItem>
+            ))}
+          </Select>
+          <Select
+            defaultSelectedKeys={[sortOrder]}
+            aria-label="Sort products"
+            placeholder="Sort"
+            variant="bordered"
+            onChange={(e) => {
+              const selectedKey = e.target.value;
+              setSortOrder(selectedKey);
+              router.push(
+                {
+                  pathname: router.pathname,
+                  query: {
+                    ...router.query,
+                    sort: selectedKey,
+                  },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+            className="w-[49%]"
+          >
+            <SelectItem key="-price">Higher price</SelectItem>
+            <SelectItem key="price">Lower price</SelectItem>
+            <SelectItem key="createdAt">Oldest</SelectItem>
+            <SelectItem key="-createdAt">Newest</SelectItem>
+          </Select>
         </div>
       </div>
-
-      <div className="w-full grid md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-1 gap-6 mb-2 lg:px-5">
+      <Divider className="my-6" />
+      {/* Products */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
           <ProductCard
             key={product._id}
@@ -209,6 +227,11 @@ export default function Index() {
           />
         ))}
       </div>
+      {loadingProducts && (
+        <div className="flex justify-center mt-6">
+          <Spinner color="primary" />
+        </div>
+      )}
     </div>
   );
 }
