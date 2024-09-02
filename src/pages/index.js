@@ -95,7 +95,6 @@ export default function Home() {
     if (index !== -1) {
       favoriteProducts.splice(index, 1);
     }
-    console.log(favoriteProducts);
     setFavoriteProducts([...favoriteProducts]);
   };
 
@@ -183,7 +182,7 @@ export default function Home() {
   }
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-start">
-      <MovingCircles numCircles={15} />
+      <MovingCircles numCircles={20} />
       <div className="w-full flex justify-center bg-gradient-to-r from-orange-100/50 via-orange-200/50 to-orange-300/50 backdrop-blur-md">
         {/* <Slider className="md:w-[700px] w-[300px]"> */}
         <div className="md:w-[700px] w-[300px]">

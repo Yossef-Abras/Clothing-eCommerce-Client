@@ -11,6 +11,7 @@ import { getProducts, getSubCategories } from "../../../public/global/product";
 import ProductCard from "../../components/ProductCard";
 import { getWishlist } from "../../../public/global/wishlist";
 import { useRouter } from "next/router";
+import MovingCircles from "../../components/MovingCircles";
 
 export default function Index() {
   const router = useRouter();
@@ -213,7 +214,8 @@ export default function Index() {
       </div>
       <Divider className="my-6" />
       {/* Products */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <MovingCircles numCircles={15} />
         {products.map((product) => (
           <ProductCard
             key={product._id}
