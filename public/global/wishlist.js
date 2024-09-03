@@ -12,6 +12,8 @@ export const getWishlist = async () => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!");
   }
 };
 export const addToWishlist = async (productId) => {
@@ -31,6 +33,8 @@ export const addToWishlist = async (productId) => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!");
   }
 };
 export const deleteFromWishlist = async (productId) => {
@@ -46,5 +50,7 @@ export const deleteFromWishlist = async (productId) => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!");
   }
 };
