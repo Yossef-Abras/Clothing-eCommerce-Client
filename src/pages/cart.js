@@ -55,8 +55,29 @@ export default function CartSellers() {
     setTotalCartPrice(totalCartPrice);
   };
 
+  const isShippingAddressComplete = () => {
+    return (
+      shippingAddress.details &&
+      shippingAddress.phone &&
+      shippingAddress.city &&
+      shippingAddress.postalCode
+    );
+  };
+
   const handleCheckout = async () => {
+    if (!isShippingAddressComplete()) {
+      localStorage.setItem(
+        "alertMessage",
+        JSON.stringify({
+          message: "Please fill in all required shipping details.",
+          isError: true,
+        })
+      );
+      return;
+    }
+
     setCheckoutLoading(true);
+    setOrderSuccess(false);
     try {
       if (paymentMethod === "cash") {
         // Handle cash order creation
@@ -74,15 +95,30 @@ export default function CartSellers() {
           cartId,
           shippingAddress
         );
-        if (sessionResponse.status === "success") {
-          window.location.href = sessionResponse.url; // Redirect to Stripe Checkout
+
+        if (sessionResponse.url) {
+          setOrderSuccess(true);
+          window.location.href = sessionResponse.url;
         } else {
-          console.error("Failed to create checkout session");
+          localStorage.setItem(
+            "alertMessage",
+            JSON.stringify({
+              message: "Failed to create checkout session or URL is missing",
+              isError: true,
+            })
+          );
+          console.error("Failed to create checkout session or URL is missing");
         }
       }
     } catch (error) {
+      localStorage.setItem(
+        "alertMessage",
+        JSON.stringify({
+          message: "Error during checkout!",
+          isError: true,
+        })
+      );
       console.error("Error during checkout", error);
-
     } finally {
       setCheckoutLoading(false);
     }
@@ -153,7 +189,6 @@ export default function CartSellers() {
                     label="Payment Method"
                     placeholder="Select a payment method"
                     variant="bordered"
-                    // selectedKeys={[paymentMethod]}
                     onChange={(e) => setPaymentMethod(e.target.value)}
                     className="max-w-xs"
                   >
@@ -198,7 +233,12 @@ export default function CartSellers() {
                   />
                 </div>
                 <div className="text-center">
-                  {orderSuccess && (
+                  {orderSuccess && paymentMethod === "cash" && (
+                    <p className="text-green-600 mb-4">
+                      Order placed successfully. Redirecting to orders page...
+                    </p>
+                  )}
+                  {orderSuccess && paymentMethod === "card" && (
                     <p className="text-green-600 mb-4">
                       Redirecting to payment...
                     </p>
