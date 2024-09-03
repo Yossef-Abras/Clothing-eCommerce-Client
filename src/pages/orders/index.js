@@ -76,7 +76,7 @@ export default function Orders() {
                   <span className="font-semibold text-gray-700">
                     Delivered:
                   </span>
-                  {order.isPaid ? (
+                  {order.isDelivered ? (
                     <FaCheck className="text-green-500 ml-2" />
                   ) : (
                     <MdOutlinePendingActions className="text-gray-500 ml-2" />
