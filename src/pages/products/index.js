@@ -96,18 +96,10 @@ export default function Index() {
 
   // Effect to run on initial component load
   useEffect(() => {
-    if (query) {
-      if (query.sort !== undefined) {
-        setSortOrder(query.sort);
-      }
-      if (query.category !== undefined) {
-        setSelectedKeysForCategories(query.category);
-      }
-    }
     const fetchData = async () => {
       try {
         setLoadingPage(true);
-        await Promise.all([getAllProducts(1), fetchSubCategories()]);
+        await Promise.all([fetchSubCategories()]);
       } catch (error) {
         console.error("Error occurred during fetching data:", error);
       } finally {
@@ -126,6 +118,14 @@ export default function Index() {
 
   // Effect to update products when sort order, categories, or keyword change
   useEffect(() => {
+    if (query) {
+      if (query.sort !== undefined) {
+        setSortOrder(query.sort);
+      }
+      if (query.cat !== undefined) {
+        setSelectedKeysForCategories(query.cat);
+      }
+    }
     const updateProducts = async () => {
       setPage(1);
       setLoadingProducts(true);
@@ -187,9 +187,10 @@ export default function Index() {
             aria-label="Filter by category"
             placeholder="Category"
             variant="bordered"
+            defaultSelectedKeys={[selectedKeysForCategories]}
             onChange={(e) => {
               setSelectedKeysForCategories(e.target.value);
-              router.push(
+              router.replace(
                 {
                   pathname: router.pathname,
                   query: {
@@ -217,7 +218,7 @@ export default function Index() {
             onChange={(e) => {
               const selectedKey = e.target.value;
               setSortOrder(selectedKey);
-              router.push(
+              router.replace(
                 {
                   pathname: router.pathname,
                   query: {

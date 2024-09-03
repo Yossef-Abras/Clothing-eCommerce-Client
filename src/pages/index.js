@@ -6,11 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "../components/ProductCard";
 import { Button, Progress, Spinner } from "@nextui-org/react";
 import MovingCircles from "../components/MovingCircles";
-import {
-  getCategories,
-  getProducts,
-  getSubCategories,
-} from "../../public/global/product";
+import { getProducts, getSubCategories } from "../../public/global/product";
 import { useRouter } from "next/router";
 import { getWishlist } from "../../public/global/wishlist";
 
@@ -85,6 +81,13 @@ export default function Home() {
   const [lodaing, setLoading] = useState(true);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  function getRandomIntBetween(a, b) {
+    if (a > b) {
+      [a, b] = [b, a];
+    }
+    return Math.floor(Math.random() * (b - a + 1)) + a;
+  }
 
   const handleAddToWishlist = (id) => {
     setFavoriteProducts([...favoriteProducts, id]);
@@ -185,8 +188,15 @@ export default function Home() {
       <MovingCircles numCircles={20} />
       <div className="w-full flex justify-center bg-gradient-to-r from-orange-100/50 via-orange-200/50 to-orange-300/50 backdrop-blur-md">
         {/* <Slider className="md:w-[700px] w-[300px]"> */}
-        <div className="md:w-[700px] w-[300px]">
-          <PromoCategoryCard categories={categories} />
+        <div className="">
+          <PromoCategoryCard
+            categories={categories}
+            img={
+              TopSellersProductsproducts[
+                getRandomIntBetween(0, TopSellersProductsproducts.length - 1)
+              ]?.imageCover
+            }
+          />
         </div>
         {/* </Slider> */}
       </div>
