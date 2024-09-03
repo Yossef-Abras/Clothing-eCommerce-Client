@@ -36,6 +36,13 @@ export default function CartSellers() {
         setTotalCartPrice(cart.data.totalCartPrice);
       } catch (error) {
         console.error("Failed to fetch cart", error);
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({
+            message: error.message || "Unknown error!!",
+            isError: true,
+          })
+        );
       } finally {
         setLoading(false);
       }
@@ -75,6 +82,7 @@ export default function CartSellers() {
       }
     } catch (error) {
       console.error("Error during checkout", error);
+
     } finally {
       setCheckoutLoading(false);
     }

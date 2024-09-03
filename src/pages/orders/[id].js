@@ -28,6 +28,13 @@ export default function OrderDetails() {
           setOrder(ordersResponse.data);
         } catch (error) {
           console.error("Failed to fetch order details", error);
+          localStorage.setItem(
+            "alertMessage",
+            JSON.stringify({
+              message: error.message || "Unknown error!!",
+              isError: true,
+            })
+          );
         } finally {
           setLoading(false);
         }

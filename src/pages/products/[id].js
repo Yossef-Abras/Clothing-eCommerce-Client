@@ -64,9 +64,18 @@ export default function ProductPage() {
     try {
       await addToCart(productData._id, selectedColor, selectedSize);
       router.push("/cart");
+      localStorage.setItem(
+        "alertMessage",
+        JSON.stringify({ message: "Item added to cart successfully!", isError: false }));
     } catch (error) {
       console.error("Failed to add to cart:", error);
-    } finally {
+      localStorage.setItem(
+        "alertMessage",
+        JSON.stringify({
+          message: error.message || "Unknown error!!",
+          isError: true,
+        })
+      );
       setIsAddingToCart(false);
     }
   };
@@ -82,11 +91,10 @@ export default function ProductPage() {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
-                    mainImage === image
-                      ? "ring-2 ring-orange-300"
-                      : "hover:ring-2 hover:ring-gray-300"
-                  }`}
+                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${mainImage === image
+                    ? "ring-2 ring-orange-300"
+                    : "hover:ring-2 hover:ring-gray-300"
+                    }`}
                   onClick={() => setMainImage(image)}
                 >
                   <Image
