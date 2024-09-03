@@ -11,6 +11,7 @@ import {
   FaCreditCard,
 } from "react-icons/fa";
 import { getSpecificUserOrders } from "../../../public/global/order";
+import { MdOutlinePendingActions } from "react-icons/md";
 
 export default function OrderDetails() {
   const router = useRouter();
@@ -121,7 +122,7 @@ export default function OrderDetails() {
                     {order.isPaid ? (
                       <FaCheck className="text-green-500 mr-2" />
                     ) : (
-                      <FaTimes className="text-red-500 mr-2" />
+                      <MdOutlinePendingActions className="text-gray-500 mr-2" />
                     )}
                     Paid:
                   </td>
@@ -134,7 +135,7 @@ export default function OrderDetails() {
                     {order.isDelivered ? (
                       <FaCheck className="text-green-500 mr-2" />
                     ) : (
-                      <FaTimes className="text-red-500 mr-2" />
+                      <MdOutlinePendingActions className="text-gray-500 mr-2" />
                     )}
                     Delivered:
                   </td>

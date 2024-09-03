@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Card, Spinner } from "@nextui-org/react";
-import { FaDollarSign, FaCalendarDay } from "react-icons/fa";
+import { Spinner } from "@nextui-org/react";
+import { FaDollarSign, FaCalendarDay, FaCheck } from "react-icons/fa";
 import { getUserOrders } from "../../../public/global/order";
 import Link from "next/link";
+import { MdOutlinePendingActions } from "react-icons/md";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -62,6 +63,24 @@ export default function Orders() {
                   <span className="ml-2 text-gray-600">
                     {new Date(order.createdAt).toLocaleString()}
                   </span>
+                </div>
+                <div className="flex items-center">
+                  <span className="font-semibold text-gray-700">Paid:</span>
+                  {order.isPaid ? (
+                    <FaCheck className="text-green-500 ml-2" />
+                  ) : (
+                    <MdOutlinePendingActions className="text-gray-500 ml-2" />
+                  )}
+                </div>
+                <div className="flex items-center">
+                  <span className="font-semibold text-gray-700">
+                    Delivered:
+                  </span>
+                  {order.isPaid ? (
+                    <FaCheck className="text-green-500 ml-2" />
+                  ) : (
+                    <MdOutlinePendingActions className="text-gray-500 ml-2" />
+                  )}
                 </div>
               </div>
             </Link>
