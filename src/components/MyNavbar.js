@@ -10,7 +10,6 @@ import {
   Button,
 } from "@nextui-org/react";
 import Login from "./login";
-import { ImSearch } from "react-icons/im";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
