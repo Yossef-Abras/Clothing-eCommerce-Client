@@ -21,21 +21,33 @@ export default function ProductCard({
   const [isAddingDeleting, setIsAddingDeleting] = useState(false);
 
   const handleAddToWishlist = async (e) => {
-    e.stopPropagation(); // To prevent routing when clicking on the wishlist button
+    e.stopPropagation();
     setIsAddingDeleting(true);
     try {
       if (isFav) {
         await deleteFromWishlist(id);
         onDeleteFromWishlist(id);
-        localStorage.setItem("alertMessage", JSON.stringify({ message: "Removed from wishlist!", isError: false }));
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: "Removed from wishlist!", isError: false })
+        );
       } else {
         await addToWishlist(id);
         onAddToWishlist(id);
-        localStorage.setItem("alertMessage", JSON.stringify({ message: "added from wishlist!", isError: false }));
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: "Added to wishlist!", isError: false })
+        );
       }
     } catch (error) {
       console.error("Error updating wishlist:", error);
-      // localStorage.setItem("alertMessage", JSON.stringify({ message: "dvfgthtr", isError: true }));
+      localStorage.setItem(
+        "alertMessage",
+        JSON.stringify({
+          message: error.message || "Unknown error!!",
+          isError: true,
+        })
+      );
     } finally {
       setIsAddingDeleting(false);
     }
@@ -52,8 +64,9 @@ export default function ProductCard({
           height={4000}
           src={img}
           alt={prodectname}
-          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
-            }`}
+          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
