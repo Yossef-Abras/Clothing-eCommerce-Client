@@ -105,7 +105,7 @@ export default function Home() {
 
   const getTopSellersProducts = async () => {
     try {
-      const res = await getProducts();
+      const res = await getProducts("limit=8&sort=-sold");
       setTopSellersProducts(res.data);
     } catch (error) {
       console.error("Error fetching Top Sellers Products:", error);
@@ -231,7 +231,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
+      {/* <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
         <div className="flex justify-between items-center">
           <label className="text-orange-400 text-lg font-bold">
             Special Offers
@@ -269,7 +269,7 @@ export default function Home() {
             </Slider>
           </div>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 }
