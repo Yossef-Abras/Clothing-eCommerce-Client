@@ -4,11 +4,14 @@ import { Button, Spinner } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { isLogin } from "../../public/global/auth";
 import { useRouter } from "next/router";
+import AlertMessage from "../components/AlertMessage";
 export default function HomeLayout({ children }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(true);
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
   const [loginUserState, setLoginUserState] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
+  const [isError, setIsError] = useState(false);
   const userPages = ["/cart", "/favorite"];
 
   useEffect(() => {
@@ -35,6 +38,18 @@ export default function HomeLayout({ children }) {
       !JSON.parse(localStorage.getItem("user"))?.emailVerified && loginUserState
     );
   }, [router, loginUserState, pageLoading]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const alertData = JSON.parse(localStorage.getItem("alertMessage"));
+      if (alertData) {
+        setAlertMessage(alertData.message);
+        setIsError(alertData.isError);
+        localStorage.removeItem("alertMessage");
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (pageLoading)
     return (
@@ -44,7 +59,7 @@ export default function HomeLayout({ children }) {
     );
   if (userPages.includes(router.pathname) && !loginUserState) return <></>;
   return (
-    <div>
+    <div className="">
       <MyNavbar
         loginUserState={loginUserState}
         onLogin={() => {
@@ -75,7 +90,11 @@ export default function HomeLayout({ children }) {
             </Button>
           </div>
         )}
-      <main>{children}</main>
+      {alertMessage && <AlertMessage message={alertMessage} isError={isError} onReset={() => setAlertMessage(null)} />}
+      <main >
+
+        {children}
+      </main>
       <Footer />
     </div>
   );
