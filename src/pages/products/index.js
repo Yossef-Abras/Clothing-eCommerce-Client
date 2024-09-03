@@ -231,6 +231,7 @@ export default function Index() {
             }}
             className="w-[49%]"
           >
+            <SelectItem key="-sold">Top seller</SelectItem>
             <SelectItem key="-price">Higher price</SelectItem>
             <SelectItem key="price">Lower price</SelectItem>
             <SelectItem key="createdAt">Oldest</SelectItem>
