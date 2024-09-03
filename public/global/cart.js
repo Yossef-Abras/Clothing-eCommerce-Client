@@ -12,6 +12,8 @@ export const getCart = async () => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!")
   }
 };
 export const addToCart = async (productId, color, size) => {
@@ -31,6 +33,8 @@ export const addToCart = async (productId, color, size) => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!");
   }
 };
 
@@ -51,6 +55,8 @@ export const updateCartItemQuantity = async (cartItemId, quantity) => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!");
   }
 };
 
@@ -70,5 +76,7 @@ export const deletProductFromCart = async (cartItemId) => {
     } catch (error) {
       throw error.response.data;
     }
+  } else {
+    throw new Error("You're not logged in!!");
   }
 };
