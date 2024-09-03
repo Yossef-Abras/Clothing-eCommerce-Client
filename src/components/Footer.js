@@ -18,12 +18,27 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap mx-auto gap-20 px-10">
           <div className="flex flex-col flex-wrap content-center">
-            <h2 className="font-bold text-orange-400 ">Browse</h2>
-            <div>
-              <Link href="products">Products</Link>
-            </div>
+            <h2 className="font-bold text-orange-400 ">About</h2>
             <div>
               <Link href="about-us">About Us</Link>
+            </div>
+            <div>
+              <Link
+                href="/privacy-policy">
+                Privacy Policy
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/return-policy">
+                Return & Exchange Policy
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/terms-of-service">
+                Terms of Service
+              </Link>
             </div>
             <div>
               <Link href="contacy-us">Contact Us</Link>
