@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-  Button,
-} from "@nextui-org/react";
-import Login from "./login";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { MdFavorite } from "react-icons/md";
+import { IoMdClose, IoMdMenu } from "react-icons/io";
+import Login from "./login";
+
 export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(loginUserState);
 
   const handleLogout = () => {
@@ -27,6 +19,15 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
     onLogout();
   };
 
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLinkClick = (path) => {
+    router.push(path);
+    setIsMenuOpen(false);
+  };
+
   const menuItems = {
     products: "Products",
     "about-us": "About us",
@@ -34,124 +35,97 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   };
 
   return (
-    <Navbar
-      onMenuOpenChange={setIsMenuOpen}
-      className=" bg-white text-lg text-black shadow-md backdrop-blur-3xl backdrop-filter"
-    >
-      <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-
-        <NavbarBrand>
+    <nav className="bg-white shadow-md">
+      <div className="container mx-auto flex justify-between items-center p-4">
+        <div className="flex gap-2 items-center">
+          {/* Mobile menu toggle with icons */}
+          <button onClick={handleMenuToggle} className="sm:hidden rounded-full">
+            {isMenuOpen ? (
+              <IoMdClose className="w-6 h-6 text-gray-700" />
+            ) : (
+              <IoMdMenu className="w-6 h-6 text-gray-700" />
+            )}
+          </button>
           <p
-            onClick={() => {
-              router.replace("/");
-            }}
-            className="text-lg font-bold text-orange-400  font-serif italic cursor-pointer"
+            onClick={() => router.push("/")}
+            className="text-lg font-bold text-orange-400 font-serif italic cursor-pointer"
           >
             SARAMODA
           </p>
-        </NavbarBrand>
-      </NavbarContent>
+        </div>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link
-            className={
-              router.pathname.slice(1) === "products"
-                ? `text-orange-400 font-bold`
-                : `text-black`
-            }
-            href="/products"
-          >
-            Products
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            className={
-              router.pathname.slice(1) === "contact-us"
-                ? `text-orange-400 font-bold`
-                : `text-black`
-            }
-            href="/contact-us"
-          >
-            Contacts
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            className={
-              router.pathname.slice(1) === "about-us"
-                ? `text-orange-400 font-bold`
-                : `text-black`
-            }
-            href="/about-us"
-          >
-            About us
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify="end" className="gap-4 md:gap-6">
-        {isLoggedIn && (
-          <>
-            <NavbarItem>
-              <Button
+        {/* Desktop navigation links */}
+        <div className="hidden sm:flex gap-4">
+          {Object.keys(menuItems).map((key) => (
+            <Link
+              key={key}
+              href={`/${key}`}
+              className={
+                router.pathname.slice(1) === key
+                  ? `text-orange-400 font-bold`
+                  : `text-black`
+              }
+            >
+              {menuItems[key]}
+            </Link>
+          ))}
+        </div>
+
+        {/* Cart, Favorites, Logout/Login */}
+        <div className="flex items-center gap-4">
+          {isLoggedIn ? (
+            <>
+              <button
                 onClick={() => router.push("/cart")}
-                className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+                className="flex items-center justify-center w-10 h-10 bg-orange-200 rounded-full"
               >
                 <TfiShoppingCartFull />
-              </Button>
-            </NavbarItem>
-            <NavbarItem>
-              <Button
+              </button>
+              <button
                 onClick={() => router.push("/favorite")}
-                className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
+                className="flex items-center justify-center w-10 h-10 bg-orange-200 rounded-full"
               >
                 <MdFavorite />
-              </Button>
-            </NavbarItem>
-          </>
-        )}
-        {!isLoggedIn ? (
-          <NavbarItem>
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex items-center justify-center w-10 h-10 bg-orange-200 rounded-full"
+              >
+                <RiLogoutCircleRLine />
+              </button>
+            </>
+          ) : (
             <Login
               onSuccess={() => {
                 setIsLoggedIn(true);
                 onLogin();
               }}
             />
-          </NavbarItem>
-        ) : (
-          <NavbarItem>
-            <Button
-              onClick={handleLogout}
-              className="flex rounded-full bg-orange-200 justify-center items-center w-10 h-10 md:text-lg text-black min-w-fit"
-            >
-              <RiLogoutCircleRLine />
-            </Button>
-          </NavbarItem>
-        )}
-      </NavbarContent>
-      <NavbarMenu>
-        {Object.keys(menuItems).map((key) => (
-          <NavbarMenuItem key={key}>
-            <Link
-              className={
-                router.pathname.slice(1) === key
-                  ? `text-orange-400 font-bold`
-                  : `text-black`
-              }
-              href={key}
-              size="lg"
-            >
-              {menuItems[key]}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
-    </Navbar>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="sm:hidden bg-white/55 backdrop-blur-md shadow-md absolute top-16 w-full z-50">
+          <ul className="flex flex-col gap-2 p-4">
+            {Object.keys(menuItems).map((key) => (
+              <li key={key}>
+                <button
+                  onClick={() => handleLinkClick(`/${key}`)}
+                  className={
+                    router.pathname.slice(1) === key
+                      ? `text-orange-400 font-bold`
+                      : `text-black`
+                  }
+                >
+                  {menuItems[key]}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </nav>
   );
 }
