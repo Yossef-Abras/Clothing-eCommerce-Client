@@ -71,61 +71,63 @@ export default function OrderDetails() {
             <table className="w-full table-auto mb-6">
               <tbody>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     <FaCalendarDay className="text-orange-500 mr-2" />
                     Order ID:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">{order._id}</td>
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
+                    {order._id}
+                  </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     <FaShippingFast className="text-orange-500 mr-2" />
                     Shipping Address:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     {order.shippingAddress.details},{" "}
                     {order.shippingAddress.city},{" "}
                     {order.shippingAddress.postalCode}
                   </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     <FaPhoneAlt className="text-orange-500 mr-2" />
                     Phone:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     {order.shippingAddress.phone}
                   </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     <FaDollarSign className="text-orange-500 mr-2" />
                     Total Price:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     ${order.totalOrderPrice}
                   </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     <FaCalendarDay className="text-orange-500 mr-2" />
                     Created At:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     {new Date(order.createdAt).toLocaleString()}
                   </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     <FaCreditCard className="text-orange-500 mr-2" />
                     Payment Method:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     {order.paymentMethodType === "cash" ? "Cash" : "Card"}
                   </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     {order.isPaid ? (
                       <FaCheck className="text-green-500 mr-2" />
                     ) : (
@@ -133,12 +135,12 @@ export default function OrderDetails() {
                     )}
                     Paid:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     {order.isPaid ? "Yes" : "No"}
                   </td>
                 </tr>
                 <tr className="flex items-center">
-                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center">
+                  <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
                     {order.isDelivered ? (
                       <FaCheck className="text-green-500 mr-2" />
                     ) : (
@@ -146,7 +148,7 @@ export default function OrderDetails() {
                     )}
                     Delivered:
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-gray-600 min-w-max">
                     {order.isDelivered ? "Yes" : "No"}
                   </td>
                 </tr>
