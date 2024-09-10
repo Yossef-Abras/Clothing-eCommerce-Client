@@ -24,7 +24,9 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isQuantityChanged, setIsQuantityChanged] = useState(false);
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
-  const price = product.price;
+  const price = product.priceAfterDiscount
+    ? product.priceAfterDiscount
+    : product.price;
 
   useEffect(() => {
     setIsQuantityChanged(quantity !== initialQuantity);

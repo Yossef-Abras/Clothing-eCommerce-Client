@@ -33,7 +33,9 @@ export default function CartSellers() {
         const cart = await getCart();
         setCartId(cart.data._id);
         setCart(cart.data.cartItems);
-        setTotalCartPrice(cart.data.totalCartPrice);
+        setTotalCartPrice(
+          cart.data?.totalPriceAfterDiscount || cart.data.totalCartPrice
+        );
       } catch (error) {
         console.error("Failed to fetch cart", error);
         localStorage.setItem(
@@ -159,6 +161,7 @@ export default function CartSellers() {
               product={{
                 ...item.product,
                 price: item.price,
+                priceAfterDiscount: item.priceAfterDiscount,
                 quantity: item.quantity,
                 color: item.color,
                 size: item.size,
