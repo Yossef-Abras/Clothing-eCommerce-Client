@@ -148,7 +148,7 @@ export default function ProductPage() {
                   <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
                     ${productData.priceAfterDiscount}
                   </span>
-                  <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-orange-300 to-orange-500 rounded-full w-fit h-10 z-50 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
+                  <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-orange-300 to-orange-500 rounded-full w-fit h-10 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
                     {Math.round(productData.discount)}% OFF
                   </div>
                 </div>
