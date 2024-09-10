@@ -132,9 +132,23 @@ export default function ProductPage() {
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {productData.title}
               </h2>
-              <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
-                Price ${productData.price}
-              </span>
+              {
+                productData.priceAfterDiscount ? (
+                  <div className="flex flex-col">
+                    <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif line-through">
+                      Price ${productData.price}
+                    </span>
+                    <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                      Price ${productData.priceAfterDiscount}
+                    </span>
+                  </div>
+                ) : (
+                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                    Price ${productData.price}
+                  </span>
+                )
+              }
+
               <div>
                 <h2 className="text-base">{productData.description}</h2>
               </div>
