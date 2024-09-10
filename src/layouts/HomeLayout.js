@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { isLogin } from "../../public/global/auth";
 import { useRouter } from "next/router";
 import AlertMessage from "../components/AlertMessage";
+
 export default function HomeLayout({ children }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(true);
@@ -38,6 +39,7 @@ export default function HomeLayout({ children }) {
       !JSON.parse(localStorage.getItem("user"))?.emailVerified && loginUserState
     );
   }, [router, loginUserState, pageLoading]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const alertData = JSON.parse(localStorage.getItem("alertMessage"));
@@ -57,9 +59,11 @@ export default function HomeLayout({ children }) {
         <Spinner color="primary" />
       </div>
     );
+
   if (userPages.includes(router.pathname) && !loginUserState) return <></>;
+
   return (
-    <div className="">
+    <div>
       <MyNavbar
         loginUserState={loginUserState}
         onLogin={() => {
@@ -73,6 +77,7 @@ export default function HomeLayout({ children }) {
           setShowVerificationMessage(false);
         }}
       />
+
       {showVerificationMessage &&
         !router.pathname.endsWith("/verify-email") && (
           <div
@@ -90,11 +95,18 @@ export default function HomeLayout({ children }) {
             </Button>
           </div>
         )}
-      {alertMessage && <AlertMessage message={alertMessage} isError={isError} onReset={() => setAlertMessage(null)} />}
-      <main >
 
-        {children}
-      </main>
+      {alertMessage && (
+        <AlertMessage
+          message={alertMessage}
+          isError={isError}
+          onReset={() => setAlertMessage(null)}
+        />
+      )}
+
+      {/* Add padding-top to prevent content from being hidden by the fixed Navbar */}
+      <main style={{ paddingTop: "72px" }}>{children}</main>
+
       <Footer />
     </div>
   );

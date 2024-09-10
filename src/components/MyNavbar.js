@@ -4,7 +4,7 @@ import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { MdFavorite } from "react-icons/md";
-import { IoMdClose, IoMdMenu } from "react-icons/io";
+import { IoMdClose, IoMdMenu } from "react-icons/io"; // Importing icons
 import Login from "./login";
 
 export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
@@ -35,15 +35,15 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   };
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md fixed top-0 w-full z-50">
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="flex gap-2 items-center">
           {/* Mobile menu toggle with icons */}
           <button onClick={handleMenuToggle} className="sm:hidden rounded-full">
             {isMenuOpen ? (
-              <IoMdClose className="w-6 h-6 text-gray-700" />
+              <IoMdClose className="w-6 h-6 text-black" />
             ) : (
-              <IoMdMenu className="w-6 h-6 text-gray-700" />
+              <IoMdMenu className="w-6 h-6 text-black" />
             )}
           </button>
           <p
@@ -107,7 +107,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="sm:hidden bg-white/55 backdrop-blur-md shadow-md absolute top-16 w-full z-50">
+        <div className="sm:hidden bg-white/65 backdrop-blur-md shadow-md absolute top-16 w-full z-50">
           <ul className="flex flex-col gap-2 p-4">
             {Object.keys(menuItems).map((key) => (
               <li key={key}>
