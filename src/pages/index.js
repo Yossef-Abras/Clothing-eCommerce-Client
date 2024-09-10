@@ -118,7 +118,7 @@ export default function Home() {
 
   const getTopOffersProducts = async () => {
     try {
-      const res = await getProducts();
+      const res = await getProducts("limit=8&sort=-discount");
       const filteredProducts = res.data.filter((product) =>
         product.hasOwnProperty("priceAfterDiscount")
       );
@@ -210,7 +210,7 @@ export default function Home() {
           </label>
           <Button
             onClick={() => {
-              router.push("/products");
+              router.push("/products?sort=-sold");
             }}
             className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 "
           >
@@ -252,7 +252,7 @@ export default function Home() {
           </label>
           <Button
             onClick={() => {
-              router.push("/products");
+              router.push("/products?sort=-discount");
             }}
             className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 "
           >

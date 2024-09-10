@@ -57,7 +57,7 @@ export default function ProductCard({
   return (
     <div
       onClick={() => router.push("/products/" + id)}
-      className="relative w-full max-w-xs p-4 m-2 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 border border-gray-200 cursor-pointer mx-auto"
+      className="relative w-full max-w-xs p-4 m-2 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-200 border border-gray-200 cursor-pointer overflow-hidden mx-auto"
     >
       <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg flex justify-center items-center">
         <Image

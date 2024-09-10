@@ -138,13 +138,19 @@ export default function ProductPage() {
                 {productData.title}
               </h2>
               {productData.priceAfterDiscount ? (
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
+                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                    Price
+                  </span>
                   <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif line-through">
-                    Price ${productData.price}
+                    ${productData.price}
                   </span>
                   <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
                     ${productData.priceAfterDiscount}
                   </span>
+                  <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-orange-300 to-orange-500 rounded-full w-fit h-10 z-50 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
+                    {Math.round(productData.discount)}% OFF
+                  </div>
                 </div>
               ) : (
                 <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
