@@ -65,8 +65,9 @@ export default function ProductCard({
           height={4000}
           src={img}
           alt={prodectname}
-          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
-            }`}
+          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
@@ -74,9 +75,13 @@ export default function ProductCard({
         <div>
           <p className="text-lg font-bold text-gray-800">{prodectname}</p>
           {priceAfterDiscount ? (
-            <div>
-              <p className="text-sm text-gray-600 line-through">{price}$</p>
-              <p className="text-sm text-red-600 font-bold">{priceAfterDiscount}$</p>
+            <div className="flex justify-items-center gap-1">
+              <p className="my-auto text-sm text-gray-500 line-through">
+                {price}$
+              </p>
+              <p className="text-lg text-red-600 font-bold">
+                {priceAfterDiscount}$
+              </p>
             </div>
           ) : (
             <p className="text-sm text-gray-600">{price}$</p>

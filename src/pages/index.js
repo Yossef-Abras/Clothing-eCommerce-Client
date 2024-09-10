@@ -119,8 +119,8 @@ export default function Home() {
   const getTopOffersProducts = async () => {
     try {
       const res = await getProducts();
-      const filteredProducts = res.data.filter(
-        (product) => product.hasOwnProperty('priceAfterDiscount')
+      const filteredProducts = res.data.filter((product) =>
+        product.hasOwnProperty("priceAfterDiscount")
       );
       setTopOffersProducts(filteredProducts);
     } catch (error) {
@@ -233,6 +233,7 @@ export default function Home() {
                   key={product._id}
                   prodectname={product.title}
                   price={product.price}
+                  priceAfterDiscount={product.priceAfterDiscount}
                   img={product.imageCover}
                   id={product._id}
                   onAddToWishlist={handleAddToWishlist}

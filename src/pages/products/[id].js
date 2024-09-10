@@ -66,7 +66,11 @@ export default function ProductPage() {
       router.push("/cart");
       localStorage.setItem(
         "alertMessage",
-        JSON.stringify({ message: "Item added to cart successfully!", isError: false }));
+        JSON.stringify({
+          message: "Item added to cart successfully!",
+          isError: false,
+        })
+      );
     } catch (error) {
       console.error("Failed to add to cart:", error);
       localStorage.setItem(
@@ -91,10 +95,11 @@ export default function ProductPage() {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${mainImage === image
-                    ? "ring-2 ring-orange-300"
-                    : "hover:ring-2 hover:ring-gray-300"
-                    }`}
+                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
+                    mainImage === image
+                      ? "ring-2 ring-orange-300"
+                      : "hover:ring-2 hover:ring-gray-300"
+                  }`}
                   onClick={() => setMainImage(image)}
                 >
                   <Image
@@ -132,22 +137,20 @@ export default function ProductPage() {
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {productData.title}
               </h2>
-              {
-                productData.priceAfterDiscount ? (
-                  <div className="flex flex-col">
-                    <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif line-through">
-                      Price ${productData.price}
-                    </span>
-                    <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
-                      Price ${productData.priceAfterDiscount}
-                    </span>
-                  </div>
-                ) : (
-                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+              {productData.priceAfterDiscount ? (
+                <div className="flex gap-2">
+                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif line-through">
                     Price ${productData.price}
                   </span>
-                )
-              }
+                  <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                    ${productData.priceAfterDiscount}
+                  </span>
+                </div>
+              ) : (
+                <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                  Price ${productData.price}
+                </span>
+              )}
 
               <div>
                 <h2 className="text-base">{productData.description}</h2>
