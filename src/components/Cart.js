@@ -48,7 +48,10 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
     setIsUpdating(true);
     try {
       const res = await updateCartItemQuantity(cartItemId, quantity);
-      handleCartUpdate(res.data.totalCartPrice, res.data.cartItems);
+      handleCartUpdate(
+        res.data.totalPriceAfterDiscount || res.data.totalCartPrice,
+        res.data.cartItems
+      );
       setInitialQuantity(quantity);
     } catch (error) {
       console.error("Failed to update cart item quantity", error);
