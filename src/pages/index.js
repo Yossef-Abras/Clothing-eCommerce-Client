@@ -119,7 +119,10 @@ export default function Home() {
   const getTopOffersProducts = async () => {
     try {
       const res = await getProducts();
-      setTopOffersProducts(res.data);
+      const filteredProducts = res.data.filter(
+        (product) => product.hasOwnProperty('priceAfterDiscount')
+      );
+      setTopOffersProducts(filteredProducts);
     } catch (error) {
       console.error("Error fetching Top Offers Products:", error);
       throw error;
@@ -241,7 +244,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
+      <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
         <div className="flex justify-between items-center">
           <label className="text-orange-400 text-lg font-bold">
             Special Offers
@@ -269,6 +272,7 @@ export default function Home() {
                   key={product._id}
                   prodectname={product.title}
                   price={product.price}
+                  priceAfterDiscount={product.priceAfterDiscount}
                   img={product.imageCover}
                   id={product._id}
                   onAddToWishlist={handleAddToWishlist}
@@ -279,7 +283,7 @@ export default function Home() {
             </Slider>
           </div>
         </div>
-      </div> */}
+      </div>
     </main>
   );
 }

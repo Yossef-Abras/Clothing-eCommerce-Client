@@ -11,6 +11,7 @@ export default function ProductCard({
   id,
   prodectname,
   price,
+  priceAfterDiscount,
   img,
   onAddToWishlist,
   onDeleteFromWishlist,
@@ -64,16 +65,22 @@ export default function ProductCard({
           height={4000}
           src={img}
           alt={prodectname}
-          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-            imageLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
       <div className="mt-4 flex justify-between items-center">
         <div>
           <p className="text-lg font-bold text-gray-800">{prodectname}</p>
-          <p className="text-sm text-gray-600">{price}$</p>
+          {priceAfterDiscount ? (
+            <div>
+              <p className="text-sm text-gray-600 line-through">{price}$</p>
+              <p className="text-sm text-red-600 font-bold">{priceAfterDiscount}$</p>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-600">{price}$</p>
+          )}
         </div>
         <Button
           onClick={handleAddToWishlist}
