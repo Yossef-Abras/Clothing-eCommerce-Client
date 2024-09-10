@@ -17,6 +17,7 @@ export default function FavoriteCard({
   id,
   productname,
   price,
+  priceAfterDiscount,
   img,
   handleRemove,
 }) {
@@ -44,9 +45,8 @@ export default function FavoriteCard({
           height={3000}
           src={img}
           alt={productname}
-          className={`w-fit rounded-none max-h-[328px] relative z-10 ${
-            imageLoaded ? "" : "hidden"
-          }`}
+          className={`w-fit rounded-none max-h-[328px] relative z-10 ${imageLoaded ? "" : "hidden"
+            }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
@@ -59,7 +59,12 @@ export default function FavoriteCard({
               onClick={handleAddToCart}
               className="w-full bg-inherit border-1 text-orange-400 hover:text-black border-orange-400 rounded-md hover:bg-orange-300 px-4 py-2 "
             >
-              Add to Cart <b className="text-black">{price}$</b>
+              Add to Cart {priceAfterDiscount ? (<div className="flex items-center gap-1">
+                <p className="text-sm text-gray-600 line-through">{price}$</p>
+                <p className="text-lg text-red-600 font-bold">{priceAfterDiscount}$</p>
+              </div>)
+
+                : (<b className="text-black">{price}$</b>)}
             </Button>
             <Button
               className="text-lg border-1 border-red-500 bg-inherit text-red-500 px-2 py-2 rounded min-w-10 hover:bg-red-300"

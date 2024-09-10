@@ -48,6 +48,7 @@ export default function Favorites() {
               id={product._id}
               productname={product.title}
               price={product.price}
+              priceAfterDiscount={product.priceAfterDiscount}
               img={product.imageCover}
               handleRemove={() => handleRemove(product._id)}
             />
