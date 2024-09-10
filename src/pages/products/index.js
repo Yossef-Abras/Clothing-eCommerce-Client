@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Input,
   Progress,
@@ -30,6 +30,7 @@ export default function Index() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const isFirstLoad = useRef(true);
 
   // Function to check user login status
   const checkLoginStatus = () => {
@@ -118,14 +119,6 @@ export default function Index() {
 
   // Effect to update products when sort order, categories, or keyword change
   useEffect(() => {
-    if (query) {
-      if (query.sort !== undefined) {
-        setSortOrder(query.sort);
-      }
-      if (query.cat !== undefined) {
-        setSelectedKeysForCategories(query.cat);
-      }
-    }
     const updateProducts = async () => {
       setPage(1);
       setLoadingProducts(true);
@@ -134,6 +127,19 @@ export default function Index() {
     };
     updateProducts();
   }, [sortOrder, selectedKeysForCategories, keyword]);
+
+  // Effect to handle query parameters only on the first load
+  useEffect(() => {
+    if (isFirstLoad.current && query) {
+      if (query.sort !== undefined) {
+        setSortOrder(query.sort);
+      }
+      if (query.cat !== undefined) {
+        setSelectedKeysForCategories(query.cat);
+      }
+      isFirstLoad.current = false;
+    }
+  }, [query]);
 
   // Effect to fetch favorite products when user is logged in
   useEffect(() => {
