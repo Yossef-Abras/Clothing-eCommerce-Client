@@ -161,6 +161,7 @@ export default function ProductPage() {
                   <Select
                     disallowEmptySelection={true}
                     label="Please Select Your Color"
+                    defaultSelectedKeys={[selectedColor]}
                     value={selectedColor}
                     onChange={(e) => setSelectedColor(e.target.value)}
                     className="max-w-full"
@@ -208,6 +209,7 @@ export default function ProductPage() {
                         />
                       </div>
                     }
+                    defaultSelectedKeys={[selectedSize]}
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(e.target.value)}
                     className="max-w-full"
