@@ -249,6 +249,7 @@ export default function Index() {
             key={product._id}
             prodectname={product.title}
             price={product.price}
+            priceAfterDiscount={product.priceAfterDiscount}
             img={product.imageCover}
             id={product._id}
             onAddToWishlist={handleAddToWishlist}
