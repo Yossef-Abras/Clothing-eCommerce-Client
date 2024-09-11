@@ -4,8 +4,9 @@ import Link from "next/link";
 import { TfiShoppingCartFull } from "react-icons/tfi";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { MdFavorite } from "react-icons/md";
-import { IoMdClose, IoMdMenu } from "react-icons/io"; // Importing icons
+import { IoMdClose, IoMdMenu } from "react-icons/io";
 import Login from "./login";
+import Image from "next/image";
 
 export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
   const router = useRouter();
@@ -41,11 +42,18 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
           {/* Mobile menu toggle with icons */}
           <button onClick={handleMenuToggle} className="sm:hidden rounded-full">
             {isMenuOpen ? (
-              <IoMdClose className="w-6 h-6 text-black" />
+              <IoMdClose className="w-6 h-6 text-gray-800" />
             ) : (
-              <IoMdMenu className="w-6 h-6 text-black" />
+              <IoMdMenu className="w-6 h-6 text-gray-800" />
             )}
           </button>
+          <Image
+            src={"/img/logo.png"}
+            height={1000}
+            width={1000}
+            alt="saramoda logo"
+            className="w-10 h-10 drop-shadow-[0_6px_7px_rgba(0,0,0,0.30)]"
+          />
           <p
             onClick={() => router.push("/")}
             className="text-lg font-bold text-orange-400 font-serif italic cursor-pointer"
