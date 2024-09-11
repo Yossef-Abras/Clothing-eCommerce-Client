@@ -52,7 +52,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
             height={1000}
             width={1000}
             alt="saramoda logo"
-            className="w-10 h-10 drop-shadow-[0_6px_7px_rgba(0,0,0,0.30)]"
+            className="w-10 h-10 drop-shadow-[0_6px_7px_rgba(0,0,0,0.20)]"
           />
           <p
             onClick={() => router.push("/")}
