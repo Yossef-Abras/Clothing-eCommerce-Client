@@ -130,12 +130,14 @@ export default function Index() {
 
   // Effect to handle query parameters only on the first load
   useEffect(() => {
-    if (isFirstLoad.current && query) {
+    if (query) {
       if (query.sort !== undefined) {
         setSortOrder(query.sort);
       }
       if (query.cat !== undefined) {
-        setSelectedKeysForCategories(query.cat);
+        setSelectedKeysForCategories(
+          query.cat.split(",").filter((i) => i.length > 0)
+        );
       }
       isFirstLoad.current = false;
     }
@@ -193,9 +195,11 @@ export default function Index() {
             aria-label="Filter by category"
             placeholder="Category"
             variant="bordered"
-            defaultSelectedKeys={[selectedKeysForCategories]}
+            defaultSelectedKeys={selectedKeysForCategories}
             onChange={(e) => {
-              setSelectedKeysForCategories(e.target.value);
+              setSelectedKeysForCategories(
+                e.target.value.split(",").filter((i) => i.length > 0)
+              );
               router.replace(
                 {
                   pathname: router.pathname,
@@ -211,7 +215,7 @@ export default function Index() {
             className="w-[49%]"
           >
             {subCategories.map((cat) => (
-              <SelectItem key={cat._id} value={cat.id}>
+              <SelectItem key={cat._id} value={cat._id}>
                 {cat.name}
               </SelectItem>
             ))}
