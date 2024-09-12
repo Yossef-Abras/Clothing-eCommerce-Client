@@ -188,7 +188,7 @@ export default function Login({ onSuccess }) {
                   onClick={() => setFormisLogin(!Formislogin)}
                 >
                   {Formislogin
-                    ? "You Dont Have account"
+                    ? "You don't have an account?"
                     : "You have already account?"}
                 </Link>
               </div>
