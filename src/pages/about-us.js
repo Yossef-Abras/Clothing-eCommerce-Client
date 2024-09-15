@@ -64,15 +64,15 @@ export default function AboutUs() {
         {data.map((item, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10 xl:p-12 transform hover:scale-105 transition-transform duration-300 lg:max-w-2xl mx-auto border-t-4 border-orange-400"
+            className="bg-white rounded-lg shadow-md p-6 md:p-8 lg:p-10 xl:p-12 transform hover:scale-105 transition-transform duration-300 lg:max-w-2xl mx-auto border-t-4 border-primary"
           >
-            <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold mb-4 text-orange-400">
+            <h2 className="text-xl lg:text-2xl xl:text-3xl font-bold mb-4 text-primary">
               {item.title}
             </h2>
             {item.description.map((desc, i) => (
               <p
                 key={i}
-                className="text-gray-600 text-md lg:text-lg xl:text-xl mb-4"
+                className="text-gray-700 text-md lg:text-lg xl:text-xl mb-4"
               >
                 {desc}
               </p>
@@ -81,13 +81,13 @@ export default function AboutUs() {
               <div className="mt-6">
                 {item.promise.map((promise, i) => (
                   <div key={i} className="mb-4">
-                    <h3 className="text-lg lg:text-xl xl:text-2xl font-semibold mb-2 text-orange-400">
+                    <h3 className="text-lg lg:text-xl xl:text-2xl font-semibold mb-2 text-primary">
                       {promise.promTitle}
                     </h3>
                     {promise.promDesc.map((desc, j) => (
                       <p
                         key={j}
-                        className="text-gray-600 text-sm lg:text-md xl:text-lg"
+                        className="text-gray-700 text-sm lg:text-md xl:text-lg"
                       >
                         {desc}
                       </p>

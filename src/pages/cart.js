@@ -133,7 +133,7 @@ export default function CartSellers() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-orange-400">
+      <div className="min-h-screen flex items-center justify-center text-primary">
         <Spinner color="primary" />
       </div>
     );
@@ -141,7 +141,7 @@ export default function CartSellers() {
 
   return (
     <div className="w-full min-h-screen p-5 bg-gray-100 relative">
-      <h1 className="text-3xl font-bold mb-8 text-orange-400">Shopping Cart</h1>
+      <h1 className="text-3xl font-bold mb-8 text-primary">Shopping Cart</h1>
       <Button
         auto
         flat
@@ -177,7 +177,7 @@ export default function CartSellers() {
             {!showShippingForm ? (
               <div className="text-center">
                 <Button
-                  className="bg-orange-400 text-white px-6 py-2 rounded-lg"
+                  className="bg-primary text-white px-6 py-2 rounded-lg"
                   onClick={() => setShowShippingForm(true)}
                 >
                   Proceed to Checkout
@@ -247,7 +247,7 @@ export default function CartSellers() {
                     </p>
                   )}
                   <Button
-                    className="bg-orange-400 text-white px-6 py-2 rounded-lg"
+                    className="bg-primary text-white px-6 py-2 rounded-lg"
                     onClick={handleCheckout}
                     isDisabled={checkoutLoading}
                   >

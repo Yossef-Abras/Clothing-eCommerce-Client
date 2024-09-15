@@ -63,7 +63,7 @@ export default function Login({ onSuccess }) {
           formData.passwordConfirm
         );
         if (!response.error) {
-          setMessage({ data: "signup successful", isError: true });
+          setMessage({ data: "Signup successful", isError: true });
           onClose();
           onSuccess();
         } else {
@@ -80,7 +80,7 @@ export default function Login({ onSuccess }) {
     <div>
       <Button
         onClick={onOpen}
-        className="min-w-fit flex rounded-full bg-orange-200 justify-center items-center  md:text-lg text-black"
+        className="min-w-fit flex rounded-full bg-primary/20 justify-center items-center md:text-lg text-black"
       >
         <BsPerson />
       </Button>
@@ -88,7 +88,7 @@ export default function Login({ onSuccess }) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-row text-orange-300 gap-3">
+              <ModalHeader className="flex flex-row text-primary gap-3">
                 <p>{Formislogin ? "Login" : "Signup"}</p>
               </ModalHeader>
 
@@ -122,7 +122,7 @@ export default function Login({ onSuccess }) {
                     <Link
                       onClick={onClose}
                       href="/forget-password"
-                      className="text-orange-500 hover:underline"
+                      className="text-primary hover:underline"
                     >
                       Forgot Password?
                     </Link>
@@ -183,7 +183,7 @@ export default function Login({ onSuccess }) {
 
               <div className="flex py-2 px-1 justify-center">
                 <Link
-                  className="hover:text-orange-300"
+                  className="hover:text-primary"
                   href=""
                   onClick={() => setFormisLogin(!Formislogin)}
                 >
@@ -204,7 +204,7 @@ export default function Login({ onSuccess }) {
                   Close
                 </Button>
                 <Button
-                  className="bg-orange-300"
+                  className="bg-primary text-white"
                   onClick={onSubmit}
                   isDisabled={
                     Formislogin

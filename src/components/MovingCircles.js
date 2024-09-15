@@ -29,7 +29,7 @@ export default function MovingCircles({ numCircles = 20 }) {
       {circles.map((circle, index) => (
         <div
           key={index}
-          className="absolute bg-orange-400 rounded-full opacity-50 animate-pulse"
+          className="absolute bg-primary rounded-full opacity-40 animate-pulse"
           style={{
             top: `${circle.top}%`,
             left: `${circle.left}%`,

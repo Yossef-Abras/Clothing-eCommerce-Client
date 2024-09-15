@@ -37,7 +37,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
 
   return (
     <nav className="bg-white shadow-md fixed top-0 w-full z-50">
-      <div className="container mx-auto flex justify-between items-center p-4">
+      <div className="container mx-auto flex justify-between items-center p-2">
         <div className="flex gap-2 items-center">
           {/* Mobile menu toggle with icons */}
           <button onClick={handleMenuToggle} className="sm:hidden rounded-full">
@@ -52,25 +52,25 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
             height={1000}
             width={1000}
             alt="saramoda logo"
-            className="w-10 h-10 drop-shadow-[0_6px_7px_rgba(0,0,0,0.20)]"
+            className="w-14 h-14 drop-shadow-[0_6px_7px_rgba(0,0,0,0.20)]"
           />
           <p
             onClick={() => router.push("/")}
-            className="text-lg font-bold text-orange-400 font-serif italic cursor-pointer"
+            className="text-2xl font-bold text-primary cursor-pointer"
           >
             SARAMODA
           </p>
         </div>
 
         {/* Desktop navigation links */}
-        <div className="hidden sm:flex gap-4">
+        <div className="hidden text-lg sm:flex gap-4">
           {Object.keys(menuItems).map((key) => (
             <Link
               key={key}
               href={`/${key}`}
               className={
                 router.pathname.slice(1) === key
-                  ? `text-orange-400 font-bold`
+                  ? `text-primary font-bold`
                   : `text-black`
               }
             >
@@ -85,19 +85,19 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
             <>
               <button
                 onClick={() => router.push("/cart")}
-                className="flex items-center justify-center w-10 h-10 bg-orange-200 rounded-full"
+                className="flex items-center justify-center w-10 h-10 bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white"
               >
                 <TfiShoppingCartFull />
               </button>
               <button
                 onClick={() => router.push("/favorite")}
-                className="flex items-center justify-center w-10 h-10 bg-orange-200 rounded-full"
+                className="flex items-center justify-center w-10 h-10 bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white"
               >
                 <MdFavorite />
               </button>
               <button
                 onClick={handleLogout}
-                className="flex items-center justify-center w-10 h-10 bg-orange-200 rounded-full"
+                className="flex items-center justify-center w-10 h-10 bg-primary/20 rounded-full text-primary hover:bg-primary hover:text-white"
               >
                 <RiLogoutCircleRLine />
               </button>
@@ -123,7 +123,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
                   onClick={() => handleLinkClick(`/${key}`)}
                   className={
                     router.pathname.slice(1) === key
-                      ? `text-orange-400 font-bold`
+                      ? `text-primary font-bold`
                       : `text-black`
                   }
                 >

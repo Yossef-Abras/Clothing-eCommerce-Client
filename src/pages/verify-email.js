@@ -54,7 +54,7 @@ export default function VerifyEmail() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-200 to-orange-400">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
       <div className="bg-white shadow-lg rounded-xl p-8 max-w-md mx-auto my-20">
         <div className="text-center">
           <h1 className="font-bold text-gray-800 font-sans text-3xl sm:text-4xl mt-8">
@@ -86,7 +86,7 @@ export default function VerifyEmail() {
                   <Button
                     type="submit"
                     onClick={handleSubmit}
-                    className="w-fit mt-8 bg-orange-400 hover:bg-orange-500 text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
+                    className="w-fit mt-8 bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-lg transition duration-300 sm:mt-6"
                     isDisabled={isLoading}
                   >
                     Submit
@@ -94,7 +94,7 @@ export default function VerifyEmail() {
 
                   <Button
                     onClick={handleResendCode}
-                    className="w-fit mt-4 bg-inherit text-orange-400 font-semibold py-3 rounded-lg transition duration-300 hover:text-orange-500 hover:border-2 hover:border-orange-400"
+                    className="w-fit mt-4 bg-inherit text-primary font-semibold py-3 rounded-lg transition duration-300 hover:text-primary-dark hover:border-2 hover:border-primary"
                     isDisabled={isLoading}
                   >
                     Resend Code

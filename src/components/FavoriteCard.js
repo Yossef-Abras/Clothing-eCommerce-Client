@@ -38,15 +38,16 @@ export default function FavoriteCard({
   };
 
   return (
-    <div className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-orange-400 bg-white overflow-hidden block mx-auto">
+    <div className="min-w-60 w-60 m-2 rounded-lg shadow-lg border-1 border-primary bg-white overflow-hidden block mx-auto">
       <div className="flex justify-center min-h-[328px] relative">
         <Image
           width={4000}
           height={3000}
           src={img}
           alt={productname}
-          className={`w-fit rounded-none max-h-[328px] relative z-10 ${imageLoaded ? "" : "hidden"
-            }`}
+          className={`w-fit rounded-none max-h-[328px] relative z-10 ${
+            imageLoaded ? "" : "hidden"
+          }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
@@ -57,14 +58,19 @@ export default function FavoriteCard({
           <div className=" flex gap-3 justify-between">
             <Button
               onClick={handleAddToCart}
-              className="w-full bg-inherit border-1 text-orange-400 hover:text-black border-orange-400 rounded-md hover:bg-orange-300 px-4 py-2 "
+              className="w-full bg-inherit border-1 text-primary hover:text-black border-primary rounded-md hover:bg-gray-200 px-4 py-2 "
             >
-              Add to Cart {priceAfterDiscount ? (<div className="flex items-center gap-1">
-                <p className="text-sm text-gray-600 line-through">{price}$</p>
-                <p className="text-lg text-red-600 font-bold">{priceAfterDiscount}$</p>
-              </div>)
-
-                : (<b className="text-black">{price}$</b>)}
+              Add to Cart{" "}
+              {priceAfterDiscount ? (
+                <div className="flex items-center gap-1">
+                  <p className="text-sm text-gray-600 line-through">{price}$</p>
+                  <p className="text-md text-red-600 font-bold">
+                    {priceAfterDiscount}$
+                  </p>
+                </div>
+              ) : (
+                <b className="text-black">{price}$</b>
+              )}
             </Button>
             <Button
               className="text-lg border-1 border-red-500 bg-inherit text-red-500 px-2 py-2 rounded min-w-10 hover:bg-red-300"

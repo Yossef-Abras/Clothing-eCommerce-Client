@@ -123,7 +123,7 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
       <div className="flex items-center gap-4 mt-4">
         <Button
           onClick={handleDecrease}
-          className="bg-orange-400 text-white rounded-full min-w-min w-8 h-8 p-0"
+          className="bg-primary text-white rounded-full min-w-min w-8 h-8 p-0"
         >
           -
         </Button>
@@ -135,13 +135,13 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
         />
         <Button
           onClick={handleIncrease}
-          className="bg-orange-400 text-white rounded-full min-w-min w-8 h-8 p-0"
+          className="bg-primary text-white rounded-full min-w-min w-8 h-8 p-0"
         >
           +
         </Button>
         <Button
           onClick={updateQuantity}
-          className={`bg-orange-400 text-white rounded-full px-4 ml-auto ${
+          className={`bg-primary text-white rounded-full px-4 ml-auto ${
             !isQuantityChanged || isUpdating
               ? "opacity-50 cursor-not-allowed"
               : ""
@@ -155,7 +155,7 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="text-orange-400">
+              <ModalHeader className="text-primary">
                 Confirm Deletion
               </ModalHeader>
               <ModalBody>

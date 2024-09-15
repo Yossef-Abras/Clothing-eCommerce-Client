@@ -6,7 +6,7 @@ import { isLogin } from "../../public/global/auth";
 import { useRouter } from "next/router";
 import AlertMessage from "../components/AlertMessage";
 
-export default function HomeLayout({ children }) {
+export default function HomeLayout({ children, className }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(true);
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
@@ -63,7 +63,7 @@ export default function HomeLayout({ children }) {
   if (userPages.includes(router.pathname) && !loginUserState) return <></>;
 
   return (
-    <div>
+    <div className={className}>
       <MyNavbar
         loginUserState={loginUserState}
         onLogin={() => {
@@ -87,16 +87,16 @@ export default function HomeLayout({ children }) {
       )}
 
       {/* Add padding-top to prevent content from being hidden by the fixed Navbar */}
-      <main style={{ paddingTop: "72px" }}>
+      <main style={{ paddingTop: "64px" }}>
         {showVerificationMessage &&
           !router.pathname.endsWith("/verify-email") && (
             <div
               style={{ marginBottom: "15px", marginTop: "15px" }}
-              className="mx-auto w-fit bg-orange-200 text-orange-800 p-2 px-3 rounded-lg shadow-md flex gap-2 justify-between items-center"
+              className="mx-auto w-fit bg-primary/20 text-primary p-2 px-3 rounded-lg shadow-md flex gap-2 justify-between items-center"
             >
               <span>You should verify your email</span>
               <Button
-                className="bg-orange-400 text-white font-bold px-4 rounded-md min-h-8 h-8"
+                className="bg-primary text-white font-bold px-4 rounded-md min-h-8 h-8"
                 onClick={() => {
                   router.push("/verify-email");
                 }}

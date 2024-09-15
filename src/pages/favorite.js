@@ -32,7 +32,7 @@ export default function Favorites() {
   };
   if (loading) {
     return (
-      <div className="min-h-[400px] text-orange-500 flex justify-center items-center">
+      <div className="min-h-[400px] text-primary flex justify-center items-center">
         <Spinner color="primary" />
       </div>
     );

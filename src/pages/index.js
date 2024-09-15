@@ -181,7 +181,7 @@ export default function Home() {
 
   if (lodaing) {
     return (
-      <div className="min-h-[400px] text-orange-500 flex justify-center items-center">
+      <div className="min-h-[400px] text-primary flex justify-center items-center">
         <Spinner color="primary" />
       </div>
     );
@@ -189,7 +189,7 @@ export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-start">
       <MovingCircles numCircles={20} />
-      <div className="w-full flex justify-center bg-gradient-to-r from-orange-100/50 via-orange-200/50 to-orange-300/50 backdrop-blur-md">
+      <div className="w-full flex justify-center bg-gradient-to-r from-gray-100/50 via-gray-200/50 to-gray-300/50 backdrop-blur-md">
         {/* <Slider className="md:w-[700px] w-[300px]"> */}
         <div className="">
           <PromoCategoryCard
@@ -205,14 +205,12 @@ export default function Home() {
       </div>
       <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
         <div className="flex justify-between items-center">
-          <label className="text-orange-400 text-lg font-bold">
-            Top Sellers
-          </label>
+          <label className="text-primary text-lg font-bold">Top Sellers</label>
           <Button
             onClick={() => {
               router.push("/products?sort=-sold");
             }}
-            className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 "
+            className=" p-0 px-2 mb-2 bg-inherit border-2 border-primary rounded-2xl hover:bg-primary/30 "
           >
             Show More
           </Button>
@@ -220,9 +218,9 @@ export default function Home() {
 
         <Progress
           size="sm"
-          color="warning"
+          color="primary"
           value={100}
-          className="font-bold text-orange-400"
+          className="font-bold text-primary"
         />
 
         <div className="relative w-[86%] mx-auto m-3">
@@ -247,23 +245,23 @@ export default function Home() {
       </div>
       <div className="w-full backdrop-blur-md m-5 my-10 px-5 pt-4">
         <div className="flex justify-between items-center">
-          <label className="text-orange-400 text-lg font-bold">
+          <label className="text-primary text-lg font-bold">
             Special Offers
           </label>
           <Button
             onClick={() => {
               router.push("/products?sort=-discount");
             }}
-            className=" p-0 px-2 mb-2 bg-inherit border-2 border-orange-400 rounded-2xl hover:bg-orange-200 "
+            className=" p-0 px-2 mb-2 bg-inherit border-2 border-primary rounded-2xl hover:bg-primary/30 "
           >
             Show More
           </Button>
         </div>
         <Progress
           size="sm"
-          color="warning"
+          color="primary"
           value={100}
-          className="font-bold text-orange-400"
+          className="font-bold text-primary"
         />
         <div className="relative w-[86%] mx-auto m-3">
           <div className="flex">
