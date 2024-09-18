@@ -97,7 +97,7 @@ export default function ProductPage() {
                   key={index}
                   className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
                     mainImage === image
-                      ? "ring-2 ring-orange-300"
+                      ? "ring-2 ring-primary"
                       : "hover:ring-2 hover:ring-gray-300"
                   }`}
                   onClick={() => setMainImage(image)}
@@ -128,7 +128,7 @@ export default function ProductPage() {
                 {productData.subcategories.map((subcategory) => (
                   <span
                     key={subcategory._id}
-                    className="w-max h-15 bg-orange-300 text-black block text-center px-2 pb-[2px] rounded-full"
+                    className="w-max bg-primary/30 text-black block text-center px-2 rounded-full"
                   >
                     {subcategory.name}
                   </span>
@@ -148,7 +148,7 @@ export default function ProductPage() {
                   <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
                     ${productData.priceAfterDiscount}
                   </span>
-                  <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-orange-300 to-orange-500 rounded-full w-fit h-10 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
+                  <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-primary-300 to-primary-500 rounded-full w-fit h-10 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
                     {Math.round(productData.discount)}% OFF
                   </div>
                 </div>
@@ -174,9 +174,9 @@ export default function ProductPage() {
                     classNames={{
                       label: "text-black tracking-[2px]",
                       trigger:
-                        "focus:ring-2 focus:ring-orange-300 focus:ring-offset-2",
+                        "focus:ring-2 focus:ring-primary focus:ring-offset-2",
                     }}
-                    style={{ backgroundColor: "#fdba74" }}
+                    // style={{ backgroundColor: "#fdba74" }}
                   >
                     {productData.colors.map((color, index) => (
                       <SelectItem key={color} value={color}>
@@ -222,9 +222,9 @@ export default function ProductPage() {
                     classNames={{
                       label: "text-black tracking-[2px]",
                       trigger:
-                        "focus:ring-2 focus:ring-orange-300 focus:ring-offset-2",
+                        "focus:ring-2 focus:ring-primary focus:ring-offset-2",
                     }}
-                    style={{ backgroundColor: "#fdba74" }}
+                    // style={{ backgroundColor: "#fdba74" }}
                   >
                     {productData.sizes.map((size, index) => (
                       <SelectItem key={size} value={size}>
@@ -250,7 +250,7 @@ export default function ProductPage() {
                 {isLoggedIn ? (
                   <Button
                     radius="2px"
-                    className="bg-gradient-to-tr from-orange-300 to-yellow-500 text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
+                    className="bg-primary text-white shadow-lg w-full h-[56px] text-lg tracking-[5px]"
                     onClick={handleAddToCart}
                     disabled={isAddingToCart}
                   >
@@ -259,7 +259,7 @@ export default function ProductPage() {
                 ) : (
                   <Button
                     radius="2px"
-                    className="bg-gradient-to-tr from-orange-300 to-yellow-500 text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
+                    className="bg-primaryi text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
                   >
                     Login to Add to Cart 🔒
                   </Button>
