@@ -98,7 +98,7 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
           />
         </div>
         <div className="flex-1">
-          <h2 className="text-2xl font-semibold mb-2">{product.title}</h2>
+          <h2 className="text-2xl font-semibold mb-2 pr-3">{product.title}</h2>
           <p className="text-gray-700 mb-1 text-lg">Price: ${price}</p>
           <p className="text-gray-700 mb-1 text-lg">
             Total: ${price * quantity}
@@ -141,11 +141,10 @@ export default function Cart({ cartItemId, product, handleCartUpdate }) {
         </Button>
         <Button
           onClick={updateQuantity}
-          className={`bg-primary text-white rounded-full px-4 ml-auto ${
-            !isQuantityChanged || isUpdating
-              ? "opacity-50 cursor-not-allowed"
-              : ""
-          }`}
+          className={`bg-primary text-white rounded-full px-4 ml-auto ${!isQuantityChanged || isUpdating
+            ? "opacity-50 cursor-not-allowed"
+            : ""
+            }`}
           disabled={!isQuantityChanged || isUpdating}
         >
           {isUpdating ? "Updating..." : "Update"}
