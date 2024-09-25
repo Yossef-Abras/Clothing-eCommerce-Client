@@ -195,9 +195,9 @@ export default function CartSellers() {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                     className="max-w-xs"
                   >
-                    <SelectItem key="cash" value="cash">
+                    {/* <SelectItem key="cash" value="cash">
                       Cash
-                    </SelectItem>
+                    </SelectItem> */}
                     <SelectItem key="card" value="card">
                       Card
                     </SelectItem>
