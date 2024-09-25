@@ -90,7 +90,7 @@ export default function ProductPage() {
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2">
-          {/* القسم الأيسر: الصور */}
+
           <div className="p-[40px] md:p-12 max-md:h-[60rem] max-sm:h-[40rem] grid gap-4 lg:grid-cols-5">
             <div className="order-last flex gap-4 lg:order-none lg:flex-col">
               {images.map((image, index) => (
@@ -245,7 +245,7 @@ export default function ProductPage() {
                     </div>
                   )}
                 </div>
-                <div className="relative overflow-hidden rounded-lg bg-gray-100 shadow-lg w-full max-w-xl mx-auto">
+                {productData.videoUrl && <div className="relative overflow-hidden rounded-lg bg-gray-100 shadow-lg w-full max-w-xl mx-auto">
                   <video
                     width="100%"
                     height="350"
@@ -254,7 +254,7 @@ export default function ProductPage() {
                   >
                     Your browser does not support the video tag.
                   </video>
-                </div>
+                </div>}
               </div>
             </div>
           </div>
