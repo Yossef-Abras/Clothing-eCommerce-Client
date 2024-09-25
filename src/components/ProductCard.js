@@ -65,13 +65,12 @@ export default function ProductCard({
           height={4000}
           src={img}
           alt={prodectname}
-          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-            imageLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          className={`w-full h-full  object-cover rounded-lg transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
           onLoad={() => setImageLoaded(true)}
         />
       </div>
-      <div className="mt-4 flex justify-between items-center">
+      <div className="mt-4 flex justify-between items-center h-20">
         <div>
           <p className="text-lg font-bold text-gray-800">{prodectname}</p>
           {priceAfterDiscount ? (
@@ -90,7 +89,7 @@ export default function ProductCard({
         <Button
           onClick={handleAddToWishlist}
           disabled={isAddingDeleting}
-          className="bg-transparent hover:bg-transparent p-0 m-0 min-w-0"
+          className="bg-transparent hover:bg-transparent p-0 m-0 min-w-6"
           aria-label="Add to wishlist"
         >
           {isFav ? (
