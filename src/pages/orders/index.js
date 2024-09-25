@@ -26,7 +26,7 @@ export default function Orders() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-orange-400">
+      <div className="min-h-screen flex items-center justify-center text-primary">
         <Spinner color="primary" />
       </div>
     );
@@ -34,7 +34,7 @@ export default function Orders() {
 
   return (
     <div className="w-full min-h-screen p-5 bg-gray-100">
-      <h1 className="text-3xl font-bold mb-1 text-orange-400">Your Orders</h1>
+      <h1 className="text-3xl font-bold mb-1 text-primary">Your Orders</h1>
       <p className="text-xs text-gray-400 pl-1">
         Click on order item to show details
       </p>
@@ -44,19 +44,19 @@ export default function Orders() {
             <Link key={order._id} href={`/orders/${order._id}`} passHref>
               <div className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 cursor-pointer">
                 <div className="flex items-center">
-                  <FaCalendarDay className="text-orange-500 mr-2" />
+                  <FaCalendarDay className="text-primary mr-2" />
                   <span className="font-semibold text-gray-700">ID:</span>
                   <span className="ml-2 text-gray-600">{order._id}</span>
                 </div>
                 <div className="flex items-center">
-                  <FaDollarSign className="text-orange-500 mr-2" />
+                  <FaDollarSign className="text-primary mr-2" />
                   <span className="font-semibold text-gray-700">Price:</span>
                   <span className="ml-2 text-gray-600">
                     ${order.totalOrderPrice}
                   </span>
                 </div>
                 <div className="flex items-center">
-                  <FaCalendarDay className="text-orange-500 mr-2" />
+                  <FaCalendarDay className="text-primary mr-2" />
                   <span className="font-semibold text-gray-700">
                     Created At:
                   </span>
