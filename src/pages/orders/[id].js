@@ -45,7 +45,7 @@ export default function OrderDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-orange-400">
+      <div className="min-h-screen flex items-center justify-center text-primary">
         <Spinner color="primary" />
       </div>
     );
@@ -61,18 +61,18 @@ export default function OrderDetails() {
 
   return (
     <div className="w-full min-h-screen p-5 bg-gray-100">
-      <h1 className="text-3xl font-bold mb-8 text-orange-400 text-center">
+      <h1 className="text-3xl font-bold mb-8 text-primary text-center">
         Order Details
       </h1>
       <Card className="shadow-lg rounded-lg overflow-hidden bg-white mb-6 border border-gray-200">
         <div className="p-6">
-          <h2 className="text-2xl font-bold mb-4 text-orange-500">Details</h2>
+          <h2 className="text-2xl font-bold mb-4 text-primary">Details</h2>
           <div className="overflow-x-auto">
             <table className="w-full table-auto mb-6">
               <tbody>
                 <tr className="flex items-center">
                   <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
-                    <FaCalendarDay className="text-orange-500 mr-2" />
+                    <FaCalendarDay className="text-primary mr-2" />
                     Order ID:
                   </td>
                   <td className="py-2 px-4 text-gray-600 min-w-max">
@@ -81,7 +81,7 @@ export default function OrderDetails() {
                 </tr>
                 <tr className="flex items-center">
                   <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
-                    <FaShippingFast className="text-orange-500 mr-2" />
+                    <FaShippingFast className="text-primary mr-2" />
                     Shipping Address:
                   </td>
                   <td className="py-2 px-4 text-gray-600 min-w-max">
@@ -92,7 +92,7 @@ export default function OrderDetails() {
                 </tr>
                 <tr className="flex items-center">
                   <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
-                    <FaPhoneAlt className="text-orange-500 mr-2" />
+                    <FaPhoneAlt className="text-primary mr-2" />
                     Phone:
                   </td>
                   <td className="py-2 px-4 text-gray-600 min-w-max">
@@ -101,16 +101,16 @@ export default function OrderDetails() {
                 </tr>
                 <tr className="flex items-center">
                   <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
-                    <FaDollarSign className="text-orange-500 mr-2" />
+                    <FaDollarSign className="text-primary mr-2" />
                     Total Price:
                   </td>
                   <td className="py-2 px-4 text-gray-600 min-w-max">
-                    ${order.totalOrderPrice}
+                    ${order.totalOrderPrice} including tax of {order.taxPrice}
                   </td>
                 </tr>
                 <tr className="flex items-center">
                   <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
-                    <FaCalendarDay className="text-orange-500 mr-2" />
+                    <FaCalendarDay className="text-primary mr-2" />
                     Created At:
                   </td>
                   <td className="py-2 px-4 text-gray-600 min-w-max">
@@ -119,7 +119,7 @@ export default function OrderDetails() {
                 </tr>
                 <tr className="flex items-center">
                   <td className="py-2 px-4 font-semibold text-gray-700 flex items-center min-w-max">
-                    <FaCreditCard className="text-orange-500 mr-2" />
+                    <FaCreditCard className="text-primary mr-2" />
                     Payment Method:
                   </td>
                   <td className="py-2 px-4 text-gray-600 min-w-max">
@@ -157,9 +157,7 @@ export default function OrderDetails() {
           </div>
           <Divider />
           <div className="mt-1">
-            <h2 className="text-2xl font-bold mb-4 text-orange-500">
-              Products:
-            </h2>
+            <h2 className="text-2xl font-bold mb-4 text-primary">Products:</h2>
             <div className="flex flex-wrap gap-4">
               {order.cartItems.map((item) => (
                 <div
@@ -173,7 +171,7 @@ export default function OrderDetails() {
                     isHoverable
                     className="relative flex flex-row shadow-md border border-gray-200 rounded-lg"
                   >
-                    <div className="absolute top-0 right-0 bg-orange-500 text-white text-xs px-2 py-1 rounded-bl-lg">
+                    <div className="absolute top-0 right-0 bg-primary text-white text-xs px-2 py-1 rounded-bl-lg">
                       ${item.price}
                     </div>
                     <div className="w-28">
