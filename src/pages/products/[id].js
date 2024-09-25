@@ -90,16 +90,16 @@ export default function ProductPage() {
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2">
+          {/* القسم الأيسر: الصور */}
           <div className="p-[40px] md:p-12 max-md:h-[60rem] max-sm:h-[40rem] grid gap-4 lg:grid-cols-5">
             <div className="order-last flex gap-4 lg:order-none lg:flex-col">
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
-                    mainImage === image
-                      ? "ring-2 ring-primary"
-                      : "hover:ring-2 hover:ring-gray-300"
-                  }`}
+                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${mainImage === image
+                    ? "ring-2 ring-primary"
+                    : "hover:ring-2 hover:ring-gray-300"
+                    }`}
                   onClick={() => setMainImage(image)}
                 >
                   <Image
@@ -122,151 +122,161 @@ export default function ProductPage() {
               />
             </div>
           </div>
-          <div className="md:pt-14">
-            <div className="mb-5 md:mb-3 h-full flex flex-col gap-[35px]">
-              <div className="flex gap-2">
-                {productData.subcategories.map((subcategory) => (
-                  <span
-                    key={subcategory._id}
-                    className="w-max bg-primary/30 text-black block text-center px-2 rounded-full"
-                  >
-                    {subcategory.name}
-                  </span>
-                ))}
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                {productData.title}
-              </h2>
-              {productData.priceAfterDiscount ? (
-                <div className="flex gap-2 items-center">
-                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
-                    Price
-                  </span>
-                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif line-through">
-                    ${productData.price}
-                  </span>
-                  <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
-                    ${productData.priceAfterDiscount}
-                  </span>
-                  <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-primary-300 to-primary-500 rounded-full w-fit h-10 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
-                    {Math.round(productData.discount)}% OFF
-                  </div>
+
+          <div className="md:pt-14 relative flex flex-col justify-between">
+            <div>
+              <div className="mb-5 md:mb-3 h-full flex flex-col gap-[15px]">
+                <div className="flex gap-2">
+                  {productData.subcategories.map((subcategory) => (
+                    <span
+                      key={subcategory._id}
+                      className="w-max bg-primary/30 text-black block text-center px-2 rounded-full"
+                    >
+                      {subcategory.name}
+                    </span>
+                  ))}
                 </div>
-              ) : (
-                <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
-                  Price ${productData.price}
-                </span>
-              )}
-
-              <div>
-                <h2 className="text-base">{productData.description}</h2>
-              </div>
-              <div className="inline-flex flex-col gap-[15px]">
-                <h2 className="text-2xl font-semibold">Color</h2>
-                {isLoggedIn ? (
-                  <Select
-                    disallowEmptySelection={true}
-                    label="Please Select Your Color"
-                    defaultSelectedKeys={[selectedColor]}
-                    value={selectedColor}
-                    onChange={(e) => setSelectedColor(e.target.value)}
-                    className="max-w-full"
-                    classNames={{
-                      label: "text-black tracking-[2px]",
-                      trigger:
-                        "focus:ring-2 focus:ring-primary focus:ring-offset-2",
-                    }}
-                    // style={{ backgroundColor: "#fdba74" }}
-                  >
-                    {productData.colors.map((color, index) => (
-                      <SelectItem key={color} value={color}>
-                        {color}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {productData.colors.map((color, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-gray-200 rounded-md"
-                      >
-                        {color}
-                      </span>
-                    ))}
+                <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
+                  {productData.title}
+                </h2>
+                {productData.priceAfterDiscount ? (
+                  <div className="flex gap-2 items-center">
+                    <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                      Price
+                    </span>
+                    <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif line-through">
+                      ${productData.price}
+                    </span>
+                    <span className="w-max text-red-600 text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                      ${productData.priceAfterDiscount}
+                    </span>
+                    <div className="ml-4 px-4 py-2 flex justify-center items-center bg-gradient-to-r from-primary-300 to-primary-500 rounded-full w-fit h-10 shadow-lg text-sm uppercase leading-6 tracking-[1px] font-bold text-white">
+                      {Math.round(productData.discount)}% OFF
+                    </div>
                   </div>
-                )}
-              </div>
-
-              <div className="inline-flex flex-col gap-[15px]">
-                <h2 className="text-2xl font-semibold">Size</h2>
-                {isLoggedIn ? (
-                  <Select
-                    disallowEmptySelection={true}
-                    label={
-                      <div className="flex items-center gap-2">
-                        {"Please Select Your Size"}
-                        <Image
-                          src={ButnIc}
-                          width={16}
-                          height={16}
-                          alt=""
-                          loading="lazy"
-                        />
-                      </div>
-                    }
-                    defaultSelectedKeys={[selectedSize]}
-                    value={selectedSize}
-                    onChange={(e) => setSelectedSize(e.target.value)}
-                    className="max-w-full"
-                    classNames={{
-                      label: "text-black tracking-[2px]",
-                      trigger:
-                        "focus:ring-2 focus:ring-primary focus:ring-offset-2",
-                    }}
-                    // style={{ backgroundColor: "#fdba74" }}
-                  >
-                    {productData.sizes.map((size, index) => (
-                      <SelectItem key={size} value={size}>
-                        {size}
-                      </SelectItem>
-                    ))}
-                  </Select>
                 ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {productData.sizes.map((size, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-gray-200 rounded-md"
-                      >
-                        {size}
-                      </span>
-                    ))}
-                  </div>
+                  <span className="w-max text-[#2b2f2e] text-[1.25rem] font-[750] uppercase leading-6 tracking-[1px] font-serif">
+                    Price ${productData.price}
+                  </span>
                 )}
-              </div>
 
-              <div className="w-full mt-20">
-                {isLoggedIn ? (
-                  <Button
-                    radius="2px"
-                    className="bg-primary text-white shadow-lg w-full h-[56px] text-lg tracking-[5px]"
-                    onClick={handleAddToCart}
-                    disabled={isAddingToCart}
+                <div>
+                  <h2 className="text-base">{productData.description}</h2>
+                </div>
+                <div className="inline-flex flex-col gap-[15px]">
+                  <h2 className="text-2xl font-semibold">Color</h2>
+                  {isLoggedIn ? (
+                    <Select
+                      disallowEmptySelection={true}
+                      label="Please Select Your Color"
+                      defaultSelectedKeys={[selectedColor]}
+                      value={selectedColor}
+                      onChange={(e) => setSelectedColor(e.target.value)}
+                      className="max-w-full"
+                      classNames={{
+                        label: "text-black tracking-[2px]",
+                        trigger:
+                          "focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                      }}
+                    >
+                      {productData.colors.map((color, index) => (
+                        <SelectItem key={color} value={color}>
+                          {color}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {productData.colors.map((color, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-gray-200 rounded-md"
+                        >
+                          {color}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="inline-flex flex-col gap-[15px]">
+                  <h2 className="text-2xl font-semibold">Size</h2>
+                  {isLoggedIn ? (
+                    <Select
+                      disallowEmptySelection={true}
+                      label={
+                        <div className="flex items-center gap-2">
+                          {"Please Select Your Size"}
+                          <Image
+                            src={ButnIc}
+                            width={16}
+                            height={16}
+                            alt=""
+                            loading="lazy"
+                          />
+                        </div>
+                      }
+                      defaultSelectedKeys={[selectedSize]}
+                      value={selectedSize}
+                      onChange={(e) => setSelectedSize(e.target.value)}
+                      className="max-w-full"
+                      classNames={{
+                        label: "text-black tracking-[2px]",
+                        trigger:
+                          "focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                      }}
+                    >
+                      {productData.sizes.map((size, index) => (
+                        <SelectItem key={size} value={size}>
+                          {size}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {productData.sizes.map((size, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-gray-200 rounded-md"
+                        >
+                          {size}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="relative overflow-hidden rounded-lg bg-gray-100 shadow-lg w-full max-w-xl mx-auto">
+                  <video
+                    width="100%"
+                    height="350"
+                    controls
+                    src={productData.videoUrl}
                   >
-                    {isAddingToCart ? "Adding to cart..." : "Add To Cart 🛒"}
-                  </Button>
-                ) : (
-                  <Button
-                    radius="2px"
-                    className="bg-primaryi text-white shadow-lg w-full h-[56px] text-base tracking-[5px]"
-                  >
-                    Login to Add to Cart 🔒
-                  </Button>
-                )}
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="w-full my-10 flex justify-center">
+          {isLoggedIn ? (
+            <Button
+              radius="2px"
+              className="bg-primary text-white shadow-lg w-1/2 h-[56px] text-lg tracking-[5px]"
+              onClick={handleAddToCart}
+              disabled={isAddingToCart}
+            >
+              {isAddingToCart ? "Adding to cart..." : "Add To Cart 🛒"}
+            </Button>
+          ) : (
+            <Button
+              radius="2px"
+              className="bg-primaryi text-primary text-lg border-1 border-primary shadow-lg w-1/2 h-[56px]  tracking-[5px]"
+            >
+              Login to Add to Cart 🔒
+            </Button>
+          )}
         </div>
       </div>
     </div>
