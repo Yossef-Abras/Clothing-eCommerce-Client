@@ -90,16 +90,16 @@ export default function ProductPage() {
     <div className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2">
-
           <div className="p-[40px] md:p-12 max-md:h-[60rem] max-sm:h-[40rem] grid gap-4 lg:grid-cols-5">
             <div className="order-last flex gap-4 lg:order-none lg:flex-col">
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${mainImage === image
-                    ? "ring-2 ring-primary"
-                    : "hover:ring-2 hover:ring-gray-300"
-                    }`}
+                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
+                    mainImage === image
+                      ? "ring-2 ring-primary"
+                      : "hover:ring-2 hover:ring-gray-300"
+                  }`}
                   onClick={() => setMainImage(image)}
                 >
                   <Image
@@ -245,16 +245,18 @@ export default function ProductPage() {
                     </div>
                   )}
                 </div>
-                {productData.videoUrl && <div className="relative overflow-hidden rounded-lg bg-gray-100 shadow-lg w-full max-w-xl mx-auto">
-                  <video
-                    width="100%"
-                    height="350"
-                    controls
-                    src={productData.videoUrl}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </div>}
+                {productData.videoUrl && (
+                  <div className="relative overflow-hidden rounded-lg bg-gray-100 shadow-lg w-full max-w-xl mx-auto">
+                    <video
+                      width="100%"
+                      height="350"
+                      controls
+                      src={productData.videoUrl}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -263,7 +265,7 @@ export default function ProductPage() {
           {isLoggedIn ? (
             <Button
               radius="2px"
-              className="bg-primary text-white shadow-lg w-1/2 h-[56px] text-lg tracking-[5px]"
+              className="bg-primary text-white shadow-lg h-[56px] text-lg tracking-[5px] px-8"
               onClick={handleAddToCart}
               disabled={isAddingToCart}
             >
@@ -272,7 +274,7 @@ export default function ProductPage() {
           ) : (
             <Button
               radius="2px"
-              className="bg-primaryi text-primary text-lg border-1 border-primary shadow-lg w-1/2 h-[56px]  tracking-[5px]"
+              className="bg-primaryi text-primary text-lg border-1 border-primary shadow-lg w-max h-[56px]  tracking-[5px]"
             >
               Login to Add to Cart 🔒
             </Button>
