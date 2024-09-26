@@ -170,10 +170,23 @@ export default function CartSellers() {
             />
           ))}
           <div className="w-full max-w-lg mx-auto bg-white border border-gray-300 rounded-lg shadow-lg p-4 mt-8">
-            <div className="flex justify-between mb-4">
-              <span className="text-xl font-semibold">Total:</span>
-              <span className="text-xl font-semibold">$ {totalCartPrice}</span>
+            <div className="flex justify-between">
+              <div className="flex gap-2 mb-4 w-1/2">
+                <span className="text-xl font-semibold">Total:</span>
+                <span className="text-xl font-semibold">
+                  $ {totalCartPrice}
+                </span>
+              </div>
+              <div className="flex gap-2 mb-4 w-1/2">
+                <span className="text-xl font-semibold">
+                  Total with tax (6%):
+                </span>
+                <span className="text-xl font-semibold text-blue-700">
+                  $ {totalCartPrice + (totalCartPrice * 6) / 100}
+                </span>
+              </div>
             </div>
+
             {!showShippingForm ? (
               <div className="text-center">
                 <Button
