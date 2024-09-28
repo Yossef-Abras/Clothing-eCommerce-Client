@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Spinner, Input, Select, SelectItem } from "@nextui-org/react";
 import { getCart } from "../../public/global/cart";
-import {
-  createCheckoutSession,
-  createCashOrder,
-} from "../../public/global/order";
+import { createCheckoutSession } from "../../public/global/order";
 import { useRouter } from "next/router";
 import Cart from "../components/Cart";
 import { TbLogs } from "react-icons/tb";
@@ -13,8 +10,10 @@ export default function CartSellers() {
   const [cartId, setCartId] = useState(null);
   const [cart, setCart] = useState([]);
   const [totalCartPrice, setTotalCartPrice] = useState(0);
+  const [shippingCost, setShippingCost] = useState(0);
   const [loading, setLoading] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [shippingMethod, setShippingMethod] = useState("Priority");
   const [shippingAddress, setShippingAddress] = useState({
     details: "",
     phone: "",
@@ -52,6 +51,21 @@ export default function CartSellers() {
     fetchCart();
   }, []);
 
+  useEffect(() => {
+    // Calculate shipping cost based on method and total cart price
+    if (shippingMethod === "Express") {
+      setShippingCost(30);
+    } else if (shippingMethod === "Overnight") {
+      setShippingCost(15);
+    } else if (shippingMethod === "Priority") {
+      if (totalCartPrice > 100) {
+        setShippingCost(0);
+      } else {
+        setShippingCost(5);
+      }
+    }
+  }, [shippingMethod, totalCartPrice]);
+
   const handleCartUpdate = (totalCartPrice, updatedCart) => {
     setCart(updatedCart);
     setTotalCartPrice(totalCartPrice);
@@ -82,20 +96,19 @@ export default function CartSellers() {
     setOrderSuccess(false);
     try {
       if (paymentMethod === "cash") {
-        // Handle cash order creation
-        const cashOrderResponse = await createCashOrder(
-          cartId,
-          shippingAddress
-        );
-        if (cashOrderResponse.status === "success") {
-          setOrderSuccess(true);
-          router.push("/orders");
-        }
+        // const cashOrderResponse = await createCashOrder(
+        //   cartId,
+        //   shippingAddress
+        // );
+        // if (cashOrderResponse.status === "success") {
+        //   setOrderSuccess(true);
+        //   router.push("/orders");
+        // }
       } else {
-        // Handle card payment
         const sessionResponse = await createCheckoutSession(
           cartId,
-          shippingAddress
+          shippingAddress,
+          shippingMethod
         );
 
         if (sessionResponse.url) {
@@ -109,7 +122,6 @@ export default function CartSellers() {
               isError: true,
             })
           );
-          console.error("Failed to create checkout session or URL is missing");
         }
       }
     } catch (error) {
@@ -170,21 +182,17 @@ export default function CartSellers() {
             />
           ))}
           <div className="w-full max-w-lg mx-auto bg-white border border-gray-300 rounded-lg shadow-lg p-4 mt-8">
-            <div className="flex justify-between">
-              <div className="flex gap-2 mb-4 w-1/2">
-                <span className="text-xl font-semibold">Total:</span>
-                <span className="text-xl font-semibold">
-                  $ {totalCartPrice}
-                </span>
-              </div>
-              <div className="flex gap-2 mb-4 w-1/2">
-                <span className="text-xl font-semibold">
-                  Total with tax (6%):
-                </span>
-                <span className="text-xl font-semibold text-blue-700">
-                  $ {totalCartPrice + (totalCartPrice * 6) / 100}
-                </span>
-              </div>
+            <div className="flex gap-2 mb-4">
+              <span className="text-xl font-semibold">Products price:</span>
+              <span className="text-xl font-semibold">$ {totalCartPrice}</span>
+            </div>
+            <div className="flex gap-2 mb-4">
+              <span className="text-xl font-semibold">
+                Total (Tax 6% + Shipping price {shippingCost}):
+              </span>
+              <span className="text-xl font-semibold text-blue-700">
+                $ {totalCartPrice + shippingCost + (totalCartPrice * 6) / 100}
+              </span>
             </div>
 
             {!showShippingForm ? (
@@ -208,14 +216,39 @@ export default function CartSellers() {
                     onChange={(e) => setPaymentMethod(e.target.value)}
                     className="max-w-xs"
                   >
-                    {/* <SelectItem key="cash" value="cash">
-                      Cash
-                    </SelectItem> */}
                     <SelectItem key="card" value="card">
                       Card
                     </SelectItem>
+                    {/* <SelectItem key="cash" value="cash">
+                      Cash
+                    </SelectItem> */}
                   </Select>
                 </div>
+
+                <div className="mb-4">
+                  <Select
+                    defaultSelectedKeys={["Priority"]}
+                    disallowEmptySelection={true}
+                    label="Shipping Method"
+                    placeholder="Select a shipping method"
+                    variant="bordered"
+                    onChange={(e) => setShippingMethod(e.target.value)}
+                    className="max-w-xs"
+                  >
+                    <SelectItem key="Express" value="Express">
+                      Express - $30 (same day)
+                    </SelectItem>
+                    <SelectItem key="Overnight" value="Overnight">
+                      Overnight - $15 (second day)
+                    </SelectItem>
+                    <SelectItem key="Priority" value="Priority">
+                      {totalCartPrice > 100
+                        ? "Priority (1-3 days) - Free (order >= $100)"
+                        : "Priority (1-3 days) - $5 (order < $100)"}
+                    </SelectItem>
+                  </Select>
+                </div>
+
                 <div className="mb-4">
                   <Input
                     name="details"
@@ -248,6 +281,7 @@ export default function CartSellers() {
                     onChange={handleInputChange}
                   />
                 </div>
+
                 <div className="text-center">
                   {orderSuccess && paymentMethod === "cash" && (
                     <p className="text-green-600 mb-4">
@@ -256,19 +290,15 @@ export default function CartSellers() {
                   )}
                   {orderSuccess && paymentMethod === "card" && (
                     <p className="text-green-600 mb-4">
-                      Redirecting to payment...
+                      Redirecting to checkout page...
                     </p>
                   )}
                   <Button
                     className="bg-primary text-white px-6 py-2 rounded-lg"
+                    disabled={checkoutLoading}
                     onClick={handleCheckout}
-                    isDisabled={checkoutLoading}
                   >
-                    {checkoutLoading ? (
-                      <Spinner color="white" size="sm" />
-                    ) : (
-                      "Proceed to Payment"
-                    )}
+                    {checkoutLoading ? <Spinner /> : "Confirm Order"}
                   </Button>
                 </div>
               </div>
@@ -276,7 +306,9 @@ export default function CartSellers() {
           </div>
         </div>
       ) : (
-        <p className="text-gray-500 text-lg text-center">Your cart is empty.</p>
+        <p className="text-center text-xl text-red-500">
+          Your cart is empty. Add items to proceed.
+        </p>
       )}
     </div>
   );

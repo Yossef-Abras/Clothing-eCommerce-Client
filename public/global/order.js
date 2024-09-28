@@ -39,7 +39,11 @@ export const getSpecificUserOrders = async (orderId) => {
   }
 };
 
-export const createCashOrder = async (cartId, shippingAddress) => {
+export const createCashOrder = async (
+  cartId,
+  shippingAddress,
+  shippingMethod
+) => {
   // shippingAddress: {
   //   details: String,
   //   phone: String,
@@ -50,8 +54,8 @@ export const createCashOrder = async (cartId, shippingAddress) => {
   if (token) {
     try {
       const response = await axios.post(
-        `${process.env.BASE_API_URL}/orders/${cartId}`,
-        { shippingAddress },
+        `${process.env.BASE_API_URL}/orders/${cartId}?`,
+        { shippingAddress, shippingMethod },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -65,7 +69,11 @@ export const createCashOrder = async (cartId, shippingAddress) => {
   }
 };
 
-export const createCheckoutSession = async (cartId, shippingAddress) => {
+export const createCheckoutSession = async (
+  cartId,
+  shippingAddress,
+  shippingMethod
+) => {
   let token = localStorage.getItem("token");
 
   if (token) {
@@ -75,7 +83,7 @@ export const createCheckoutSession = async (cartId, shippingAddress) => {
       ).toString();
 
       const response = await axios.get(
-        `${process.env.BASE_API_URL}/orders/checkout-session/${cartId}?${shippingAddressParams}`,
+        `${process.env.BASE_API_URL}/orders/checkout-session/${cartId}?${shippingAddressParams}&shippingMethod=${shippingMethod}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
