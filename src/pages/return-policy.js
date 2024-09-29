@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ReturnPolicy() {
     return (
-        <div className="container mx-auto p-6 max-w-3xl shadow-lg rounded-lg my-4 bg-orange-100">
+        <div className="container mx-auto p-6 max-w-3xl shadow-lg rounded-lg my-4 bg-gray-100">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Return & Exchange Policy</h1>
             <div className="space-y-6 text-gray-700">
                 <p>Your satisfaction is our top priority. If you are not completely satisfied with your purchase, we are here to help.</p>
