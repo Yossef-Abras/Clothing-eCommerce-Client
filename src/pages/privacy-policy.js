@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
         </h2>
         <p>
           We collect information such as your name, email address, billing and
-          shipping address, payment details, and any other information you
+          shipping address, and any other information you
           provide when placing an order.
         </p>
         <h2 className="text-2xl font-semibold text-gray-800">
