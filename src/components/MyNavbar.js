@@ -80,7 +80,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
         </div>
 
         {/* Cart, Favorites, Logout/Login */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center md:gap-4 gap-2">
           {isLoggedIn ? (
             <>
               <button
