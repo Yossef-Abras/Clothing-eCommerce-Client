@@ -5,6 +5,7 @@ import { createCheckoutSession } from "../../public/global/order";
 import { useRouter } from "next/router";
 import Cart from "../components/Cart";
 import { TbLogs } from "react-icons/tb";
+import { FaInfoCircle } from "react-icons/fa";
 
 export default function CartSellers() {
   const [cartId, setCartId] = useState(null);
@@ -220,8 +221,8 @@ export default function CartSellers() {
                       Card
                     </SelectItem>
                     {/* <SelectItem key="cash" value="cash">
-                      Cash
-                    </SelectItem> */}
+                          Cash
+                        </SelectItem> */}
                   </Select>
                 </div>
 
@@ -252,7 +253,7 @@ export default function CartSellers() {
                 <div className="mb-4">
                   <Input
                     name="details"
-                    label="Shipping Details"
+                    label="Shipping Address Details"
                     value={shippingAddress.details}
                     onChange={handleInputChange}
                   />
@@ -282,6 +283,12 @@ export default function CartSellers() {
                   />
                 </div>
 
+                {/* Warning message about accurate shipping address */}
+                <div className="flex items-center gap-1 text-yellow-600 text-sm mb-2">
+                  <FaInfoCircle className="text-base" />
+                  Please make sure to enter the shipping address accurately.
+                </div>
+
                 <div className="text-center">
                   {orderSuccess && paymentMethod === "cash" && (
                     <p className="text-green-600 mb-4">
@@ -298,7 +305,11 @@ export default function CartSellers() {
                     disabled={checkoutLoading}
                     onClick={handleCheckout}
                   >
-                    {checkoutLoading ? <Spinner /> : "Confirm Order"}
+                    {checkoutLoading ? (
+                      <Spinner color="white" />
+                    ) : (
+                      "Confirm Order"
+                    )}
                   </Button>
                 </div>
               </div>
