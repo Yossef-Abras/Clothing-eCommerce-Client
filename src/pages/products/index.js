@@ -185,7 +185,7 @@ export default function Index() {
         <Progress
           size="sm"
           aria-label="Loading progress"
-          color="warning"
+          color="primary"
           value={100}
           className="w-full md:w-1/3 hidden md:block"
         />

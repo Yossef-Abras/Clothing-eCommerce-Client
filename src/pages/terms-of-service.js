@@ -2,13 +2,13 @@ import React from "react";
 
 export default function TermsOfService() {
   return (
-    <div className="container mx-auto p-6 max-w-3xl bg-orange-100 shadow-lg rounded-lg my-4">
+    <div className="container mx-auto p-6 max-w-3xl bg-gray-100 shadow-lg rounded-lg my-4">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">
         Terms of Service
       </h1>
       <div className="space-y-6 text-gray-700">
         <p>
-          Welcome to <span className="text-orange-400">Saramoda</span>. These
+          Welcome to <span className="font-bold">Saramoda</span>. These
           terms and conditions outline the rules and regulations for the use of
           our website.
         </p>
