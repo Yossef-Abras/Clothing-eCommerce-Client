@@ -15,6 +15,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { login, signup } from "../../public/global/auth";
 import Message from "./Message";
 
+
 export default function Login({ onSuccess }) {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
@@ -210,12 +211,12 @@ export default function Login({ onSuccess }) {
                     Formislogin
                       ? !(formData.email && formData.password)
                       : !(
-                          formData.name &&
-                          formData.email &&
-                          formData.password &&
-                          formData.passwordConfirm &&
-                          formData.password === formData.passwordConfirm
-                        )
+                        formData.name &&
+                        formData.email &&
+                        formData.password &&
+                        formData.passwordConfirm &&
+                        formData.password === formData.passwordConfirm
+                      )
                   }
                 >
                   {Formislogin
@@ -223,8 +224,8 @@ export default function Login({ onSuccess }) {
                       ? "login.."
                       : "login"
                     : loading
-                    ? "Signing.."
-                    : "Sign up"}
+                      ? "Signing.."
+                      : "Sign up"}
                 </Button>
               </ModalFooter>
             </>
