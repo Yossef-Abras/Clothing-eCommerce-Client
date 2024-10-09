@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 import { isLogin } from "../../public/global/auth";
 import { useRouter } from "next/router";
 import AlertMessage from "../components/AlertMessage";
+import { useDispatch, useSelector } from "react-redux";
+import { sign } from "../store/userSlice";
+
 
 export default function HomeLayout({ children, className }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(true);
   const [showVerificationMessage, setShowVerificationMessage] = useState(false);
-  const [loginUserState, setLoginUserState] = useState(false);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [alertMessage, setAlertMessage] = useState(null);
   const [isError, setIsError] = useState(false);
   const userPages = ["/cart", "/favorite"];
@@ -20,7 +24,8 @@ export default function HomeLayout({ children, className }) {
       try {
         setPageLoading(true);
         const result = await isLogin();
-        setLoginUserState(result);
+        dispatch(sign(result))
+        console.log(result)
         setShowVerificationMessage(
           !JSON.parse(localStorage.getItem("user")).emailVerified && result
         );
@@ -33,12 +38,12 @@ export default function HomeLayout({ children, className }) {
   }, []);
 
   useEffect(() => {
-    if (!pageLoading && userPages.includes(router.pathname) && !loginUserState)
+    if (!pageLoading && userPages.includes(router.pathname) && !isLoggedIn)
       router.replace("/");
     setShowVerificationMessage(
-      !JSON.parse(localStorage.getItem("user"))?.emailVerified && loginUserState
+      !JSON.parse(localStorage.getItem("user"))?.emailVerified && isLoggedIn
     );
-  }, [router, loginUserState, pageLoading]);
+  }, [router, isLoggedIn, pageLoading]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,23 +65,11 @@ export default function HomeLayout({ children, className }) {
       </div>
     );
 
-  if (userPages.includes(router.pathname) && !loginUserState) return <></>;
+  if (userPages.includes(router.pathname) && !isLoggedIn) return <></>;
 
   return (
     <div className={className}>
-      <MyNavbar
-        loginUserState={loginUserState}
-        onLogin={() => {
-          setLoginUserState(true);
-          setShowVerificationMessage(
-            !JSON.parse(localStorage.getItem("user"))?.emailVerified
-          );
-        }}
-        onLogout={() => {
-          setLoginUserState(false);
-          setShowVerificationMessage(false);
-        }}
-      />
+      <MyNavbar />
 
       {alertMessage && (
         <AlertMessage
