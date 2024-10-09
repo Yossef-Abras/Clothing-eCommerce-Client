@@ -7,17 +7,19 @@ import { MdFavorite } from "react-icons/md";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 import Login from "./login";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/userSlice";
 
-export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
+export default function MyNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(loginUserState);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    onLogout();
+    dispatch(logout())
   };
 
   const handleMenuToggle = () => {
@@ -103,12 +105,7 @@ export default function MyNavbar({ loginUserState, onLogin, onLogout }) {
               </button>
             </>
           ) : (
-            <Login
-              onSuccess={() => {
-                setIsLoggedIn(true);
-                onLogin();
-              }}
-            />
+            <Login />
           )}
         </div>
       </div>
