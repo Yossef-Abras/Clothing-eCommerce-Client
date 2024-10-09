@@ -6,6 +6,7 @@ import {
   handle401Error,
 } from "./helper";
 
+
 export const isLogin = async () => {
   const token = getToken();
   if (!token) return false;
@@ -16,7 +17,8 @@ export const isLogin = async () => {
       },
     });
     localStorage.setItem("user", JSON.stringify(res.data.user));
-    return true;
+    return res.data;
+
   } catch (err) {
     handle401Error(err);
   }
@@ -33,8 +35,10 @@ export const login = async (email, password) => {
     );
     setToken(response.data.token);
     localStorage.setItem("user", JSON.stringify(response.data.user));
+    console.log(response.data)
     return { error: false, data: response.data };
   } catch (error) {
+    console.log(error)
     if (error.response.status === 401)
       return { error: true, msg: error.response.data.message };
     throw error.response.data;
