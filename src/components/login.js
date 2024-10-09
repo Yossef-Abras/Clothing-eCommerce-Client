@@ -12,11 +12,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { login, signup } from "../../public/global/auth";
 import Message from "./Message";
+import { sign } from "../store/userSlice";
 
-
-export default function Login({ onSuccess }) {
+export default function Login() {
   const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const [Formislogin, setFormisLogin] = useState(true);
@@ -28,6 +29,8 @@ export default function Login({ onSuccess }) {
   });
   const [message, setMessage] = useState({ data: "", isError: Boolean });
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
 
   const resetMessage = () => {
     setMessage({ data: "", isError: Boolean });
@@ -48,9 +51,9 @@ export default function Login({ onSuccess }) {
         setLoading(true);
         const response = await login(formData.email, formData.password);
         if (!response.error) {
+          dispatch(sign(response.data));
           setMessage({ data: "Login successful", isError: true });
           onClose();
-          onSuccess();
         } else {
           setMessage({ data: response.msg, isError: false });
         }
@@ -64,16 +67,17 @@ export default function Login({ onSuccess }) {
           formData.passwordConfirm
         );
         if (!response.error) {
+          dispatch(sign({ email: formData.email }));
           setMessage({ data: "Signup successful", isError: true });
           onClose();
-          onSuccess();
         } else {
           setMessage({ data: response.msg, isError: false });
         }
         setLoading(false);
       }
-    } catch (message) {
+    } catch (error) {
       setLoading(false);
+      setMessage({ data: "Something went wrong", isError: false });
     }
   };
 
