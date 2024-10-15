@@ -5,10 +5,12 @@ import {
   setToken,
   handle401Error,
 } from "./helper";
+import store from "../../src/store/store";
+import { sign } from "../../src/store/userSlice";
 
 
 export const isLogin = async () => {
-  const token = getToken();
+  const { token } = store.getState().user.token;
   if (!token) return false;
   try {
     const res = await axios.get(`${process.env.BASE_API_URL}/auth/checkLogin`, {
@@ -16,7 +18,7 @@ export const isLogin = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    localStorage.setItem("user", JSON.stringify(res.data.user));
+    store.dispatch(sign({ user: res.data.user, token }));
     return res.data;
 
   } catch (err) {
@@ -33,8 +35,7 @@ export const login = async (email, password) => {
         password,
       }
     );
-    setToken(response.data.token);
-    localStorage.setItem("user", JSON.stringify(response.data.user));
+    store.dispatch(sign({ user: response.data.user, token: response.data.token }));
     console.log(response.data)
     return { error: false, data: response.data };
   } catch (error) {
@@ -56,8 +57,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
         passwordConfirm,
       }
     );
-    setToken(response.data.token);
-    localStorage.setItem("user", JSON.stringify(response.data.user));
+    store.dispatch(sign({ user: response.data.user, token: response.data.token }));
     return { error: false, data: response.data };
   } catch (error) {
     if (error.response.status === 400)
