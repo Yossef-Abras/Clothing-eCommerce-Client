@@ -67,7 +67,7 @@ export default function Login() {
           formData.passwordConfirm
         );
         if (!response.error) {
-          dispatch(sign({ email: formData.email }));
+          dispatch(sign(response.data));
           setMessage({ data: "Signup successful", isError: true });
           onClose();
         } else {

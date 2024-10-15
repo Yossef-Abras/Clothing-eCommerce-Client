@@ -25,7 +25,6 @@ export default function HomeLayout({ children, className }) {
         setPageLoading(true);
         const result = await isLogin();
         dispatch(sign(result))
-        console.log(result)
         setShowVerificationMessage(
           !JSON.parse(localStorage.getItem("user")).emailVerified && result
         );
