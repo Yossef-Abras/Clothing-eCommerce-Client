@@ -1,7 +1,8 @@
 import axios from "axios";
+import store from "../../src/store/store";
 
 export const getUserOrders = async () => {
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
   if (token) {
     try {
       const response = await axios.get(`${process.env.BASE_API_URL}/orders`, {
@@ -19,7 +20,7 @@ export const getUserOrders = async () => {
 };
 
 export const getSpecificUserOrders = async (orderId) => {
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
   if (token) {
     try {
       const response = await axios.get(
@@ -50,7 +51,7 @@ export const createCashOrder = async (
   //   city: String,
   //   postalCode: String,
   // }
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
   if (token) {
     try {
       const response = await axios.post(
@@ -74,7 +75,7 @@ export const createCheckoutSession = async (
   shippingAddress,
   shippingMethod
 ) => {
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
 
   if (token) {
     try {

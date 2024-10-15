@@ -1,6 +1,7 @@
 import axios from "axios";
+import store from "../../src/store/store";
 export const getCart = async () => {
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
   if (token) {
     try {
       const response = await axios.get(`${process.env.BASE_API_URL}/cart`, {
@@ -17,7 +18,7 @@ export const getCart = async () => {
   }
 };
 export const addToCart = async (productId, color, size) => {
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
   if (token) {
     try {
       const response = await axios.post(
@@ -39,7 +40,7 @@ export const addToCart = async (productId, color, size) => {
 };
 
 export const updateCartItemQuantity = async (cartItemId, quantity) => {
-  let token = localStorage.getItem("token");
+  let token = store.getState().user.token;
   if (token) {
     try {
       const response = await axios.put(
