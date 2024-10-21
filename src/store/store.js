@@ -3,30 +3,34 @@ import userReducer from './userSlice';
 
 const saveStateToLocalStorage = (state) => {
     try {
-        const serializedState = JSON.stringify(state);
-        localStorage.setItem('reduxState', serializedState);
+        if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+            const serializedState = JSON.stringify(state);
+            localStorage.setItem('reduxUserState', serializedState);
+        }
     } catch (e) {
         console.warn("Could not save state", e);
     }
 };
 const loadStateFromLocalStorage = () => {
     try {
-        const serializedState = localStorage.getItem('reduxState');
-        if (serializedState === null) return undefined; // إذا لم توجد حالة مخزنة
-        return JSON.parse(serializedState);
+        if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+            const serializedState = localStorage.getItem('reduxUserState');
+            if (serializedState === null) return undefined;
+            return JSON.parse(serializedState);
+        }
+        return undefined;
     } catch (e) {
         console.warn("Could not load state", e);
         return undefined;
     }
 };
-
-const preloadedState = loadStateFromLocalStorage();
+const localStorageStore = loadStateFromLocalStorage();
 
 const store = configureStore({
     reducer: {
         user: userReducer,
     },
-    preloadedState,
+    preloadedState: localStorageStore,
 });
 
 store.subscribe(() => {

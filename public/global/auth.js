@@ -1,30 +1,10 @@
 // axios.js
 import axios from "axios";
 import {
-  getToken,
-  setToken,
   handle401Error,
 } from "./helper";
 import store from "../../src/store/store";
 import { sign } from "../../src/store/userSlice";
-
-
-export const isLogin = async () => {
-  const { token } = store.getState().user.token;
-  if (!token) return false;
-  try {
-    const res = await axios.get(`${process.env.BASE_API_URL}/auth/checkLogin`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    store.dispatch(sign({ user: res.data.user, token }));
-    return res.data;
-
-  } catch (err) {
-    handle401Error(err);
-  }
-};
 
 export const login = async (email, password) => {
   try {
@@ -36,7 +16,6 @@ export const login = async (email, password) => {
       }
     );
     store.dispatch(sign({ user: response.data.user, token: response.data.token }));
-    console.log(response.data)
     return { error: false, data: response.data };
   } catch (error) {
     console.log(error)

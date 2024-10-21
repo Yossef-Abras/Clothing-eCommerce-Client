@@ -17,8 +17,6 @@ export default function MyNavbar() {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
     dispatch(logout())
   };
 

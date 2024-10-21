@@ -6,26 +6,19 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { getProduct } from "../../../public/global/product";
 import { addToCart } from "../../../public/global/cart";
+import { useSelector } from "react-redux";
 
 export default function ProductPage() {
   const [productData, setProductData] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
-
-  const checkLoginStatus = () => {
-    const user = localStorage.getItem("user");
-    setIsLoggedIn(!!user);
-  };
-
   useEffect(() => {
-    checkLoginStatus();
-
     if (id) {
       getProduct(id)
         .then((data) => {
@@ -39,11 +32,7 @@ export default function ProductPage() {
         });
     }
 
-    const interval = setInterval(() => {
-      checkLoginStatus();
-    }, 1000);
 
-    return () => clearInterval(interval);
   }, [id]);
 
   if (!productData) {
@@ -95,11 +84,10 @@ export default function ProductPage() {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${
-                    mainImage === image
-                      ? "ring-2 ring-primary"
-                      : "hover:ring-2 hover:ring-gray-300"
-                  }`}
+                  className={`overflow-hidden rounded-lg bg-gray-100 transition-all duration-300 ${mainImage === image
+                    ? "ring-2 ring-primary"
+                    : "hover:ring-2 hover:ring-gray-300"
+                    }`}
                   onClick={() => setMainImage(image)}
                 >
                   <Image

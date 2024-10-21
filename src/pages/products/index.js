@@ -13,6 +13,8 @@ import ProductCard from "../../components/ProductCard";
 import { getWishlist } from "../../../public/global/wishlist";
 import { useRouter } from "next/router";
 import MovingCircles from "../../components/MovingCircles";
+import { useDispatch } from "react-redux";
+import store from "../../store/store";
 
 export default function Index() {
   const router = useRouter();
@@ -27,16 +29,12 @@ export default function Index() {
     []
   );
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const isFirstLoad = useRef(true);
 
-  // Function to check user login status
-  const checkLoginStatus = () => {
-    const user = localStorage.getItem("user");
-    setIsLoggedIn(!!user);
-  };
+
 
   // Function to handle adding a product to the wishlist
   const handleAddToWishlist = (id) => {
@@ -108,13 +106,6 @@ export default function Index() {
       }
     };
     fetchData();
-
-    checkLoginStatus();
-    const interval = setInterval(() => {
-      checkLoginStatus();
-    }, 1000);
-
-    return () => clearInterval(interval);
   }, []);
 
   // Effect to update products when sort order, categories, or keyword change
