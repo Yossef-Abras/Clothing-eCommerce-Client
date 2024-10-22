@@ -27,7 +27,7 @@ export default function Footer() {
               <Link href="/privacy-policy">Privacy Policy</Link>
             </div>
             <div>
-              <Link href="/return-policy">Return & Exchange Policy</Link>
+              <Link href="/return-policy">Return Policy</Link>
             </div>
             <div>
               <Link href="/terms-of-service">Terms of Service</Link>
