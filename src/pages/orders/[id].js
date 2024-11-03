@@ -372,7 +372,9 @@ export default function OrderDetails() {
                           <p className="text-gray-600">
                             {item.status === "Pending"
                               ? "Created Date: " +
-                                new Date(returnOrder.createdAt).toLocaleString()
+                                new Date(
+                                  order.returnOrder.createdAt
+                                ).toLocaleString()
                               : item.status === "Approved"
                               ? "Approval Date: " +
                                 new Date(item.approvalDate).toLocaleString()
