@@ -99,3 +99,46 @@ export const createCheckoutSession = async (
     throw new Error("No token found. Please log in.");
   }
 };
+
+export const createReturnOrderRequest = async (body) => {
+  let token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const response = await axios.post(
+        `${process.env.BASE_API_URL}/return-order`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+};
+
+export const cancelReturnOrderRequest = async (
+  returnOrderId,
+  canceledItems
+) => {
+  let token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const response = await axios.patch(
+        `${process.env.BASE_API_URL}/return-order/${returnOrderId}/cancel`,
+        { canceledItems },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+};
