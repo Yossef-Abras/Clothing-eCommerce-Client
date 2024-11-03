@@ -319,12 +319,12 @@ export default function OrderDetails() {
                     `(${order.returnOrder.refundAmount}$ refunded)`}
                 </h2>
                 {order.returnOrder &&
-                order.returnOrder.returnItems.every(
+                order.returnOrder.returnItems.some(
                   (item) => item.status === "Refunded"
                 ) ? (
                   <p className="text-sm text-yellow-500">
-                    Refund processing may take up to 10 days from the date of
-                    return acceptance.
+                    Refund processing may take up to 10 days from the refund
+                    date.
                   </p>
                 ) : (
                   <p className="text-sm text-yellow-500">
