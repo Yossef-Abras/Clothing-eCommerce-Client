@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    BASE_API_URL: "https://api.saramoda.shop/api/v1",
+    BASE_API_URL:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5000/api/v1"
+        : "https://api.saramoda.shop/api/v1",
   },
   images: {
     remotePatterns: [
