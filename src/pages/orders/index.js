@@ -52,7 +52,7 @@ export default function Orders() {
                   <FaDollarSign className="text-primary mr-2" />
                   <span className="font-semibold text-gray-700">Price:</span>
                   <span className="ml-2 text-gray-600">
-                    ${order.totalOrderPrice}
+                    ${Number(order.totalOrderPrice).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex items-center">
