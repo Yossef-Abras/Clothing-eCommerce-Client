@@ -129,7 +129,7 @@ export default function CartSellers() {
       localStorage.setItem(
         "alertMessage",
         JSON.stringify({
-          message: "Error during checkout!",
+          message: error.message || "Error during checkout!",
           isError: true,
         })
       );

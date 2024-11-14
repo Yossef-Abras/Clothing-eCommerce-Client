@@ -1,6 +1,8 @@
 import axios from "axios";
+import { getToken } from "./helper";
+
 export const getWishlist = async () => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       const response = await axios.get(`${process.env.BASE_API_URL}/wishlist`, {
@@ -17,7 +19,7 @@ export const getWishlist = async () => {
   }
 };
 export const addToWishlist = async (productId) => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       const response = await axios.post(
@@ -38,7 +40,7 @@ export const addToWishlist = async (productId) => {
   }
 };
 export const deleteFromWishlist = async (productId) => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       await axios.delete(`${process.env.BASE_API_URL}/wishlist/${productId}`, {

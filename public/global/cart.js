@@ -1,6 +1,8 @@
 import axios from "axios";
+import { getToken } from "./helper";
+
 export const getCart = async () => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       const response = await axios.get(`${process.env.BASE_API_URL}/cart`, {
@@ -13,11 +15,11 @@ export const getCart = async () => {
       throw error.response.data;
     }
   } else {
-    throw new Error("You're not logged in!!")
+    throw new Error("You're not logged in!!");
   }
 };
 export const addToCart = async (productId, color, size) => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       const response = await axios.post(
@@ -39,7 +41,7 @@ export const addToCart = async (productId, color, size) => {
 };
 
 export const updateCartItemQuantity = async (cartItemId, quantity) => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       const response = await axios.put(
@@ -61,7 +63,7 @@ export const updateCartItemQuantity = async (cartItemId, quantity) => {
 };
 
 export const deletProductFromCart = async (cartItemId) => {
-  let token = localStorage.getItem("token");
+  let token = getToken();
   if (token) {
     try {
       const response = await axios.delete(
